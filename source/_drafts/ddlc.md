@@ -35,8 +35,16 @@ And here comes the main mechanic. To make a poem, you need to choose 20 words, e
 
 The girls react differently to the poems. That is, if you write a poem that attract Sayori most, for Natsuki it will be just plain. And if you write a "Yuri" poem on the second day, after Natsuki and Yuri had a quarrel about writing style, Natsuki may even feel sorry for that she has insulted the style of both Yuri and the MC, and runs away. Of course, as a part of the sharing, you will read the poems written by the four girls, and they are mostly identical to their word preference.
 
-The real nature of the game is hidden in this phase, but clues are revealed little by little. Monika's Writing Tips on the second day is a fourth-wall breaking one: save on important moments.On the third day, Sayori becomes a bit off, and she's written a really creepy poem: 
+The real nature of the game is hidden in this phase, but clues are revealed little by little. Monika's Writing Tips on the second day is a fourth-wall breaking one: save on important moments. On the third day, Sayori becomes a bit off, and she's written a poem, which is really creepy according to the MC: 
 {% quote %}
+They were supposed to be for my friends, my friends who aren't smiling.
+They're all shouting, pleading. Something.
 But all I hear is echo, echo, echo, echo, echo
 Inside my head
+{% endquote %}
+
+The poem managed to take a toll on my sanity. And Yuri's poem today seems a mite uncanny as well. It tells a story of 'I' and a raccoon. 'I' feed the raccoon with bread crumbs every day, and as a result the raccoon grows excitement when 'I' show the very knife used for cutting. In the end of the poem:
+{% quote %}
+A rush of blood. Classic Pavlovian conditioning. I slice the bread.
+And I feed myself again.
 {% endquote %}
