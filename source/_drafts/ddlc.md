@@ -55,25 +55,44 @@ So I just root for Natsuki for the weekend event. In this case, <del>you</del> t
 
 Back to this morning. The welcomed protag decides to visit Sayori before Natsuki/Yuri's arrival. Sayori reveals that she suffers from heavy depression, and hope that the he just forget about her and get along with other girls. But she also admits her feeling heartbroken seeing his having a good time with them, without actually realizing that it's out of jealousy. Sayori shows up again, and after Natsuki/Yuri is gone, she confesses her love for our protagonist. Here you have two options: accept it or not. If you choose to accept it, the two of them hugs each other and on and on. If not, Sayori breaks down, with a cry she runs away.
 
-I'm glad I choosed to confess the love in my first run. And I'm sure I've brought her some really [hxppy thxughts](https://ddlcwiki.ga/wiki/Hxppy_thxughts.png).
+I'm glad I choosed to confess the love in my first run. Hope I've brought her some "hxppy thxughts"[1](#happy-thoughts).
 
-Either way, on the day of the festival, you'll see her last poem on the literature club's pamphlet. Named *%*, it's dark and well, a lot creepier than her second poem. Its craziness is made obvious through the repetition of "get out of my head".
+Either way, on the day of the festival, you'll see her last poem on the literature club's pamphlet. Named *%*, it's dark and well, a lot creepier than her second poem. 
 
 {% blockquote Sayori, % %}
+<span style="white-space:nowrap;margin:auto -100% auto auto;margin:auto calc(50% - 50vw) auto auto;">Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of my head.  Get out of</span>
+
+Get.
+Out.
+Of.
+My.
+Head.
+<br/><br/>
+Get out of my head before I do what I know is best for you.
+Get out of my head before I listen to everything she said to me.
+Get out of my head before I show you how much I love you.
+Get out of my head before I finish writing this poem.
+<br/><br/><br/><br/><br/>
 But a poem is never finished
 It just stops moving
 {% endblockquote %}
 
-The quote comes from Paul Valery, a French poet: *A poem is never finished, just abandoned.* A poem is never finished, because it's intrinsic to the poet. It's a part of the poet themself, whether about their feelings or experiences. In this sense, all poems written by the same people are in fact a continuous flow of the poet's personal experiences. So a poem can never be finished in this way, it's just like some underground rivers, some streams seemingly seperated by rocks are in fact connected together. And this flow just stops moving...I think you got the point.
+The quote comes from Paul Valery, a French poet: *A poem is never finished, just abandoned.* A poem is never finished, because it's intrinsic to the poet. It's a part of the poet themself, whether about their feelings or experiences. In this sense, all poems written by the same people are in fact a continuous flow of the poet's personal experiences. So a poem can never be finished in this way, it's just like some underground rivers, some streams seemingly seperated by rocks are in fact connected together. And if this flow just stops moving...think you get the point.
 
-The protag realizes how serious things are, and hurries to Sayori's house, just to see her hanging in the room.
+The poem reminds you of everything. Of her creepy one on the third day, of her leave on Friday, of her telling you she's suffering from heavy depression in the weekend.
 
-{% wide_image https://ddlcwiki.ga/w/images/b/b5/Poem_special1.png "You just left her hanging, didn't you" %}
+No, it can't be. You keep assuring yourself. It's just a mediocre visual novel, only appealing to those weebs who can't even stand a non-virgin, easily afraid theres no way Sayori will do something she's fine just a little depres wont do anything shes ok shes ok shes ok she must be ok god she must be ok
 
-And everything speeds from bad to worse from now. The game restarts, but this time without the presence of Sayori. Her sprite in the title screen is replaced by an amalgam of the other three in a messy way. All previous saves rendered unloadable(telling you cannot find Sayori's character file) and then deleted. Then the story unrolls as if Sayori never existed.
+But that feeling can't go away.
 
-Now the game have glitches here and there, and things are exacerbating for Natsuki and Yuri. They have a quarrel on the same day as before, but without Sayori this time, it remains unchecked. If you've triggered Natsuki's event this day, she'll faint while talking to the protagonist, which, by Monika, is due to her malnutrition. And Natsuki hints that she's suffering from home abuse. When it comes to Yuri, she shows a tendency to excessive obsession.
+The screen turns black after you enter Sayori's house. When it goes bright again, Sayori is there.
 
-Losing control is the theme throughout this game. As a player, we might think that we are omnipotent, we save and load at our will, we pick the outcome we like. But here, nothing goes as expected. It breaks the stereotype that we have about VNs.
+Her body is there.
 
+And everything speeds from bad to worse since. The game restarts, but this time without Sayori. Her sprite in the title screen is replaced by an amalgam of the other members' pixels. All previous saves become unloadable(saying you cannot find Sayori's character file) and then deleted. Then the story unrolls as if Sayori never existed.
 
+Now the game have glitches here and there, and things are exacerbating for Natsuki and Yuri. They have a quarrel on the same day as before, but without Sayori this time, it remains unchecked. 
+
+If you've triggered Natsuki's event this day, she'll faint while talking to the protagonist, which, by Monika, is due to her malnutrition. And Natsuki hints that she's suffering from home abuse. When it comes to Yuri, she begins to show somewhat excessive obsession with MC.
+
+Fear of the unknown may be a little more fundamental than other phobias. One is constantly scared, because what will come out next, is completely out of imagination. 
