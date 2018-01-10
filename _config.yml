@@ -34,7 +34,7 @@ default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
-render_drafts: true
+render_drafts: false
 post_asset_folder: true
 relative_link: false
 future: true
@@ -96,10 +96,9 @@ sitemap:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: rsync
-  host: 98.142.132.231
+  host: mjol.nir.moe
   user: noma
-  root: /home/noma/blog/public
-  port: 28168
+  root: /home/noma/blog/
 
 
 # algolia search
