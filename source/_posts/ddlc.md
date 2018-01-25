@@ -1,12 +1,15 @@
 ---
 title: Let's start from DDLC
-date: 2017-12-18 09:55:11
-lang: en
 tags:
-	- game
-	- meta
-	- timeleap
+  - game
+  - meta
+  - timeleap
+lang: en
+category:
+  - writing
+date: 2018-1-26 03:05:51
 ---
+
 
 {% alert warning %}
 This article contains spoilers, which may harm or even completely ruin your playing experience of the games, including but not limited to:
@@ -43,7 +46,7 @@ But all I hear is echo, echo, echo, echo, echo
 Inside my head
 {% endblockquote %}
 
-The poem managed to take a toll on my sanity. And Yuri's poem today seems a mite uncanny as well. It tells a story of 'I' and a raccoon. 'I' feed the raccoon with bread crumbs every day, and as a result the raccoon grows excitement when 'I' show the very knife used for cutting. In the end of the poem:
+The poem managed to take a toll on my sanity. And Yuri's poem today seems a mite uncanny as well. It tells a story of 'I' and a raccoon. 'I' feed the raccoon with bread crumbs every day, and as a result the raccoon grows excitement when 'I' show the very knife used for cutting bread. In the end of the poem:
 {% blockquote Yuri, The Raccoon %}
 A rush of blood. Classic Pavlovian conditioning. I slice the bread.
 And I feed myself again.
@@ -99,15 +102,15 @@ Fear of the unknown may be a little more fundamental than other phobias. One is 
 
 It's said that prepare for the worst. Ironically, sometimes the same thing applies to our fear, too. The worst thought pops in our mind, usually when it's most unwanted. Horror games try to exploit this. They don't scare you all the time, instead they create a ghastly environment, and the player's mind will do the rest.
 
-But DDLC is not entirely getting at it. Though Salvato decided to make something eerie with a sugar coat, there's something, other than pure horror in the core of the game. Without it, DDLC would be a lot less special.
+But DDLC is not entirely getting at it. Though Salvato, its creater, decided to make something eerie with a sugar coat, there's something, other than pure horror in the game. Without it, DDLC would be a lot less special.
 
-That's meta. Sometimes I find my self unable to resist the charm of those self references and fourth-wall-breaking stuff.
+That's meta. Sometimes I find my self unable to resist the charm of those self references and fourth-wall breaking stuff.
 
 ## Beyond the topsy-turvy
 
 {% alert danger %}
-You've come here, which means about half the plot has been spoiled. No turning back if you go on reading.
-If you do have some interest, stop here and go to play. It just takes several hours and no bucks, definitely worth a try.
+You've come a long way here, which means about half the plot has been spoiled already. No turning back if you go on reading.
+If you do have some interest, why not stop here and play the game right away? It's free and takes just a couple of hours to go through, definitely worth a try.
 
 And unfortunately, some other innocent games will be spoiled just because they bear some relevance. Amen.
 
@@ -117,31 +120,33 @@ The names of the games aren't listed here in case of being a spoiler.
 
 From its greek definition, a metagame should be a game about games, or a game beyond games. 
 
-It's nothing new. After all, Shakespeare wrote meta-dramas centuries ago. You can make a game about making games, just like what lightnovel writers are doing now. Shion Momone, Masamune Izumi, Hashima Itsuki, here and there. The author of Noucome is working on a new one, too, and the first volume seems promising.
+It's nothing new. After all, Shakespeare wrote meta-dramas centuries ago. You can make a game about making games, just like what lightnovel writers have been doing recently. Shion Momone, Masamune Izumi, Hashima Itsuki, all of them. The author of *Noucome* is working on a new one in this genre, too, and the first volume is interesting.
 
 Sega, near its end of life in the console war, made a game called *Segagaga*. In this game the player assumes Taro Sega, trying to save Sega by making a great game ,beating the rivaling company DOGMA (a parody of Sony, one of its main competitors back then), and capture as much market share as possible. Ironic jokes and parodies throughout the play make the game a mite different. But it cannot compare to the *Seaman*, another game published by Sega, in the sense of weirdness. In the game, the player brings up and interact with a man-faced fish.
 
-And the eccentricity also exists in the first parts of the game.
+And the eccentricity also exists in the first parts of DDLC.
 
-Without Sayori, one can say the first act is just about ordinary school life, and in the second act, a horrible one. It’s like Danganronpa, where there’s a chapter of not-everyday life and then another about class trial.
+Without Sayori, one can say the first act is just about ordinary school life, and in the second act, a horrible one. It’s like Danganronpa, where there’s a chapter of (un)common life and then another about class trial.
+
+---
 
 Monika 
 Monika
-Monika comes, upon entering the classroom, realizes she has screwed it and deletes Yuri and Natsuki’s character file. And it’s going to Act 3.
+Monika shows up, and upon entering the classroom, she realizes that she has screwed it all. So she deletes Yuri and Natsuki’s character file and cleans up the mess. And it’s progressing on to Act 3.
 
-The game restarts again, and this time, the protagonist-the player sits with Monika, face to face. But unlike other girls, Monika face right to the screen in the whole gameplay, so it’s always the case.
+The game restarts again, and this time, <del>the protagonist</del>the player sits with Monika, face to face. But unlike other girls, Monika face right to the screen in the whole gameplay, so it’s always the case.
 
 Møn ka admits that she’s the culprit of all the terrible school life, however, it’s due to her obssession with the player, the only reality in the world of fiction.
 
 All of a sudden, M̶o̶n̶ìką realized all the other members of the literature club were nothing but a piece of code, and their characters were just some archetypes common in Japanese anime, game and stuff. Frantically wanting to be together with the player, she abuses her privilege as the president, forces the player to choose to help her at the weekend, and even interferes with the personality of other girls. 
 
-At the expense of the game falling apart.
+At the price of the game itself.
 
-But deleting the character file of others, and even telling how to do it to the player, who she believes would never betray her, turn out to be her undoings. In this act M&nbsp;&nbsp;&nbsp;&nbsp;a will talks about some random topics, some of them being a bit thought provoking. The eternity lasts, until the player deletes her character file.
+But deleting the character file of others, and even telling how to do it to the player, who she believes would never betray her, turn out to be her undoings. In this act M&nbsp;&nbsp;&nbsp;&nbsp;a will talk about some random topics, and some of them are thought provoking. The eternity lasts, until the player deletes her character file.
 
-Being removed makes Monika reflect on what she's done to Sayori, Natsuki, Yuri, and also, the player. She apologizes for ruining the player's experience as I'm now doing, and admits though fictitious, they're still her friends. So she decides to restore the world to its initial state. A world the player desires. And a world without Monika.
+Being removed leads to Monika reflecting on herself about what she's done to Sayori, Natsuki, Yuri, and also, the player. She apologizes for ruining the player's experience as I'm now doing, and admits though fictitious, they're still her friends. So she decides to restore the world to its initial state. A world the player desires. And a world without Monika.
 
-Everything seems just normal at first. Sayori thanks the player for making the other girls happy, and...
+Everything seems on track at first. Sayori thanks the player for making the other girls happy, and...
 
 And for getting rid of Monika. As the new president of the literature club, Sayori has obtained the ability that is once Monika's. Trying to use it to be with the player forever, Sayori is stopped short by Monika. In the end, Monika says, the Literature Club is no more than a place of grief and despair, so she decides to disband it. 
 
@@ -154,29 +159,31 @@ I'll leave you be
 
 From here on, the game won't start. Instead, a farewell message from Monika is displayed.
 
-If all CGs are seen, there's an alternative end, where Sayori thanks you and that's it. So that marks the end of the game.
+If all CGs are seen, there's an alternative end, where Sayori and the developer thank you and that's it. That marks the end of the game.
 
 So in its essence, DDLC is a VN, or it tries to be one, but ended up being a melting pot of love, horror, and meta. Though, DDLC isn't the first one to do that. The first with file manipulation in mind may be the computer tutorials. Also, years ago, there's a game called [OneShot](http://store.steampowered.com/app/420530/OneShot/) that used similar tricks.
 
-In this game, the sun, which has been providing the whole world energy died out. And our protagonist, Niko, wakes up with a lightbulb in hand. They know from the prophet the lightbulb is the new sun, and Niko, the savior. Player's goal is to guide Niko to the tower and put the sun back there.
+In this game, the sun died out, which has been providing energy to the world. And our protagonist, Niko, wakes up with a lightbulb in hand. They know from the prophet the lightbulb is the new sun, and Niko, the savior. Player's goal is to guide Niko to the tower and put the new sun into its place.
 
-But it's not that simple as it seems. During the pilgrimage, some puzzles requires the player to find something on the computer. Yes, the game places some files in your documents directory for you to solve the puzzle in game. And in another situation, it even resets your desktop background for hints. And the ways to solve them, sometimes, also feature the same technique: at a time you may need to drag the game window to reveal the hidden information, or at another, close it to progress to the next scene.
+But it's not that simple as it seems. During the pilgrimage, some puzzles requires the player to find something on the computer, instead of from inside the game. Yes, at a time the game places some files in your document directory for you to solve the problems in game. And in another situation, it even resets your desktop background for hints. And the ways to solve them, sometimes, also feature the same technique: you may need to drag the game window to reveal the hidden information, or, close it to progress to the next scene.
 
-In the tower, the player come to know the sun needs the savior to operate, that is, if Niko put the sun back, they cannot return to their home. And if Niko smash the lightbulb, they can, but at the expense of the entire world.
+In the last part of the journey, the player comes to know that the sun needs the savior to operate, that is, if Niko returns the sun to the world, they cannot return to their own home. And if Niko smash the lightbulb, they can return, but at the expense of this world.
 
-If Niko sacrifices themself for everybody's sake, when you restart the game, the starting room is shown, bathed in light, without Niko's presence. If you choose the other route, Niko goes back to their home, but the game will fail to start due to the world's destruction.
+And it's decisive. If Niko sacrifices themself for everybody's sake, when you restart the game, only the starting room is shown, bathed in light, without Niko's presence. If you choose the other route, Niko goes back to their home, but the game will fail to start due to the world's destruction.
 
-You have only one shot.
+{% quote %}
+You only have one shot.
+{% endquote %}
 
-Don't know how they managed it in the remake version, but in the original version, the registry of the computer is modified to maintain the state across installations. Games becomes scrupulous when they become commercial(and when they go on Steam), so it may not dare to tamper with the registry now.
+Don't know how they managed this in the remake version, but in the original version, the registry of the computer is modified to maintain the state across installations. Games becomes scrupulous when they become commercial(and when they go on Steam), so it may not dare to play with the registry now.
 
-However unsurprisingly, OneShot closes itself in a non-oneshot way. That's in the solstice update. In this route, things become clear that the world has disappeared already, and the current one is none but a piece of code running on Player's machine. But the Entity, the mind of the game itself, is "untamed"(you can interpret it as insensible), and started to self-destruct in order to protect the innocent victim trapped in the game, that is Niko. Now Niko needs to face the Entity to save the virtual world, and, to return home.
+However unsurprisingly, OneShot closes itself in a non-oneshot way. That's in the solstice update. In this route, things become clear that the world has come to its end already, and the current one is none but a clone, a piece of code running on Player's machine. But the Entity, the mind of the game itself, is "untamed"(you can interpret it as insensible), and started to self-destruct in order to protect the innocent victim trapped in the game, that is Niko. Now Niko needs to face the Entity to save the virtual world, and, to return home.
 
-At a time you even need to move character files into a folder to transport their figures in the game! Only computer tutorials can make one do that! Maybe the puzzle of deleting a character file comes out of here, we just don't know. Let's just state it as striking similarity.
+At a time you even need to move character files into a folder to transport their figures in the game! Only computer tutorials can force one to do that! Maybe the puzzle of deleting a character file comes out of here, we just don't know. Let's just state it as striking similarity.
 
-When it comes to *Kimi to Kanojo to Kanojo no Koi.*(The Love Between You, Her, and Her, abbreviated *Totono*), a visual game published by Nitroplus, I'm more inclined to say it's imitation or homage, since they bear the same core idea: the heroine(a female character with her own route) being the literal "game changer", while still inside of it. Although it's difficult to see Monika as a heroine since there's only two common routes available in DDLC.
+When it comes to *Kimi to Kanojo to Kanojo no Koi.*(The Love Between You, Her, and Her, abbreviated *Totono*), a visual game published by Nitroplus, I'm more inclined to say DDLC is imitating it, since they bear the same core idea: the heroine(a female character with her own route) being the literal "game changer", while still inside of it. Although to be exact, Monika doesn't own a route.
 
-Miyuki Sone is a childhood friend of Shinichi, our protagonist, and she's also an idol in the school. Please refer to the game for further details. The point is, first the player is limited to Miyuki's route, and then, when the player goes down the route of another heroine-Aoi-in its end Miyuki appears, killing Aoi and says the player should be loyal to her and choose her route again and again since the player chose her route in the beginning(yes, she's aware she is a heroine in a visual novel), before killing Shinichi as well.
+Miyuki Sone is a childhood friend of Shinichi, our protagonist, and she's also an idol in the school. One can always refer to the game for further details. The point is, first the player is limited to Miyuki's route, and then, when the player goes down the route of another heroine-Aoi-in its end Miyuki appears, killing Aoi and says the player should be loyal to her and choose her route again and again since the player chose her route in the beginning(yes, she's aware she is a heroine in a visual novel), before killing Shinichi as well.
 
 After restarting the game, Miyuki has already changed it, rendering it impossible to choose someone other than Miyuki, in the game. So as one may expect, to save the game from this mire, the player needs something out of the game.
 
@@ -184,11 +191,13 @@ To solve it, player needs to call a number that comes with the game package. And
 
 By the way, only one of the two heroines can be chosen ultimately, and the consequence is irrevertible unless a reinstallation is done. Yeah, one shot.
 
-Admittedly, Totono comes first, but its influence is limited. Not only because it's Japanese only, but it's still a galgame, in its core. There are H scenes, the plot mainly talks about the relationship, so on and so forth. However, DDLC is an indie game, its lack of commercial spirit makes a wilder attempt a possibility. The developers don't care about whether the girls are that appealing, so they can make the girls depressed or abused, mask their eyes with black pixels, let Monika talk about anything in Act 3, leave a bad end only(with a compromised good one). That's what makes the game appealing, aside from the plot twist. 
+## (Non-)verdict
 
-For instance, I would say Monika's Writing Tip of the day are sometimes very inspiring(despite the fourth-wall breaking ones). That, along with the gameplay, is unforgettable.
+Admittedly, Totono comes first, but its influence is limited. Not only because it's Japanese only, but it's still a galgame, deep in its core. There are H scenes, the plot mainly talks about the relationship, so on and so forth. However, DDLC is an indie game, its lack of commercial spirit makes a wilder attempt a possibility. The developers don't care about whether the girls are that appealing, so they can make the girls depressed or abused, mask their eyes with black pixels, let Monika talk about anything in Act 3, leave a bad end only(with a compromised good one). DDLC is special in this sense. And it's what makes the game appealing, aside from the plot twist. 
 
-Let's conclude it with Monika's last tip of the day:
+Like, I would say Monika's Writing Tips of the day are sometimes very inspiring(despite the fourth-wall breaking ones). Those are unforgettable.
+
+So let's end it with Monika's last tip of the day:
 
 {% quote %}
 
