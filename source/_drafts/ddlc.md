@@ -168,15 +168,27 @@ If Niko sacrifices themself for everybody's sake, when you restart the game, the
 
 You have only one shot.
 
-Don't know how they did it in the Steam version, but in the original version, the registry of the computer is modified to make it happen and maintain the state through reinstallations.
+Don't know how they managed it in the remake version, but in the original version, the registry of the computer is modified to maintain the state across installations. Games becomes scrupulous when they become commercial(and when they go on Steam), so it may not dare to tamper with the registry now.
 
 However unsurprisingly, OneShot closes itself in a non-oneshot way. That's in the solstice update. In this route, things become clear that the world has disappeared already, and the current one is none but a piece of code running on Player's machine. But the Entity, the mind of the game itself, is "untamed"(you can interpret it as insensible), and started to self-destruct in order to protect the innocent victim trapped in the game, that is Niko. Now Niko needs to face the Entity to save the virtual world, and, to return home.
 
 At a time you even need to move character files into a folder to transport their figures in the game! Only computer tutorials can make one do that! Maybe the puzzle of deleting a character file comes out of here, we just don't know. Let's just state it as striking similarity.
 
-When it comes to *Kimi to Kanojo to Kanojo no Koi.*(The Love Between You, Her, and Her), a visual game published by Nitroplus, I'm more inclined to say it's imitation or homage, since they bear the same core idea: the heroine(a female character with her own route) being the literal "game changer", while still inside of it. Although it's difficult to see Monika as a heroine, because there's only two common routes in DDLC.
+When it comes to *Kimi to Kanojo to Kanojo no Koi.*(The Love Between You, Her, and Her, abbreviated *Totono*), a visual game published by Nitroplus, I'm more inclined to say it's imitation or homage, since they bear the same core idea: the heroine(a female character with her own route) being the literal "game changer", while still inside of it. Although it's difficult to see Monika as a heroine since there's only two common routes available in DDLC.
 
-Here's the last Monika's Writing Tip of the Day:
+Miyuki Sone is a childhood friend of Shinichi, our protagonist, and she's also an idol in the school. Please refer to the game for further details. The point is, first the player is limited to Miyuki's route, and then, when the player goes down the route of another heroine-Aoi-in its end Miyuki appears, killing Aoi and says the player should be loyal to her and choose her route again and again since the player chose her route in the beginning(yes, she's aware she is a heroine in a visual novel), before killing Shinichi as well.
+
+After restarting the game, Miyuki has already changed it, rendering it impossible to choose someone other than Miyuki, in the game. So as one may expect, to save the game from this mire, the player needs something out of the game.
+
+To solve it, player needs to call a number that comes with the game package. And the very trick dates back to 1998, when the first Metal Gear Solid game was released, wherein Snake needs to contact Meryl, whose codec frequency is on the CD case. Not a CD in the game, but the CD of the game(it's on PS1, so no DVD or blu-ray, just to clarify).
+
+By the way, only one of the two heroines can be chosen ultimately, and the consequence is irrevertible unless a reinstallation is done. Yeah, one shot.
+
+Admittedly, Totono comes first, but its influence is limited. Not only because it's Japanese only, but it's still a galgame, in its core. There are H scenes, the plot mainly talks about the relationship, so on and so forth. However, DDLC is an indie game, its lack of commercial spirit makes a wilder attempt a possibility. The developers don't care about whether the girls are that appealing, so they can make the girls depressed or abused, mask their eyes with black pixels, let Monika talk about anything in Act 3, leave a bad end only(with a compromised good one). That's what makes the game appealing, aside from the plot twist. 
+
+For instance, I would say Monika's Writing Tip of the day are sometimes very inspiring(despite the fourth-wall breaking ones). That, along with the gameplay, is unforgettable.
+
+Let's conclude it with Monika's last tip of the day:
 
 {% quote %}
 
