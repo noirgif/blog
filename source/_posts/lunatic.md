@@ -1,6 +1,8 @@
 ---
 title: Lunatic
 date: 2017-05-09 23:40:57
+category:
+    - misc
 tags:
     - Syojobyo
     - lyrics

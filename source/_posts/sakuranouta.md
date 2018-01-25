@@ -1,6 +1,8 @@
 ---
 title: 樱之诗
 date: 2017-05-09 12:50:50
+category:
+    - commentary
 tags:
     - game
 ---

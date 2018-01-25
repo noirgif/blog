@@ -1,5 +1,7 @@
 ---
 title: 升空的焰火，从侧面看
+category:
+  - commentary
 tags:
   - book
 date: 2017-12-10 19:42:51

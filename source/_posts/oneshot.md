@@ -1,5 +1,7 @@
 ---
 title: OneShot
+category:
+  - commentary
 tags:
   - game
   - meta

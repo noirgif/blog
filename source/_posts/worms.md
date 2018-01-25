@@ -1,5 +1,7 @@
 ---
 title: 虫子
+category:
+  - writing
 tags:
   - forecast
 date: 2018-01-24 12:02:18

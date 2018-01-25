@@ -1,6 +1,8 @@
 ---
 title: 在7年后等你
 date: 2017-10-27 03:04:59
+category:
+  - commentary
 tags:
   - game
   - timeleap

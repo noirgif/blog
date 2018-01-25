@@ -1,6 +1,8 @@
 ---
 title: 一刀9999级的世界
 date: 2017-05-16 23:33:42
+category:
+    - writing
 tags:
     - kuso
     - game
