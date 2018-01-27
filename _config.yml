@@ -81,9 +81,10 @@ math:
             # default config
 
 feed:
-    type: atom
-    path: atom.xml
-    limit: 20
+    type: rss2
+    path: rss.xml
+    limit: 3
+    content: true
     hub:
 
 # sitemap
