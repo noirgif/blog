@@ -10,9 +10,9 @@ We are setting out today.
 
 Ack, maybe I've ruined it already, but we're going out now. Farewell to the village where we were born.
 
-Is it OK to be alone with a girl? No idea. Maybe so. You know, there are few parties of brave being incapacitated by loving affairs before even greeting the last boss. History teaches us that something hard to screw up is always hard to screw up.
+Is it OK to be alone with a girl? No idea. Maybe it's true. You know, there are so few parties of brave being incapacitated by love affairs before they make it to the last boss. History teaches us that something hard to screw up is always hard to screw up.
 
-See? Even Rance has managed it. Many times. That's thanks to the power of being an H-game protagonist? Then I think it's fine for me. I don't have this power, after all.
+Even Rance has managed it. Many times. Perhaps it's thanks to the power of being an H-game protagonist? Then I think it's fine for me. I don't have this power, after all, and I'm trying not to.
 
 I turned to her, who's walking on my left, "Lola, you think we'll end up in an item?"
 
