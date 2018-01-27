@@ -32,7 +32,7 @@ But it turns out not to be the case for DDLC. Quite the opposite. After witnessi
 
 ## Doki-doki school life
 
-The game begins with a cliche VN plot, the main protagonist(the player names him), on an invitation from his childhood friend, Sayori, decides to actually pay a visit to the club she's in-the literature club. There he meets the other three girls in the club: Natsuki making cupcakes for everyone, Yuri bringing him a book to read and at last, president Monika, regarding the iminnent school festival, proposes that everyone writes a poem, and brings it the second day to share with each other to enhance mutual communication and writing skills.
+The game begins with a cliche VN plot, the main protagonist(the player names him), on an invitation from his childhood friend, Sayori, decides to actually pay a visit to the club she's in -- the literature club. There he meets the other three girls in the club: Natsuki making cupcakes for everyone, Yuri bringing him a book to read and at last, president Monika, regarding the iminnent school festival, proposes that everyone writes a poem, and brings it the second day to share with each other to enhance mutual communication and writing skills.
 
 And here comes the game's main mechanism. To compose a poem, you need to have 20 words, each of them chosen from 10 words. Every word appeals most to a specific heroine, and the hint is given during the day: Yuri loves something abstract and metaphorical, while cute words like lollipop or kawaii are appealing to Natsuki. And about Sayori, she have an inclination towards human emotion, and is drawn to both words for happiness and ones for sadness, which is made clear in the second day. The girl's storyline will progress who is the most pleased. There are stickers of the girls showing on the left while making a poem. When a word is chosen, the corresponding girl will jump, making an easy indicator.
 
@@ -183,7 +183,7 @@ At a time you even need to move character files into a folder to transport their
 
 When it comes to *Kimi to Kanojo to Kanojo no Koi.*(The Love Between You, Her, and Her, abbreviated *Totono*), a visual game published by Nitroplus, I'm more inclined to say DDLC is imitating it, since they bear the same core idea: the heroine(a female character with her own route) being the literal "game changer", while still inside of it. Although to be exact, Monika doesn't own a route.
 
-Miyuki Sone is a childhood friend of Shinichi, our protagonist, and she's also an idol in the school. One can always refer to the game for further details. The point is, first the player is limited to Miyuki's route, and then, when the player goes down the route of another heroine-Aoi-in its end Miyuki appears, killing Aoi and says the player should be loyal to her and choose her route again and again since the player chose her route in the beginning(yes, she's aware she is a heroine in a visual novel), before killing Shinichi as well.
+Miyuki Sone is a childhood friend of Shinichi, our protagonist, and she's also an idol in the school. One can always refer to the game for further details. The point is, first the player is limited to Miyuki's route, and then, when the player goes down the route of another heroine -- Aoi -- in its end Miyuki appears, killing Aoi and says the player should be loyal to her and choose her route again and again since the player chose her route in the beginning(yes, she's aware she is a heroine in a visual novel), before killing Shinichi as well.
 
 After restarting the game, Miyuki has already changed it, rendering it impossible to choose someone other than Miyuki, in the game. So as one may expect, to save the game from this mire, the player needs something out of the game.
 
@@ -247,7 +247,7 @@ Why not try some short stories?
 
 The great thing about short stories is that you can focus on just one thing that you want to do right.
 
-That goes for small projects in general - you can really focus on the one or two things.
+That goes for small projects in general -- you can really focus on the one or two things.
 
 It's such a good learning experience and stepping stone.
 
@@ -269,7 +269,7 @@ You start sucking less and less.
 
 Nothing comes naturally.
 
-Our society, our art, everything - it's built on thousands of years of human innovation.
+Our society, our art, everything -- it's built on thousands of years of human innovation.
 
 So as long as you start on that foundation, and take it step by step...
 
