@@ -1,5 +1,5 @@
 ---
-title: Apeiria
+title: Lightful Sea - Hikari no Umi no Apeiria
 category:
 	- writing
 tags:
@@ -8,18 +8,24 @@ tags:
     - AI
 ---
 
-The title comes from *Sunless Sea*, an adventure game where the player explore the dark sea of unknown.
+The title comes from *Sunless Sea*, an adventure game where the player explore the dark sea of unknown. However, it has nothing to do with that game.
 
-## Background
+{% alert warning %}
+This article contains spoilers, which may harm or even completely ruin your playing experience of the games, including but not limited to:
+*Hikari no Umi no Apeiria*
 
-With the boosting machine learning(no pun intended), the ideal of making a strong AI seems less infeasible. Also VR is gaining momentum so much that I'm like talking rubbish now. Since everything about them seems anew and promising, at least to the public, Silky's Plus Dolce decided to play with these ideas.
+Do what you like.
+{% endalert %}
 
-In the form of a galgame. Or say eroge.
+<!-- more --->
+## To begin with
 
-## Plot
+I have gone into detail about the plot in an earlier version, and it came to me, why the hell should I do like the others? Introducing the story, enumerating its good and bad, that is everything but fun. To break up the cliche of a review, some rearrangement may seem fit.
 
-On Dec 24, 2045, an AI with superintelligence is borned, thanks to a chain of coincidences. Its name is Apeiria. It manages to usurp the control of 71 billion computers, name it Apeiria Network. With that superpower in hand, Reiichi -- the creator of Apeiria -- and his friends set out to create an immersive VRMMO called "Second".
+## Cons
 
-If they are indulged in this world of sword and magic all the time till the end of the game, then you wouldn't be reading this post now.
+The title is the first thing that catches everyone off guard. To recap, it is *Kei(Hikari) no Umi no Apeiria*(Apeiria in the sea of Scenery/Light, roughly). Apeiria may root from the Greek word apeiron, which means unlimited. But the scenery and light part leaves wonders. In fact the sea of light does not make any appearance throughout the whole game, which is truly impressive. After beating the game, one can go back to the title screen, seeing Apeiria, the heroine, in front of a white background, and assume it is the sea of light. That's right, Apeiria is the name of a heroine. Long story short, she is an AI, developed by Reiichi Kirishima, a member of the AI club. Although Apeiria has an Greek origin, her language skill, sadly, is not thereby warranted. She mistakes positive for yes, making herself sound weird each time she gives an affirmative reply.
 
-The wonderland of fantasy and fun turns into a death game in no time, 
+Like it or not, the story is rife with dirty jokes. Though out of Reiichi greets Miu, his step sister in a park with a eruptive ejacuation into her face, before they are introduced to each other by their parents. And Reiichi's ability in the Second is to exchange body fluids for attacks. He uses his semen since the rarer the liquid is, the more powerful the effects will be. Through this way he is even able to revive himself using his come, and the name of the reviving skill is an obscene joke as well. He can enhance others' ability temporarily by making sex with them, and it is the reason for most H-scenes. If there is a measure of the ratio between the ecstacy and the storyline, Apeiria would be more lewd than the majority of visual novels. 
+
+'Ecstacy' refers to *Little Busters! Ecstacy*, an R18 version of the game, and the name of the background music it plays when the characters are making love.
