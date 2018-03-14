@@ -18,14 +18,22 @@ Do what you like.
 {% endalert %}
 
 <!-- more --->
-## To begin with
 
-I have gone into detail about the plot in an earlier version, and it came to me, why the hell should I do like the others? Introducing the story, enumerating its good and bad, that is everything but fun. To break up the cliche of a review, some rearrangement may seem fit.
+I suddenly wake up from the dream.
 
-## Cons
+What comes into sight is the ceiling, and a blazing ray of light. The alarm is always good at catching me off guard.
 
-The title is the first thing that catches everyone off guard. To recap, it is *Kei(Hikari) no Umi no Apeiria*(Apeiria in the sea of Scenery/Light, roughly). Apeiria may root from the Greek word apeiron, which means unlimited. But the scenery and light part leaves wonders. In fact the sea of light does not make any appearance throughout the whole game, which is truly impressive. After beating the game, one can go back to the title screen, seeing Apeiria, the heroine, in front of a white background, and assume it is the sea of light. That's right, Apeiria is the name of a heroine. Long story short, she is an AI, developed by Reiichi Kirishima, a member of the AI club. Although Apeiria has an Greek origin, her language skill, sadly, is not thereby warranted. She mistakes positive for yes, making herself sound weird each time she gives an affirmative reply.
+I cannot recall it exactly, but it is in the Second, the world the five of us created together. After defeating Mother Dragon, the five of us continue our journey up Yggdrasil. And it turns out just a beginning: countless monsters reside in this central tower, and 100 is only half of its floors.
 
-Like it or not, the story is rife with dirty jokes. Though out of Reiichi greets Miu, his step sister in a park with a eruptive ejacuation into her face, before they are introduced to each other by their parents. And Reiichi's ability in the Second is to exchange body fluids for attacks. He uses his semen since the rarer the liquid is, the more powerful the effects will be. Through this way he is even able to revive himself using his come, and the name of the reviving skill is an obscene joke as well. He can enhance others' ability temporarily by making sex with them, and it is the reason for most H-scenes. If there is a measure of the ratio between the ecstacy and the storyline, Apeiria would be more lewd than the majority of visual novels. 
+But when I come back to the reality, there is nothing but loneliness.
 
-'Ecstacy' refers to *Little Busters! Ecstacy*, an R18 version of the game, and the name of the background music it plays when the characters are making love.
+Even though I tried again and again, I still cannot save Apeiria from this game of death. I have reached the farthest this time: Apeiria ist heir, but with a time limit -- a year. Now the last second is drawing near: hours later I will have to send her back into the crucible of Second.
+
+I have nothing more to lose now.
+
+Miu, my step sister, has been disposed of because she did not meet her mother's expectation, who is ever pursuing the shadows of her aborted child.
+
+Mashiro, the loyal member of the AI club, died from exposure to radiation due to the appliance malfunction in the First's open beta event.
+
+Kuon, my childhood friend, is OK. But her mother, Towako, died in hospital with her unborn baby. Before the death, Kuon had a quarrel with Towako, and now she's lost the chance to reconcile forever.
+
