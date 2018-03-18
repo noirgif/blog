@@ -99,7 +99,7 @@ deploy:
   type: rsync
   host: mjol.nir.moe
   user: noma
-  root: /home/noma/blog/
+  root: /home/noma/www/blog/
 
 
 # algolia search
