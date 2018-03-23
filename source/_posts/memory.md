@@ -8,7 +8,7 @@ date: 2018-03-18 15:41:55
 ---
 
 
-The title of this post refers to the galgame series produced by the once existing KID, though there is no obvious relevance between the game and this  article(<span class=spoiler>though the protagonist in Yubikiri no Kioku does have a memory loss and mistakes himself for someone else</span>). By the way, an eighth installment of it is near its publication by MAGES, the franchise's now owner, along with Hikari Field. It was once decided to be a homage to one of the songs of Jin's Kagerou Project, but you are not seeing it here because I forgot that and went for this one.
+The title of this post refers to the galgame series produced by the once existing KID, though there is no obvious relevance between the game and this  article(<span class=spoiler>though the protagonist in Yubikiri no Kioku does have a memory loss and mistakes himself for someone else</span>). By the way, an eighth installment of it is near its publication by MAGES, the franchise's now owner, along with GloriaWorks. It was once decided to be a homage to one of the songs of Jin's Kagerou Project, but you are not seeing it here because I forgot that and went for this one.
 
 {% alert warning %}
 This article contains spoilers, which may harm or even completely ruin your playing or reading experience of the works, including but not limited to:
