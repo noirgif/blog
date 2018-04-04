@@ -1,6 +1,8 @@
 ---
 title: Stori1
 date: 2017-06-08 22:50:17
+category:
+    - writing
 tags:
     - otogi
 ---
