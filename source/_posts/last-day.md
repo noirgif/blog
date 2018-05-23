@@ -9,9 +9,9 @@ It was unreal, but it felt real.
 
 We are facing a giant dragon -- given that all dragons are large -- to fight our ways up the tower.
 
-The tower of Yggdrasil is still looking down upon the world from the center today.  Modeled after the boundary tower in Amakusa, Tokyo, which is birthplace of the predecessor of this game, Yggdrasil is a lofty tower, too.
+The tower of Yggdrasil is still looking down upon the world from the center today.  Modeled after the boundary tower in Amakusa, Tokyo, which is the birthplace of a phenomenal VRMMO game, Yggdrasil is a lofty tower, too.
 
-*A needle piercing into the space.*
+*Like a needle piercing into the space.*
 
  A crystal one, though, to fit in the overall fantasy art style of the Second. And like the boundary tower, Yggdrasil boasts a whole lot of floors -- 1000 of them, to be exact -- crammed with all kinds of monsters and challenges.
 
