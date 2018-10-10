@@ -5,6 +5,7 @@ tags:
     - linux
     - stub
 sitemap: false
+lang: zh-cn
 ---
 更新了系统之后,MMA就启动不了了，代替的是
 <!-- excerpt -->

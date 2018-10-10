@@ -6,6 +6,7 @@ category:
 tags:
     - Syojobyo
     - lyrics
+lang: zh-cn
 ---
 
 网易云的外链竟然用iframe，丑恶

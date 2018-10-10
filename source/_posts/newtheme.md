@@ -2,6 +2,7 @@
 title: 新主题！
 date: 2017-12-18 12:32:58
 tags: blog
+lang: zh-cn
 ---
 
 换了新主题！

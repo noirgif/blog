@@ -5,6 +5,7 @@ tags:
   - hyperref
 mathjax: true
 date: 2017-04-26 20:53:35
+lang: zh-cn
 ---
 嗯哼。
 <!-- excerpt -->

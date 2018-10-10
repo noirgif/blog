@@ -3,6 +3,7 @@ title: Last Day
 date: 2018-05-23 12:24:24
 tags:
     - game
+lang: en
 ---
 
 It was unreal, but it felt real.

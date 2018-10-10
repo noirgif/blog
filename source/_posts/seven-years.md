@@ -7,6 +7,7 @@ tags:
   - game
   - timeleap
   - scifi
+lang: zh-cn
 ---
 
 

@@ -3,6 +3,7 @@ title: 'Re:personal blog from zero'
 tags: startdash
 date: 2017-04-23 18:11:40
 sitemap: false
+lang: zh-cn
 ---
 现在这里各种意义上都很危险。
 <!-- excerpt -->

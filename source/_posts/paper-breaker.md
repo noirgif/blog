@@ -3,6 +3,7 @@ title: paper breaker
 date: 2017-10-29 00:47:24
 tags:
 	- paper
+lang: zh-cn
 ---
 本文的目标，是用最少的、最通俗的语言，来表述一篇论文的创新之处，或者说，进步。
 <!-- excerpt -->

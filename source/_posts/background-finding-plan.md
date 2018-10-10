@@ -5,6 +5,7 @@ tags:
     - blog
     - stub
 sitemap: false
+lang: zh-cn
 ---
 为了不被人说模板借用图片也借用一个人的，我踏上了寻找背景的旅程。
 <!-- excerpt -->

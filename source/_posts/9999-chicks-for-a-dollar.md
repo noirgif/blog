@@ -7,6 +7,7 @@ tags:
     - kuso
     - game
     - meta
+lang: zh-cn
 ---
 脚下是冰冷的石板。
 <!-- excerpt -->

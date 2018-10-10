@@ -6,6 +6,8 @@ tags:
 - SCP
 category:
 - writing
+lang:
+- en
 ---
 
 Headnotes:

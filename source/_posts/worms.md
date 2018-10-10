@@ -5,6 +5,7 @@ category:
 tags:
   - forecast
 date: 2018-01-24 12:02:18
+lang: zh-cn
 ---
 
 

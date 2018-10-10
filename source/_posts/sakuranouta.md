@@ -5,6 +5,7 @@ category:
     - commentary
 tags:
     - game
+lang: zh-cn
 ---
 {% quote %}
 薄っぺらの天才は、才能が透けて見える。

@@ -5,6 +5,7 @@ tags:
     - blog
     - leet
 sitemap: false
+lang: en
 ---
 
 <!-- more -->

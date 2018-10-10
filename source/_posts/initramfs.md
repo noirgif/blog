@@ -4,6 +4,7 @@ tags:
   - linux
   - boot
 date: 2017-04-25 01:07:31
+lang: zh-cn
 ---
 initramfs与mkinitcpio
 <!-- excerpt -->

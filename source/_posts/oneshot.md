@@ -6,6 +6,7 @@ tags:
   - game
   - meta
 date: 2017-07-09 21:32:02
+lang: zh-cn
 ---
 
 {% blockquote Niko，得知一切的真相之后%}

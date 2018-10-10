@@ -4,6 +4,7 @@ date: 2017-04-27 11:15:32
 tags: 
     - latex
     - blog
+lang: zh-cn
 ---
 Ad infinitum!
 <!-- excerpt -->

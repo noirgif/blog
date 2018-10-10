@@ -6,6 +6,7 @@ tags:
     - hymmnos
     - blog
 sitemap: false
+lang: zh-cn
 ---
 Fou ki ra hyear presia reen
 <!-- excerpt -->
