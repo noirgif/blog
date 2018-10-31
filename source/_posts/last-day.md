@@ -5,6 +5,8 @@ tags:
     - game
 lang: en
 label: apeiria review teaser
+category:
+    - writing
 ---
 
 It was unreal, but it felt real.

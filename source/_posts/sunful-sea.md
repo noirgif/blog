@@ -6,7 +6,7 @@ tags:
   - AI
   - time loop
 category:
-  - writing
+  - commentary
 date: 2018-07-16 15:31:33
 lang: en
 label: apeiria review

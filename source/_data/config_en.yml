@@ -1,0 +1,9 @@
+title: Goddess Unknown
+subtitle:
+description: Peek into the abyss, to find the way towards light.
+author: NoirGif
+
+feed:
+  type: rss2
+  path: rss.xml
+  limit: 20

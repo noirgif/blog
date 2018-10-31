@@ -1,5 +1,8 @@
 ---
 title: Error
+meta: false
+actions: false
+comments: false
 ---
 
 # 施工中

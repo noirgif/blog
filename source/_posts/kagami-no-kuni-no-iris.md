@@ -1,11 +1,12 @@
 ---
 title: Kagami no Kuni no Iris -- An Unsurprising Non-surprise
+date: 2018-09-10 00:00:00
 tags:
 - reading
 - lightnovel
 - SCP
 category:
-- writing
+- commentary
 lang: en
 label: iris the scp lightnovel
 ---
@@ -23,7 +24,7 @@ The price makes me hesitate for a while, but I bought it anyway.
 
 I think it is inevitable to showcase SCPs' effects when introducing them. We are reading a story, not just a piece of description. We expect to see SCPs in action, not in tales or behind hardened glass. So the choices are limited: we need them to breach, to break free, in order to unleash their full power. Keeping them in containment wouldn't provide us much opportunity to diverge from the original description text and go further in terms of creation and originality. And that's what their poster suggests, **A large scale containment breach**.
 
-{% image  fancybox group:Iris http://www.hifumi.co.jp/books/info/images/iris/iris_poster.jpg "The poster from Bookstore Hifumi, before its release being delayed to Sept. 4th" %}
+{% image  fancybox group:Iris https://res.cloudinary.com/noirgif/image/upload/v1540390376/nir.moe/kagami-no-kuni-no-iris/iris_poster.jpg "The poster from Bookstore Hifumi, before its release being delayed to Sept. 4th" %}
 
 Moreover, something deep in me is curious and excited to see a brand new breath blown into the somewhat gloomy and serious SCP objects. Akira is well known for writing abnormal things: he wrote for Yumenikki, and also that ECHO<sup>1</sup> song by GUMI/Megpoid. Therefore, it is completely sensical for him to put his hands on the SCPs, which is also a symbol of abnormality. 
 
