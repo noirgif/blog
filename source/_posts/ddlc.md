@@ -1,6 +1,7 @@
 ---
 title: Let's start from DDLC
 tags:
+  - literature
   - game
   - meta
   - timeleap
