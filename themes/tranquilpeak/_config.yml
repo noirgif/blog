@@ -58,7 +58,7 @@ sidebar:
             class: open-algolia-search
         about:
             title: global.about
-            url: /#about
+            url: /about
             icon: question
     author_links:
         # github:

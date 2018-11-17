@@ -2,6 +2,9 @@
 title: 'Memories, Off'
 tags:
   - recommendation
+  - literature
+  - lightnovel
+  - game
 category:
   - writing
 date: 2018-03-18 15:41:55
