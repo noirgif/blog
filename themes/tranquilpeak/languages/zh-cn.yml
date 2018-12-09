@@ -72,3 +72,7 @@ author:
     bio: 宅
     # 你的工作简介
     job: "学生算是无业"
+
+# 语言特定设置
+lang_spec:
+    rss_link: /zh-cn/rss.xml

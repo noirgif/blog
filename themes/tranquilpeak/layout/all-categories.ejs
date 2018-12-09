@@ -34,7 +34,7 @@ function displayCategoriesAndPosts(category) {
         html += post.title || '(' + __('post.no_title') + ')';
         html += '</a>';
         html += '<span class="archive-post-date">';
-        html += ' - ' + post.date.locale(page.lang).format(__('date_format'));
+        html += ' - ' + post.date.locale(page.lang).format("LL");
         html += '</span>';
         html += '</li>';
     });

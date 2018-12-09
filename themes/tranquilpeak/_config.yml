@@ -92,7 +92,7 @@ sidebar:
     rss:
         rss:
             title: global.rss
-            url: /rss2.xml
+            url: lang_spec.rss_link
             icon: fa fa-rss
 
 

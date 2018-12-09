@@ -1,9 +1,9 @@
 <div class="<%= (classes ? classes.join(' ') : '') %>">
     <time datetime="<%= post.date.format() %>">
 	<% if (post.lang) { %>
-		    <%= post.date.locale(post.lang).format(__('date_format')) %>
+		    <%= moment(post.date, 'YYYY-MM-DD hh:mm:ss').locale(post.lang).format("LL") %>
     	<% } else { %>
-		    <%= post.date.locale(page.lang).format(__('date_format')) %>
+		    <%= moment(post.date, 'YYYY-MM-DD hh:mm:ss').locale(page.lang).format("LL") %>
     	<% } %>
     </time>
     <% if ((post.categories) && (post.categories.length > 0)) { %>

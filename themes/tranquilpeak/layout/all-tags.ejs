@@ -29,7 +29,7 @@
                                 <%= post.title || '(' + __('post.no_title') + ')' %>
                             </a>
                             <span class="archive-post-date">
-                                <%= ' - ' + post.date.locale(page.lang).format(__('date_format')).toLowerCase() %>
+                                <%= ' - ' + moment(post.date).locale(page.lang).format("LL") %>
                             </span>
                         </li>
                     <% }) %>
