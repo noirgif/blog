@@ -99,7 +99,6 @@ deploy:
     branch: gh-pages #published
     message:
 
-
 # algolia search
 algolia:
   appId: "Z7A3XW4R2I"
