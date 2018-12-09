@@ -17,6 +17,7 @@ global:
     facebook: "Facebook"
     google_plus: "Google Plus"
     linkedin: "LinkedIn"
+    friend_link: "友情链接"
     mail: "邮箱"
     rss: "RSS"
     share_on_facebook: "分享到 Facebook"

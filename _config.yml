@@ -90,15 +90,14 @@ sitemap:
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: rsync
-  host: mjol.nir.moe
-  user: noma
-  root: /home/noma/www/blog/
-#deploy:
-#  type: git   
-#  repo: git@github.com:noirgif/blog
-#  branch: gh-pages #published
-#  message:
+  - type: rsync
+    host: mjol.nir.moe
+    user: noma
+    root: /home/noma/www/blog/
+  - type: git   
+    repo: git@github.com:noirgif/blog
+    branch: gh-pages #published
+    message:
 
 
 # algolia search
