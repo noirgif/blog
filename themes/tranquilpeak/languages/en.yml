@@ -50,6 +50,7 @@ global:
         zero: "no tag found"
         one: "1 tag found"
         other: "{n} tags found"
+    rss_link: /en/rss.xml
 
 pagination:
     page: "page %d"
@@ -80,3 +81,4 @@ author:
     bio: "A progamer."
     # Your job
     job: "Student(probably)"
+
