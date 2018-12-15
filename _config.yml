@@ -95,8 +95,8 @@ deploy:
     user: noma
     root: /home/noma/www/blog/
   - type: git   
-    repo: git@github.com:noirgif/blog
-    branch: gh-pages #published
+    repo: git@github.com:noirgif/noirgif.github.io
+    branch: master #published
     message:
 
 # algolia search
