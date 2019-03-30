@@ -20,6 +20,8 @@ I had a dream.
 
 It's the two of us. Beside the river. Orange light flickered in the water. Grass whirled up in the summer breeze.
 
+<!-- more -->
+
 There are no words between us. There is nothing in between us. Shoulders to shoulders, we watched the sun going down.
 
 I wished, again and again, that the happiness would persist. But it wouldn't.

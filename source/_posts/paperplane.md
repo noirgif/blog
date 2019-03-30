@@ -15,6 +15,8 @@ date: 2019-03-30 18:35:42
 
 Stephen Hawking said, although we could travel to the future, but going in the other direction was ruled out by Albert Einstein's theories. But everybody knows that we cannot just stop thinking about it -- the time paradox, the other self of that time, the butterfly effect. All we do is a little retreat from reality to virtuality, and in the fictional world, where the law of excluded middle doesn't work, the impossible can become possible.
 
+<!-- more -->
+
 The past is also like a mirror. It reflects the current, and reveals the future. Though I'd like to babble more about reflection upon self, this is really not the place for such cliched preachment.
 
 At least, the never ending fantasies about going to the past has spawned a ever increasing bunch of works about this topic. And this game is just one of them.
@@ -59,9 +61,9 @@ Unlike in *Bokuasu*, the time does not flow backwards for Mo Li(jasmine in Chine
 
 MC ends up telling fairy tales to the then 6-year-old Mo Li, play with her, and teach her how to fly a paper plane. And in the last, he has to say goodbye to her, knowing he will never see her again.
 
-> We will come across again, and a lot, in the future.
-> So do remember, the signal is the paper plane.
-> Because if you write a letter on it, it will reach the person on your mind.
+> We will come across again, and a lot, in the future.  
+> So do remember, the signal is the paper plane.  
+> Because if you write a letter on it, it will reach the person on your mind.  
 
 ## Prolog
 
