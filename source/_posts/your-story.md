@@ -1,14 +1,16 @@
 ---
-title: Let's Talk about Your Story -- Kimi no Hanashi, part 1
+title: 'Let''s Talk about Your Story -- Kimi no Hanashi, part 1'
 tags:
-    - lightnovel
-    - literature
-    - kimi no hanashi
-    - sugaru miaki
+  - lightnovel
+  - literature
+  - kimi no hanashi
+  - sugaru miaki
 category:
-    - writing
+  - writing
 lang: en
+date: 2019-04-18 12:42:19
 ---
+
 
 ## Forewords
 
