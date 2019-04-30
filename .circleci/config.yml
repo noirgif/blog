@@ -17,7 +17,8 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
 
-      - run: sudo npm install -g
+      - run: sudo npm install hexo@3.8.0
+      - run: npm install --save
 
       - save_cache:
           paths:
