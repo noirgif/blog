@@ -5,7 +5,7 @@ jobs:
       only:
         - gh-page
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:11.14.0-stretch
     
     working_directory: ~/blog
 
@@ -23,6 +23,8 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: sudo apt install -y rsync
 
       - run: node_modules/.bin/hexo deploy --generate
 
