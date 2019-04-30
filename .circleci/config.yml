@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:7.10
+
+    branches:
+      only: gh-page
+    
+    working_directory: ~/blog
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+
+      - run: sudo npm install -g
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: hexo deploy --generate
+
+      - add_ssh_keys:
+          fingerprints:
+            - "8e:da:94:47:0f:02:6d:8a:13:1d:e6:c6:71:26:6a:cd"
+
+    
+
+    
