@@ -12,7 +12,7 @@ jobs:
     steps:
       - checkout
       - run: mkdir -p themes
-      - run: git clone git@git.io:noirgif/tranquilpeak themes/tranquilpeak 
+      - run: git clone https://github.com/noirgif/tranquilpeak themes/tranquilpeak 
 
       - restore_cache:
           keys:
