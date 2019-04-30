@@ -1,11 +1,11 @@
 version: 2
 jobs:
   build:
+    branches:
+      only:
+        - gh-page
     docker:
       - image: circleci/node:7.10
-
-    branches:
-      only: gh-page
     
     working_directory: ~/blog
 
