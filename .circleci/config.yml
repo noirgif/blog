@@ -24,7 +24,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: node_modules/.bin/hexo-cli deploy --generate
+      - run: node_modules/.bin/hexo deploy --generate
 
       - add_ssh_keys:
           fingerprints:
