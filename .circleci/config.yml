@@ -18,6 +18,9 @@ jobs:
             - v1-dependencies-
 
       - run: npm install --save
+      - run: 
+          name: Keyscan hack
+          command:  ssh-keyscan -H mjol.nir.moe >> ~/.ssh/known_hosts
 
       - save_cache:
           paths:
@@ -26,6 +29,7 @@ jobs:
 
       - run: sudo apt install -y rsync
 
+      - run: ssh -o StrictHostKeyChecking=accept-new noma@mjol.nir.moe -n
       - run: node_modules/.bin/hexo deploy --generate
 
       - add_ssh_keys:
