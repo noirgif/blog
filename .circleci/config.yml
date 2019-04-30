@@ -17,7 +17,6 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
 
-      - run: sudo npm install hexo-cli@3.8.0 -g
       - run: npm install --save
 
       - save_cache:
@@ -25,7 +24,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: node_modules/hexo-cli deploy --generate
+      - run: node_modules/.bin/hexo-cli deploy --generate
 
       - add_ssh_keys:
           fingerprints:
