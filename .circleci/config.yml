@@ -28,8 +28,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run: sudo apt install -y rsync
-
-      - run: ssh -o StrictHostKeyChecking=accept-new noma@mjol.nir.moe -n
       - run: node_modules/.bin/hexo deploy --generate
 
       - add_ssh_keys:
