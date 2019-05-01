@@ -18,8 +18,8 @@ jobs:
 
       - run: npm install --save
       - run: 
-          name: Keyscan hack
-          command:  ssh-keyscan -H mjol.nir.moe >> ~/.ssh/known_hosts
+          name: Add known hosts
+          command:  cat .circleci/known_hosts >> ~/.ssh/known_hosts
 
       - save_cache:
           paths:
