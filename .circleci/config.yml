@@ -1,9 +1,6 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - gh-page
     docker:
       - image: circleci/node:11.14.0-stretch
     
