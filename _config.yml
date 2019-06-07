@@ -90,10 +90,6 @@ sitemap:
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  - type: rsync
-    host: mjol.nir.moe
-    user: noma
-    root: /home/noma/www/blog/
   - type: git   
     repo: git@github.com:noirgif/noirgif.github.io
     branch: master #published

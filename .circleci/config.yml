@@ -17,9 +17,6 @@ jobs:
             - v1-dependencies-
 
       - run: npm install --save
-      - run: 
-          name: Add known hosts
-          command:  cat .circleci/known_hosts >> ~/.ssh/known_hosts
 
       - save_cache:
           paths:
