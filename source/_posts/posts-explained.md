@@ -13,6 +13,8 @@ label: posts-explained
 
 梦日记并没有解说，这点就像《梦日记》一样。
 
+<!-- more -->
+
 ## 4 月 1 日吉日
 
 [本文链接](posts/april-1st-is-a-good-day/)
