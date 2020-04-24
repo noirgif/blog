@@ -17,7 +17,7 @@ label: posts-explained
 
 ## 4 月 1 日吉日
 
-[本文链接](posts/april-1st-is-a-good-day/)
+[本文链接](/posts/april-1st-is-a-good-day/)
 
 三人成虎的典故大家都听说过，那么反过来是什么样子呢？当大家都不相信的时候，会不会使得本人也渐渐怀疑自己？这篇博客就是在讲述这样一个故事。
 
@@ -29,13 +29,13 @@ label: posts-explained
 
 ## 某一个冬日的下午
 
-[本文链接](posts/winter-afternoon/)
+[本文链接](/posts/winter-afternoon/)
 
 讲述了我为什么想喝热可可，又不想喝的故事。
 
 ## 恋爱喜剧害死人
 
-[本文链接](posts/lovecome-kills/)
+[本文链接](/posts/lovecome-kills/)
 
 看恋爱喜剧轻小说的时候，会不会经常想：
 
@@ -47,7 +47,7 @@ label: posts-explained
 
 ## A Paper Plane to the Past
 
-[本文链接（英文）](posts/paperplane)
+[本文链接（英文）](/posts/paperplane)
 
 其实是橘子班的《12色的季节》的随想。在游戏里，纸飞机成为了穿越时空的媒介，也让错过的男主和女主重新相会。
 
@@ -55,7 +55,7 @@ label: posts-explained
 
 ## My Story
 
-[本文链接（英文）](posts/my-story)
+[本文链接（英文）](/posts/my-story)
 
 这一篇其实是《你的故事》评论的预告一样的文章，虽然《你的故事》的评论 4 个月之后才出。感觉 n-buna 的歌《白雪》给了这篇文章很大影响，不如说这篇文章像是在进行《白雪》里的心理描写。
 
@@ -67,7 +67,7 @@ label: posts-explained
 
 ## Last Day
 
-[本文链接（英文）](posts/last-day)
+[本文链接（英文）](/posts/last-day)
 
 这一篇其实是《景之海的 Apeiria》的预告。我努力描绘主角零一最后前往边界之塔，去结束一切的场景。最后一日的标题由此而来。
 
@@ -83,7 +83,7 @@ label: posts-explained
 
 ## Compile Heart, Busted
 
-[本文链接（英文）](posts/compileheart)
+[本文链接（英文）](/posts/compileheart)
 
 这是前年愚人节写的东西。那时候 Compile Heart 刚公布《勇者 Neptune（假定标题）》，将是一个由加拿大的工作室做的一个 2D RPG。
 
@@ -91,7 +91,7 @@ label: posts-explained
 
 ## Memories, Off
 
-[本文链接（英文）](posts/memory)
+[本文链接（英文）](/posts/memory)
 
 标题取自秋之回忆（告别回忆）系列。当时 MO8 中文版的众筹刚刚结束，而 PC 版直到今年 4 月才上 Steam，可以说是物是人非了。
 
@@ -107,11 +107,15 @@ label: posts-explained
 
 ## 虫子
 
+[本文链接](/posts/worms)
+
 不用想也知道，这是 DDLC/心跳文学部的预告。但内容，正如后面写的一样，是在描绘出汗后浑身瘙痒的感觉。
 
 如果看过纱世里在文化节上发表的那首诗，就会明白为什么会变成这样了。
 
 ## 一刀9999级的世界
+
+[本文链接](/posts/9999-chicks-for-a-dollar)
 
 这可能是这个博客里所有搞笑玩意的起点了。
 
