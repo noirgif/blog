@@ -15,6 +15,8 @@ Tetra World Adventure is a puzzle game by [Bloom Mushroom](https://twitter.com/b
 
 It's a short puzzle game with moderate difficulty. I'm no expert in puzzle games, and without hints this game took me 2 hours to beat. If you are looking for a nice and relaxing otherworldly adventure, feel free to pick up this game. For free.
 
+<!-- more -->
+
 ## A Little Discursion
 
 By the way, it took me some effort to find out the maker of the game. Appstore says the developer is norihiro hanazono, but a search of it leads me to some game news site instead of the author themself. Then I opened the in-game credits, only to be surprised that the author is not there. When I was about to give up, I noticed the signpost in main menu, which was like
@@ -36,9 +38,7 @@ Anyway, this led me to the author's twitter, and I linked it above.
 
 The game is a point-and-click adventure. Each door in the main menu represents a stage, and in each stage, you travel between rooms, grab tools and items to solve the puzzle.
 
-![Reality%20can%20never%20imprison%20Dreams%20%E2%80%94%20Tetra%20World%20Ad%20cfc02ffbe16d4984adaf2e6225ad0921/Untitled.png](Reality%20can%20never%20imprison%20Dreams%20%E2%80%94%20Tetra%20World%20Ad%20cfc02ffbe16d4984adaf2e6225ad0921/Untitled.png)
-
-Image from Google Play
+{% image fig-33 fancybox https://res.cloudinary.com/noirgif/image/upload/v1597352345/tetra_aytkmv.png "Image from Google Play" %} 
 
 This game doesn't have a lot of items, and they don't interact with each other. And the main difficulty comes from inputting the code. The player should look around carefully for clues that corresponds. 
 
