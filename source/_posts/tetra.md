@@ -19,12 +19,12 @@ It's a short puzzle game with moderate difficulty. I'm no expert in puzzle games
 
 By the way, it took me some effort to find out the maker of the game. Appstore says the developer is norihiro hanazono, but a search of it leads me to some game news site instead of the author themself. Then I opened the in-game credits, only to be surprised that the author is not there. When I was about to give up, I noticed the signpost in main menu, which was like
 
-{% quote %}
+```
 -----------
 |Bloom App|
 |mash room|
 -----------
-{% endquote %}
+```
 
 The mysterious text struck me with awe. Google says Bloom is the name of an app that helps you sleep and meditate, and another app that helps you create melodies by tapping circles. But the link between mindfulness, circles and this little puzzle game is yet unknown.
 
