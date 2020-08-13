@@ -6,10 +6,10 @@
     "version": "4.2.0"
   },
   "dependencies": {
-    "algoliasearch": "^4.1.0",
-    "cloudinary": "^1.21.0",
+    "algoliasearch": "^4.4.0",
+    "cloudinary": "^1.22.0",
     "deepmerge": "^4.2.2",
-    "hexo": "^4.2.0",
+    "hexo": "^4.2.1",
     "hexo-algoliasearch": "^0.4.2",
     "hexo-cli": "^3.1.0",
     "hexo-deployer-git": "^2.1.0",
@@ -23,7 +23,7 @@
     "hexo-generator-index": "^1.0.0",
     "hexo-generator-multilingual-feed": "^1.2.2",
     "hexo-generator-search": "^2.4.0",
-    "hexo-generator-sitemap": "^2.0.0",
+    "hexo-generator-sitemap": "^2.1.0",
     "hexo-generator-tag": "^1.0.0",
     "hexo-inject": "^1.0.0",
     "hexo-math": "^3.0.4",
@@ -32,9 +32,9 @@
     "hexo-renderer-markdown-it": "^4.1.0",
     "hexo-renderer-stylus": "^1.1.0",
     "hexo-server": "^1.0.0",
-    "highlight.js": "^9.18.1",
-    "jquery": "^3.5.0",
-    "jsdom": "^16.2.2",
+    "highlight.js": "^9.18.3",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.4.0",
     "katex": "^0.11.1"
   }
 }
