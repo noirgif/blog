@@ -8,3 +8,5 @@ lang: en
 It's Christmas again. The renewed blog has seen the comeback of the whitey snow.
 
 Find it in the side bar and try it out!
+
+<span class=hymmnos>Wee waa ra vit rre hymmnos coall here</span>
