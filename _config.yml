@@ -6,7 +6,7 @@
 title: Goddess Unknown
 subtitle:
 description:
-author: NoirGif (click me to see some <i class="far fa-snowflake"></i>)
+author: NoirGif
 language:
     - en
     - zh-cn
@@ -133,8 +133,8 @@ tag_generator:
   
 feed:
   type: rss2
-  path: rss2.xml
-  limit: 3
+  path: rss-all.xml
+  limit: 20
   hub:
   content: true
   order_by: -date
