@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "4.2.1"
+    "version": "5.2.0"
   },
   "dependencies": {
-    "algoliasearch": "^4.4.0",
-    "cloudinary": "^1.22.0",
+    "algoliasearch": "^4.8.3",
+    "cloudinary": "^1.23.0",
     "deepmerge": "^4.2.2",
-    "hexo": "^4.2.1",
+    "hexo": "^5.2.0",
     "hexo-algoliasearch": "^0.4.2",
     "hexo-cli": "^3.1.0",
     "hexo-deployer-git": "^2.1.0",
@@ -32,7 +32,7 @@
     "hexo-renderer-markdown-it": "^4.1.0",
     "hexo-renderer-stylus": "^1.1.0",
     "hexo-server": "^1.0.0",
-    "highlight.js": "^9.18.3",
+    "highlight.js": "^9.18.5",
     "jquery": "^3.5.1",
     "jsdom": "^16.4.0",
     "katex": "^0.11.1"
