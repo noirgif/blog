@@ -101,7 +101,7 @@ algolia:
   apiKey: "1040be093d539de0ea08b83ce51244f9"
   adminApiKey: "5c2541cd8affeca1f5ea545c0d9690f8"
   chunkSize: 5000
-  indexName: "tranquilpeak"
+  indexName: "nir.moe"
   fields:
     - title
     - date
