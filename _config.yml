@@ -6,7 +6,7 @@
 title: Goddess Unknown
 subtitle:
 description:
-author: NoirGif
+author: NoirGif (click me to see some <i class="far fa-snowflake"></i>)
 language:
     - en
     - zh-cn
@@ -100,7 +100,7 @@ deploy:
 algolia:
   appId: "4VZ5FRVLMP"
   apiKey: "1040be093d539de0ea08b83ce51244f9"
-  adminApiKey: "5c2541cd8affeca1f5ea545c0d9690f8"
+  adminApiKey: "<ALGOLIA_ADMIN_API_KEY>" # the admin api key is specified in circleCI
   chunkSize: 5000
   indexName: "nir.moe"
   fields:
