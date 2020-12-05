@@ -2,7 +2,7 @@
 title: 缪可消失之日
 tags:
   - cancel culture
-lang: zh-CN
+lang: zh-cn
 category:
   - writing
 label: disappearance of muke
