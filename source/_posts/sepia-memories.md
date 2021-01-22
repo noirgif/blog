@@ -5,7 +5,7 @@ tags:
 lang: en
 category:
   - commentary
-label: sepia mem
+label: sepia memories
 date: 2021-01-22 01:48:26
 ---
 
@@ -90,5 +90,6 @@ And that marks the conclusion of this little memoria. So allow me to end with so
 
 {% quote %}
 "Oh, oh! You know, the day before yesterday I saw a rabbit, and yesterday a deer, and today, you."
+
 "And here I was taking it all for granted, I'll have to stop by more often."
 {% endquote %}
