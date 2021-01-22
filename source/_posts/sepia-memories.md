@@ -52,6 +52,8 @@ Mark: If that's how you put it, then I'm justa a weak-willed slacker who would s
 
 Despite all of that, I'd say it is a nice game for its free price tag, compared to another free VN with a pink hair girl, which is too short to have any kind of plot development. I think that game somehow shows how hard it is to make a good VN.
 
+If you play the game, remember: do not genuflect.
+
 ## Some Discursion
 
 After that I played some Unity-chan shooting. It's some pixel danmaku shooting game made with Unity. The group later made another game named *[SOUND SHOOTING!!!](https://play.google.com/store/apps/details?id=jp.tank.ezdaemon.ots)* which combines the shooting part with a little rhythm game elements. You can see the similarity in their UI or fights at a glance.
@@ -86,7 +88,7 @@ There are other free games I already made a post for, like DDLC and Tetra, they 
 
 Sometimes I stop and look back into my past. What I did, the friends I had, all sorts of thing. And when I do this, I feel being myself. 'Sides, it makes me really happy to see I still like the things I liked. 
 
-And that marks the conclusion of this little memoria. So allow me to end with some words in *The Dandelion Girl: Don't You Remember Me?*, that has a little change to the repped line in the novel.
+And please allow me to end this little memoria with some words in *The Dandelion Girl: Don't You Remember Me?*, that has a little change to the repped line in the novel.
 
 {% quote %}
 "Oh, oh! You know, the day before yesterday I saw a rabbit, and yesterday a deer, and today, you."

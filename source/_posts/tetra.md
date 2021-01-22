@@ -55,3 +55,5 @@ When the player finishes World 4, expecting to find the girl, what greets them i
 I've always wanted to be lost in imagination. The azure sky. The tall grass. The ray of sunshine. A shelter from reality. However, as time goes, I find my self getting lost in everyday sundries, in sensual excitements — I am losing my self in reality. Just like a breeze flowing through the wind bell. Tetra reminds me of that. I felt myself liberated, like the bird, flapping its wings, to the end of the sky.
 
 Thanks Bloom Mushroom for the fantastic journey. And if you read this article and enjoyed the game, it is my highest pleasure.
+
+Edit: I played the slide princess by the same author, and that is also a nice puzzle game with some secrets and suprises.
