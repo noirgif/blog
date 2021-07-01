@@ -1,0 +1,6 @@
+[submodule "themes/theme/tranquilpeak"]
+	path = themes/theme/tranquilpeak
+	url = git@github.com:noirgif/tranquilpeak
+[submodule "themes/tranquilpeak"]
+	path = themes/tranquilpeak
+	url = git@github.com:noirgif/tranquilpeak
