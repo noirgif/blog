@@ -8,8 +8,9 @@ jobs:
 
     steps:
       - checkout
-      - run: mkdir -p themes
-      - run: git clone https://github.com/noirgif/tranquilpeak themes/tranquilpeak 
+      - run: git submodule sync
+      - run: git submodule update --init
+      - run: cd themes/tranquilpeak && git checkout build
 
       - restore_cache:
           keys:
@@ -37,8 +38,3 @@ jobs:
           fingerprints:
             - "08:1b:c0:8c:b3:c1:6b:24:17:8d:7c:3f:a1:a4:66:a9"
       - run: node_modules/.bin/hexo deploy
-
-
-    
-
-    
