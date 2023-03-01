@@ -12,7 +12,7 @@
     "hexo": "^5.2.0",
     "hexo-algoliasearch": "^0.4.2",
     "hexo-cli": "^3.1.0",
-    "hexo-deployer-git": "^2.1.0",
+    "hexo-deployer-git": "^4.0.0",
     "hexo-deployer-rsync": "^1.0.0",
     "hexo-deployer-sftp": "^0.4.1",
     "hexo-generator-alias": "^0.1.3",
