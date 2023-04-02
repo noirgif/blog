@@ -10,7 +10,7 @@
     "cloudinary": "^1.23.0",
     "deepmerge": "^4.2.2",
     "hexo": "^5.2.0",
-    "hexo-algoliasearch": "^0.3.2",
+    "hexo-algoliasearch": "^1.0.0",
     "hexo-cli": "^4.3.0",
     "hexo-deployer-git": "^4.0.0",
     "hexo-deployer-rsync": "^2.0.0",
