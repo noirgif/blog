@@ -92,9 +92,11 @@ YOU DIED.
 说完她捡起旁边的树枝，在地上画出了一个符号：
 
 
-$$
+{% katex %}
+
 \aleph_0
-$$
+
+{% endkatex %}
 
 
 “它表示的是，无论你多么努力，杀最开始的那头猪多少次，都无法与其相提并论。
@@ -108,9 +110,11 @@ $$
 她在风化的土地上写下一串符号：
 
 
-$$
-\aleph\_1,\aleph\_2,\ldots,\aleph\_{\aleph\_0},\aleph\_{\aleph\_1},\ldots
-$$
+{% katex %}
+
+\aleph_1,\aleph_2,\ldots,\aleph_{\aleph_0},\aleph_{\aleph_1},\ldots
+
+{% endkatex %}
 
 
 “你不是披荆斩棘的冒险者，而是如履薄冰的猎物。

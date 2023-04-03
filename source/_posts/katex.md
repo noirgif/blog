@@ -13,8 +13,10 @@ Ad infinitum!
 Ad infinitum!
 
 
-$$\lim_{x \to \infty}
-$$
+{% katex %}
+\lim_{x \to \infty}
+
+{% endkatex %}
 
 
 不知道是不是错觉，这玩意前后要空两行。

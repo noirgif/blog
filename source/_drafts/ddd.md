@@ -32,7 +32,9 @@ I turned to her, who's walking on my left, "Lola, you think we'll end up in an i
 
 "'The hell is that?" Looks like she will do it forever, so I decided to have a manual override.
 
-"You don't even know that? Just like NEN is 22.5 degrees from north to east, all directions can be expressed in a way that is the directional angle divided by 360 degrees, in binary. It is widely preferred over the old metrics. It's more flexible, because {% katex %}  \log 2 = 0.30  {% endkatex %} You can choose between 0 and 3 digits with binary, but with decimals, only 0 or 1. Also it's much easier for one to divide an angle into two equal ones than ten of them, right? Let alone the awful radians. You can't construct an one-radian angle even with the help of a ruler and a compass. A 2.718 radians one will surely blows up your mind."
+"You don't even know that? Just like NEN is 22.5 degrees from north to east, all directions can be expressed in a way that is the directional angle divided by 360 degrees, in binary. It is widely preferred over the old metrics. It's more flexible, because {% katex %}
+  \log 2 = 0.30  
+{% endkatex %} You can choose between 0 and 3 digits with binary, but with decimals, only 0 or 1. Also it's much easier for one to divide an angle into two equal ones than ten of them, right? Let alone the awful radians. You can't construct an one-radian angle even with the help of a ruler and a compass. A 2.718 radians one will surely blows up your mind."
 
 "By the way, this compass is pretty good. It reads 50 binary digits off the decimal point. However, a random direction would almost certainly be irrational, so there are actually innumerable digits."
 
