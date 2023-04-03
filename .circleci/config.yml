@@ -1,11 +1,12 @@
-version: 2
+version: 2.1
+
 jobs:
   build:
     branches:
       only:
         - master
     docker:
-      - image: circleci/node:11.14.0-stretch
+      - image: cimg/node:current
     
     working_directory: ~/blog
 

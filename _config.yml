@@ -71,14 +71,13 @@ theme: tranquilpeak
 # math
 ## math support
 math:
-    engine: 'mathjax'
     mathjax:
         src: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML" # no source
         config:
             # default config
     katex:
-        css: # "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/katex.min.css"
-        js: # "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha2/katex.min.js"
+        css: # "https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0"
+        js: # "https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
         config:
             # default config
 
