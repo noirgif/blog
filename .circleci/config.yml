@@ -29,7 +29,6 @@ jobs:
             - themes/tranquilpeak/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: sudo apt install -y rsync
       - run: git config --global user.email "nomaru@outlook.com"
       - run: git config --global user.name "noirgif(circleci)"
 
