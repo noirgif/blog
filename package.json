@@ -29,7 +29,7 @@
     "hexo-renderer-markdown-it": "7.0.0",
     "hexo-renderer-stylus": "2.1.0",
     "hexo-server": "1.0.0",
-    "highlight.js": "10.7.3",
+    "highlight.js": "11.7.0",
     "jquery": "3.6.4",
     "jsdom": "16.7.0"
   }
