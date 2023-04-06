@@ -177,3 +177,29 @@ P.S. 老艾的博文页面，左上角有一个小书签的图标，点它虽然
 不过老彼得的折腾并没有在此止步。可能是不满足于其功能，他重新写了一个博客，名叫 Paprika ，来支持 standard notes 的写作。现在老彼得的博客就用的是 Paprika 。新的博客是全英文的，罗列着一些技术贴，而老彼得 typeblog 时代的博文，现在不知沉睡在哪个角落。
 
 就是这样的一个故事。
+
+## 老卡夫的博客
+
+[老卡夫的博客](https://pyonpyon.today/)
+
+卡夫是老奎起的绰号。虽然在自我介绍里说有点宅，但我觉得这是谦虚。进入博客就能看见满面的手办摄影（和技术贴）。
+
+我很久以前也打过买手办的主意——不是像上万日元的那种，做工精细的手办——那是Banpresto的芹泽朝日的坐窗边的手办，只要30美元。
+
+<br/>
+
+{% image fancybox "/assets/image/Banpresto-The-Idolmaster-Shiny-Colors-Asahi-Serizawa-Winy-and-Motions-Espresto-5.jpg" Photo from Gamestop (store page defunct) ©BANDAI SPIRITS 2013 ©BANDAI NAMCO Entertainment Inc. ©NBGI/PROJECT iM@S %}
+
+非常忠实地还原了[卡的封面](https://twitter.com/_shinycolors_/status/1245009282845642752?s=20)。当时我预定了……
+
+但是后来想了想没有位置放就取消了——我桌子中间的位置留给了涅普涅普和诺瓦诺瓦了。
+
+{% image fancybox "/assets/image/my-desktop.jpeg" "右边桌面用的是带BGM的Shiroko封面。话说回来，玩蔚蓝档案的一个契机就是特别对味的BGM" %}
+
+嗯？右边有头挪开了正好的白色大象？
+
+有财力供养这么多手办，我还是非常羡慕老卡夫的。而且说不定一眨眼，老卡夫也能拍出来这样的艺术品，然后我克制不住自己也大买特买了……我在心中隐隐抱有这样的期待。
+
+除了摄影，老卡夫还像老狐一样搞电工活，组装了自己的键盘，可以说是心灵手巧了。我想起我上次尝试DIY修精英2手柄，最后以一个芝麻大的电阻不知道掉哪里去了而大告失败。我的手还被吸锡器划拉了一个大口子。想想就感到挫折。
+
+后记：写完这个后去亚马逊下单了，官方的渠道目前没货——如果取消或者发货了我都认了。
