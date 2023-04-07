@@ -190,7 +190,7 @@ P.S. 老艾的博文页面，左上角有一个小书签的图标，点它虽然
 
 {% image fancybox "/assets/image/Banpresto-The-Idolmaster-Shiny-Colors-Asahi-Serizawa-Winy-and-Motions-Espresto-5.jpg" Photo from Gamestop (store page defunct) ©BANDAI SPIRITS 2013 ©BANDAI NAMCO Entertainment Inc. ©NBGI/PROJECT iM@S %}
 
-非常忠实地还原了[卡的封面](https://twitter.com/_shinycolors_/status/1245009282845642752?s=20)。当时我预定了……
+看到这个图的时候就被打动了。搭配精致的背景物和恰到好处的背光，非常忠实地还原了[卡的封面](https://twitter.com/_shinycolors_/status/1245009282845642752?s=20)。虽然只持续了很短一段时间，但我当时也玩了闪耀色彩。我立刻就预定了……
 
 但是后来想了想没有位置放就取消了——我桌子中间的位置留给了涅普涅普和诺瓦诺瓦了。
 
