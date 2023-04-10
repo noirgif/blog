@@ -3,6 +3,6 @@ title: {{ date }} Diary
 date: {{ date }}
 tags:
 category:
-    - writing
+    - diary
 lang: en
 ---
