@@ -16,7 +16,7 @@ The packaging script grabbed from the repository of a fan-made mod [Monika After
 
 According to Team Salvato, DDLC's developer IP guideline, MAS can host the code because it is used for a mod of the game. Also, the packaging script is neither written by them nor for sale. Therefore, it seemed to be compliant so far.
 
-Anyways, allow me to randomly choose some of them and share my thoughts now, four years later. And there are a whole bunch of sayings out there. And Monika After Story has been expanding it -- how exciting it is! I imagine one day the fortune mod will include those new words of wisdom xas well.
+Anyways, allow me to randomly choose some of them and share my thoughts now, four years later. And there are a whole bunch of sayings out there. And Monika After Story has been expanding it -- how exciting it is! I imagine one day the fortune mod will include those new words of wisdom as well.
 
 <!-- more -->
 
