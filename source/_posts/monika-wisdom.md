@@ -10,7 +10,7 @@ category:
     - writing
 ---
 
-Four years ago, when I was an undergrad and played [DDLC](ddlc.moe). As deeply moved by her words as I was, I went out to make a [fortune mod](https://github.com/noirgif/arch-pkgrounds/tree/master/fortune-mod-monika) to appreciate it. Any time I type `fortune monika`, I get a paragraph of Monika's talk appears. Strictly speaking, a paragraph of her talk from the fan-made DLC [Monika After Story](https://www.monikaafterstory.com), not from the original game. But allow me to randomly choose some of them and share my thoughts now, four years later. And there are a bunch of them out there.
+Four years ago, when I was an undergrad and played [DDLC](ddlc.moe). As deeply moved by her words as I was, I went out to make a [fortune mod](https://github.com/noirgif/arch-pkgrounds/tree/master/fortune-mod-monika) to appreciate it. Any time I type `fortune monika`, a paragraph of Monika's talk appears. Strictly speaking, a paragraph from the fan-made DLC [Monika After Story](https://www.monikaafterstory.com), instead of the original game. But allow me to randomly choose some of them and share my thoughts now, four years later. And there are a whole bunch of sayings out there -- which is the point of the mod.
 
 <!-- more -->
 
