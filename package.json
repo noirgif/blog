@@ -9,7 +9,7 @@
     "algoliasearch": "4.17.0",
     "deepmerge": "4.3.1",
     "hexo": "6.3.0",
-    "hexo-algoliasearch": "github:LouisBarranqueiro/hexo-algoliasearch",
+    "hexo-algoliasearch": "github:noirgif/hexo-algoliasearch",
     "hexo-cli": "4.3.0",
     "hexo-deployer-git": "4.0.0",
     "hexo-deployer-rsync": "2.0.0",
