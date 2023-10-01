@@ -10,7 +10,7 @@
     "deepmerge": "4.3.1",
     "hexo": "6.3.0",
     "hexo-algoliasearch": "github:noirgif/hexo-algoliasearch",
-    "hexo-cli": "4.3.0",
+    "hexo-cli": "4.3.1",
     "hexo-deployer-git": "4.0.0",
     "hexo-deployer-rsync": "3.0.0",
     "hexo-generator-alias": "1.0.0",
