@@ -6,7 +6,7 @@
     "version": "6.3.0"
   },
   "dependencies": {
-    "algoliasearch": "4.20.0",
+    "algoliasearch": "4.23.3",
     "deepmerge": "4.3.1",
     "hexo": "6.3.0",
     "hexo-algoliasearch": "github:noirgif/hexo-algoliasearch",
