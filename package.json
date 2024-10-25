@@ -31,7 +31,7 @@
     "hexo-util": "^3.3.0",
     "highlight.js": "11.10.0",
     "jquery": "3.7.1",
-    "jsdom": "24.1.0",
+    "jsdom": "25.0.1",
     "strip-indent": "^4.0.0"
   }
 }
