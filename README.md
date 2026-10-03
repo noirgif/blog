@@ -9,8 +9,8 @@ Every route has a complete `index.html` generated at build time. Reading posts a
 Requires Node.js 22 or newer.
 
 ```sh
-pnpm install --frozen-lockfile
-pnpm new "A new thought"
+bun install --frozen-lockfile
+bun run new "A new thought"
 ```
 
 This creates `source/_posts/a-new-thought.md`. Edit it:
@@ -39,9 +39,9 @@ Dates without a timezone are interpreted as UTC, matching the migrated timestamp
 Use a stable filename for the URL: `example.md` becomes `/posts/example/`. Set `slug: another-name` or `permalink: posts/another-name` to override it. Renaming a title leaves the URL unchanged.
 
 ```sh
-pnpm build
-pnpm check
-pnpm preview
+bun run build
+bun run check
+bun run preview
 ```
 
 The preview command serves the current build at `http://localhost:4173/`. After editing, rebuild and refresh. Deploy only `dist/`.
@@ -49,7 +49,7 @@ The preview command serves the current build at `http://localhost:4173/`. After 
 ### Drafts
 
 ```sh
-pnpm new "An unfinished thought" --draft
+bun run new "An unfinished thought" --draft
 ```
 
 Files in `source/_drafts/`, posts with `draft: true`, and posts with `published: false` are excluded. Move a draft into `source/_posts/` and remove `draft: true` to publish it. Unpublished Markdown is not copied into the deployed output.
@@ -69,32 +69,25 @@ Use Cloudflare Pages **build system v3** and set:
 | Setting | Value |
 | --- | --- |
 | Root directory | Repository root |
-| Build command | `pnpm install --frozen-lockfile && pnpm build:cloudflare` |
+| Build command | `bun install --frozen-lockfile && bun run build:cloudflare` |
 | Build output directory | `dist` |
 | `NODE_VERSION` | `22` |
-| `PNPM_VERSION` | `10.11.1` |
 | `BASE_PATH` | Empty |
 | `SITE_URL` | `https://nir.moe` for the production domain, or leave unset to use `CF_PAGES_URL` |
 
-The `packageManager` field pins pnpm, and `.node-version` records Node 22. The build copies `others/_redirects` into `dist/_redirects`, preserving the RSS redirects from your original repository.
+The `.node-version` file records Node 22. The build copies `others/_redirects` into `dist/_redirects`, preserving the RSS redirects from your original repository.
 
-Your existing command:
-
-```sh
-cd themes/tranquilpeak && pnpm install && pnpm run prod && cd ../.. && pnpm dlx hexo generate && cp others/_redirects public/_redirects
-```
-
-builds the original Hexo/Tranquilpeak site and publishes `public`. This reimagined project keeps the Markdown writing format but uses its own generator, so replace that command with the one above and publish `dist`. It is a separate project, not a drop-in Tranquilpeak theme.
+The original Hexo/Tranquilpeak workflow builds the legacy site and publishes `public`. This reimagined project keeps the Markdown writing format but uses its own generator, so use the build command above and publish `dist`. It is a separate project, not a drop-in Tranquilpeak theme.
 
 Connect this repository to your existing Pages project or upload a built `dist` folder. No Pages Functions are needed.
 
 ### Free plan only
 
-No paid Cloudflare features are required or configured. The output uses static Pages hosting only: no Functions, Workers, R2, D1, Cloudflare Images, or image transformations. `sharp` optimizes images during the build. `pnpm check` enforces a maximum of 20,000 deployed files and 25 MiB per asset, the Pages Free limits. The free account also has 500 builds per month, one concurrent build, and a 20-minute build timeout. See [Cloudflare Pages limits](https://developers.cloudflare.com/pages/platform/limits/) and [build system versions](https://developers.cloudflare.com/pages/configuration/build-image/).
+No paid Cloudflare features are required or configured. The output uses static Pages hosting only: no Functions, Workers, R2, D1, Cloudflare Images, or image transformations. `sharp` optimizes images during the build. `bun run check` enforces a maximum of 20,000 deployed files and 25 MiB per asset, the Pages Free limits. The free account also has 500 builds per month, one concurrent build, and a 20-minute build timeout. See [Cloudflare Pages limits](https://developers.cloudflare.com/pages/platform/limits/) and [build system versions](https://developers.cloudflare.com/pages/configuration/build-image/).
 
 ## Deploy to GitHub Pages (optional)
 
-1. Put this project's files in your GitHub repository, including `.github/workflows/pages.yml` and `pnpm-lock.yaml`.
+1. Put this project's files in your GitHub repository, including `.github/workflows/pages.yml` and its lockfile.
 2. In **Settings → Pages → Build and deployment**, choose **GitHub Actions**.
 3. Push to `main` or `master`, or run **Publish static blog to GitHub Pages** from the Actions tab.
 
@@ -103,18 +96,18 @@ The workflow installs dependencies, builds, checks all generated routes, and dep
 To check the project-path build locally:
 
 ```sh
-BASE_PATH=/blog SITE_URL=https://noirgif.github.io pnpm build
-pnpm check
-pnpm preview
+BASE_PATH=/blog SITE_URL=https://noirgif.github.io bun run build
+bun run check
+bun run preview
 ```
 
-Open `http://localhost:4173/blog/`. Then run `pnpm build` again to restore a root-path build.
+Open `http://localhost:4173/blog/`. Then run `bun run build` again to restore a root-path build.
 
 ## Deploy to Netlify
 
 Connect the repository to Netlify. The included `netlify.toml` sets:
 
-- Build command: `pnpm build && pnpm check`
+- Build command: `bun run build && bun run check`
 - Publish directory: `dist`
 - Node.js: `22`
 - Base path: root
