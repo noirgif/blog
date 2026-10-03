@@ -125,7 +125,8 @@ No serverless functions or catch-all redirects are used. Each deep link has its 
 - `public/`: source image assets.
 - `theme/index.html`: shared page shell and navigation.
 - `theme/style.css`: styles.
-- `theme/app.js`: optional browser enhancements.
+- `theme/app.js`: optional browser enhancements and client-side navigation.
+- `theme/render.js`: shared content-markup helpers used by both the static build and browser navigation; the client bundle includes this module.
 - `scripts/build.mjs`: Markdown-to-HTML generation, archives, tags, categories, RSS, sitemap, minification, and content-hashed assets.
 - `scripts/images.mjs`: automatic responsive article images, cropped card thumbnails, sidebar variants, and tiny previews.
 - `scripts/fonts.mjs`: automatic published-text Noto subsets, source checksums, script coverage, and Han/kana width checks.
@@ -145,7 +146,7 @@ Comments start loading when the section comes within 1,500 px of the viewport, i
 
 ### Loading and caching
 
-The initial page is complete static HTML with minified styles inlined, so rendering does not wait for a stylesheet request or navigation data. After an internal link is followed, `theme/app.js` handles navigation and renders the destination client-side. This means a route such as `/` has two render paths: its generated HTML in `scripts/build.mjs` and its client-side markup in `theme/app.js`. Keep route-dependent body classes and visual behavior in sync across the generated page and `setReadingMode`; keep duplicated display formatting (especially dates) in the same timezone. When changing page structure or styling, check both a direct load and an internal-navigation visit. The build checks assert key homepage contracts, but they do not replace a browser check of both paths. DM Sans and Playfair Display remain self-hosted Latin-only variable fonts for navigation/branding, with `font-display: optional`.
+The initial page is complete static HTML with minified styles inlined, so rendering does not wait for a stylesheet request or navigation data. After an internal link is followed, `theme/app.js` handles navigation and renders the destination client-side. Shared content templates in `theme/render.js` are used by both `scripts/build.mjs` and the browser bundle for repeated structures such as post cards, rows, headings, and article headers; keep changes to those structures in the shared module rather than duplicating markup. This reduces drift without promising identical output for every browser state: client navigation still adds reveal wrappers and performs progressive loading. Route-dependent body classes and behavior remain managed separately by the build and `setReadingMode`, so check both direct loads and internal-navigation visits when changing those behaviors. The build checks verify that generated cards and rows use the shared renderers. DM Sans and Playfair Display remain self-hosted Latin-only variable fonts for navigation/branding, with `font-display: optional`.
 
 The reading area uses **Noto Serif → Noto Serif SC → Noto Serif KR**, following [Google's recommended family order](https://fonts.google.com/noto/use#use-noto-fonts-as-web-fonts). Latin, Greek, Cyrillic, numbers, and shared punctuation come from Noto Serif, with a matching italic face; Han/kanji and kana use one SC variant. The tiny KR subset supplies Hangul only, never a second regional Han variant. Builds automatically collect published text, titles, tags, excerpts, search snippets, and navigation and generate shared, content-hashed WOFF2 subsets. Adding text needs no manual font processing. Pinned sources come from Google's `fonts.gstatic.com`, not GitHub; neither builds nor visitors fetch remote font sources. See `fonts/noto/README.md` for provenance and licensing.
 

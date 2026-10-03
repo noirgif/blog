@@ -5,9 +5,10 @@ import matter from 'gray-matter';
 import { marked } from 'marked';
 import { load } from 'cheerio';
 import katex from 'katex';
-import { transform } from 'esbuild';
+import { build as bundle, transform } from 'esbuild';
 import { createImagePipeline, ARTICLE_SIZES, CARD_SIZES, PORTRAIT_MEDIA, COVER_SIZES } from './images.mjs';
 import { createReadingFonts } from './fonts.mjs';
+import { renderArticleBody, renderArticleHead, renderBrowseArchivesLink, renderPostCard, renderPostRow, renderPostTags, renderRelatedPost, renderSectionHeading, renderTaxonomyCloud, renderYearHeading } from '../theme/render.js';
 
 const root=process.cwd(), out=path.join(root,'dist');
 const config=JSON.parse(await fs.readFile('site.config.json','utf8'));
@@ -94,23 +95,18 @@ const template=await fs.readFile('theme/index.html','utf8');
 const readingFonts=await createReadingFonts([load(template)('body').text(),config.title,config.description,config.author,'…',...documents.flatMap(d=>[d.title,d.category,...d.tags,d.excerpt,d.searchText,d.firstSentence])],out);
 for(const [name,extension,loader] of [['style','css','css'],['app','js','js'],['giscus','css','css']]){
  const source=await fs.readFile(`theme/${name}.${extension}`,'utf8');
- const {code}=await transform((name==='style'?fontCSS:'')+source,{loader,minify:true,target:['chrome100','firefox100','safari15.4'],legalComments:'none'});
+ const code=name==='app'
+  ?(await bundle({entryPoints:['theme/app.js'],bundle:true,write:false,outfile:'app.js',format:'iife',platform:'browser',minify:true,target:['chrome100','firefox100','safari15.4'],legalComments:'none'})).outputFiles[0].text
+  :(await transform((name==='style'?fontCSS:'')+source,{loader,minify:true,target:['chrome100','firefox100','safari15.4'],legalComments:'none'})).code;
  if(name==='style')styleCode=code;
  const asset=`/static/${name}-${hash(code)}.${extension}`;
  await fs.writeFile(path.join(out,asset),code);staticAssets[name]=asset;
 }
-const stamp=s=>s?new Date(s).toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric',timeZone:'UTC'}):'';
-const category=p=>`<a class="category" href="/categories/${encodeURIComponent(p.category)}">${esc(p.category)}</a>`;
-const row=p=>`<div class="row"><time class="date">${esc(stamp(p.date))}</time><a href="${esc(p.path)}/">${esc(p.title)}</a></div>`;
-const card=(p,priority=false)=>`<article class="post-card"><div class="meta"><time>${esc(stamp(p.date))}</time><span>·</span>${category(p)}</div><h2><a href="${esc(p.path)}/">${esc(p.title)}</a></h2>${p.image?`<a href="${esc(p.path)}/" class="preview-images"><img class="progressive sharp" src="${p.image}" srcset="${p.imageSrcset}" sizes="${CARD_SIZES}" data-preview="${p.imagePreview}" width="${p.imageWidth}" height="${p.imageHeight}" loading="${priority?'eager':'lazy'}" fetchpriority="${priority?'high':'auto'}" decoding="async" alt="${esc(p.title)}"></a>`:''}<p>${esc(p.excerpt.slice(0,165))}…</p></article>`;
-const heading=(title,sub='',kicker='JOURNAL')=>`<div class="section-heading"><h1 tabindex="-1">${esc(title)}</h1></div>`;
-function related(d){if(!d.post)return '';const ranked=posts.filter(p=>p.path!==d.path).map(p=>({p,overlap:p.tags.filter(t=>d.tags.includes(t)).length})).sort((a,b)=>b.overlap-a.overlap||Number(b.p.category===d.category)-Number(a.p.category===d.category)||b.p.date.localeCompare(a.p.date)||a.p.path.localeCompare(b.p.path));const p=ranked[0]?.p;if(!p)return '';const tag=d.tags.find(t=>p.tags.includes(t)),label=tag?`Other post with #${tag}`:'Other post';return `<aside class="related-post" aria-label="${esc(label)}"><span class="related-label">${esc(label)}</span><h2><a href="${esc(p.path)}/">${esc(p.title)}</a></h2><p>${esc(p.firstSentence)}</p></aside>`}
-const postTags=d=>d.tags.length?`<div class="post-tags" aria-label="Tags">${d.tags.map(tag=>`<a class="post-tag" href="/tags/${encodeURIComponent(tag)}/">#${esc(tag)}</a>`).join('')}</div>`:'';
 const comments=d=>config.giscus&&d.comments?'<section class="comments-section" id="comments" aria-labelledby="comments-heading"><h2 id="comments-heading">Comments</h2><p class="comments-status" role="status">Comments load as you approach this section.</p><div class="giscus"></div><noscript><p>Enable JavaScript to read and write comments, or visit <a href="https://github.com/'+esc(config.giscus.repo)+'/discussions" target="_blank" rel="noopener">GitHub Discussions</a>.</p></noscript></section>':'';
-const article=d=>`<div class="article-head"><div class="meta"><time>${esc(stamp(d.date))}</time>${d.post?'<span>·</span>'+category(d):''}</div><h1 tabindex="-1">${esc(d.title)}</h1></div>${d.blocks.map(b=>`<div class="article-body">${b}</div>`).join('')}${d.post?postTags(d):''}${related(d)}${comments(d)}`;
+const article=d=>`${renderArticleHead(d)}${d.blocks.map(renderArticleBody).join('')}${d.post?renderPostTags(d):''}${renderRelatedPost(d,posts)}${comments(d)}`;
 const routes={};
 for(const d of documents){
- const payload=[{title:d.title,date:d.date,category:d.post?d.category:'',tags:d.post?d.tags:[],hasMath:d.hasMath},...d.blocks.map(html=>({html})),...(d.post?[{html:postTags(d),kind:'tags'},{html:related(d),kind:'related'},{html:comments(d),kind:'comments'}]:[])].map(x=>JSON.stringify(x)).join('\n')+'\n';
+ const payload=[{title:d.title,date:d.date,category:d.post?d.category:'',tags:d.post?d.tags:[],hasMath:d.hasMath},...d.blocks.map(html=>({html})),...(d.post?[{html:renderPostTags(d),kind:'tags'},{html:renderRelatedPost(d,posts),kind:'related'},{html:comments(d),kind:'comments'}]:[])].map(x=>JSON.stringify(x)).join('\n')+'\n';
  const key=hash(payload);routes[d.path]=key;await fs.writeFile(path.join(out,'data',key+'.ndjson'),payload);
 }
 async function dataAsset(name,value){const data=JSON.stringify(value),asset=`/data/${name}-${hash(data)}.json`;await fs.writeFile(path.join(out,asset),data);return asset}
@@ -154,15 +150,15 @@ async function page(route,title,body,kicker='Journal',lang='en'){
 }
 for(const d of documents)await page(d.path,d.title,article(d),'Journal / '+(d.post?'Entry':d.title),d.lang);
 const homePosts=posts.slice(0,config.postsPerPage||8),firstPreview=homePosts.find(p=>p.image);
-await page('/',config.title,homePosts.map(p=>card(p,p===firstPreview)).join('')+'<a class="chip" href="/all-archives/">Browse all entries</a>');
-let year='';await page('/all-archives','Archives',posts.map(p=>{const y=p.date.slice(0,4);const h=y!==year?`<h2 class="year-title">${esc(y)}</h2>`:'';year=y;return h+row(p)}).join(''),'Journal / Archives');
+await page('/',config.title,homePosts.map(p=>renderPostCard(p,{priority:p===firstPreview,cardSizes:CARD_SIZES})).join('')+renderBrowseArchivesLink());
+let year='';await page('/all-archives','Archives',posts.map(p=>{const y=p.date.slice(0,4);const h=y!==year?renderYearHeading(y):'';year=y;return h+renderPostRow(p)}).join(),'Journal / Archives');
 for(const kind of ['categories','tags']){
  const counts=new Map();for(const p of posts)for(const k of kind==='tags'?p.tags:[p.category])counts.set(k,(counts.get(k)||0)+1);
- await page('/all-'+kind,kind==='tags'?'Tags':'Categories',`<div class="chips">${[...counts].sort((a,b)=>b[1]-a[1]).map(([k,n])=>`<a class="chip" href="/${kind}/${encodeURIComponent(k)}/">${esc(k)}<small>${n}</small></a>`).join('')}</div>`,'Journal / '+kind);
- for(const [name,n] of counts)await page('/'+kind+'/'+name,name,heading(name,`${n} entries`,kind.toUpperCase())+posts.filter(p=>kind==='tags'?p.tags.includes(name):p.category===name).map(row).join(''),'Journal / '+kind);
+ await page('/all-'+kind,kind==='tags'?'Tags':'Categories',renderTaxonomyCloud(posts,kind),'Journal / '+kind);
+ for(const [name] of counts)await page('/'+kind+'/'+name,name,renderSectionHeading(name)+posts.filter(p=>kind==='tags'?p.tags.includes(name):p.category===name).map(renderPostRow).join(''),'Journal / '+kind);
 }
 await page('/search','Search','<h1 class="sr-only" tabindex="-1">Search</h1><noscript><p>Search needs JavaScript. Browse the <a href="/all-archives/">archives</a>.</p></noscript><label for="query" class="sr-only">Search titles, text, or tags</label><input id="query" class="search-input" type="search" placeholder="Type a word or phrase to search titles, text, or tags" autocomplete="off"><div id="results" aria-live="polite"></div>','Journal / Search');
-const notFound=await page('/404','Page not found',heading('This page has wandered off.','','404')+'<a class="chip" href="/">Return to the journal</a>');await fs.writeFile(path.join(out,'404.html'),notFound);
+const notFound=await page('/404','Page not found',renderSectionHeading('This page has wandered off.')+'<a class="chip" href="/">Return to the journal</a>');await fs.writeFile(path.join(out,'404.html'),notFound);
 for(const d of documents)for(const alias of d.aliases){const route=validRoute('/'+alias.replace(/^\/+|\/+$/g,''));if(paths.has(route))continue;const dir=path.join(out,route.slice(1));await fs.mkdir(dir,{recursive:true});await fs.writeFile(path.join(dir,'index.html'),`<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=${esc(url(d.path+'/'))}"><link rel="canonical" href="${esc((origin||'')+url(d.path+'/'))}"><a href="${esc(url(d.path+'/'))}">Continue to ${esc(d.title)}</a>`)}
 const xml=s=>String(s).replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[c]));
 await fs.writeFile(path.join(out,'.nojekyll'),'');

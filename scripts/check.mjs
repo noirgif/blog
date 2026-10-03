@@ -7,6 +7,8 @@ import crypto from 'node:crypto';
 import sharp from 'sharp';
 import { create } from 'fontkit';
 import { readingCharacters, assertReadingCoverage } from './fonts.mjs';
+import { CARD_SIZES } from './images.mjs';
+import { renderPostCard, renderPostRow } from '../theme/render.js';
 const root=path.resolve('dist'),info=JSON.parse(await fs.readFile(path.join(root,'build-info.json'),'utf8')),base=info.basePath;
 const routes=JSON.parse(await fs.readFile(path.join(root,info.assets.routes),'utf8')),records=JSON.parse(await fs.readFile(path.join(root,info.assets.records),'utf8'));
 const search=JSON.parse(await fs.readFile(path.join(root,info.assets.search),'utf8'));
@@ -24,6 +26,14 @@ assert.equal(home('#content .preview-images img[loading="eager"]').length,1,'Onl
 assert.equal(home('link[data-katex]').length,0,'The homepage must not load math CSS');
 assert.equal(home('link[rel="stylesheet"]').length,0,'The homepage must not have render-blocking stylesheet requests');
 assert(home('style[data-site-style]').length,'Missing inline critical styles');
+function prefixSharedMarkup(markup){if(!base)return markup;const $=load(`<div id="shared">${markup}</div>`);$('#shared [href],#shared [src],#shared [data-preview]').each((i,el)=>{for(const attr of ['href','src','data-preview']){const value=$(el).attr(attr);if(value?.startsWith('/')&&!value.startsWith('//'))$(el).attr(attr,base+value)}});$('#shared [srcset]').each((i,el)=>$(el).attr('srcset',$(el).attr('srcset').replace(/(^|,\s*)(\/(?!\/)[^\s,]+)/g,(_,separator,src)=>separator+base+src)));return $('#shared').html()}
+const firstHomePost=records.find(record=>record.path.startsWith('/posts/'));
+assert(firstHomePost,'Missing published posts for shared-renderer checks');
+assert.equal(home('#content .post-card').first().find('h2 a').text(),firstHomePost.title,'Homepage post order must come from navigation records');
+const expectedCard=renderPostCard(firstHomePost,{priority:Boolean(firstHomePost.image),cardSizes:CARD_SIZES});
+assert.equal(home('#content .post-card').first().html(),load(prefixSharedMarkup(expectedCard))('article').html(),'Static homepage card markup must use the shared renderer');
+const archive=load(await fs.readFile(path.join(root,'all-archives','index.html'),'utf8'));
+assert.equal(archive('#content .row').first().html(),load(prefixSharedMarkup(renderPostRow(firstHomePost)))('.row').html(),'Static archive rows must use the shared renderer');
 for(const script of home('script').toArray())assert.equal(home(script).attr('data-cfasync'),'false','Site scripts must opt out of Rocket Loader');
 assert(home('#content .preview-images img').first().attr('srcset').includes('640w'),'Missing close-fitting mobile thumbnail');
 assert(!home.html().includes('fonts.googleapis.com')&&!home.html().includes('fonts.gstatic.com')&&!home.html().includes('Noto Sans SC'),'External font dependency returned');
