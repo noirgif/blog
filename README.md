@@ -135,9 +135,17 @@ No serverless functions or catch-all redirects are used. Each deep link has its 
 
 Set `SITE_URL` (origin only, such as `https://nir.moe`) to generate canonical links and `sitemap.xml`. RSS is generated on every build; setting `SITE_URL` makes its links absolute. `BASE_PATH` overrides `site.config.json`'s `basePath`.
 
+### Comments
+
+Posts use giscus with `noirgif/blog` → Announcements, strict pathname mapping, and reactions enabled. Configure repository/category IDs in `site.config.json`; remove `giscus` to disable comments globally. Set `comments: false` in a post's front matter to opt out. Static pages do not show comments.
+
+`theme/giscus.css` matches the light paper/violet palette without downloading fonts or importing other stylesheets. The build emits a content-hashed stylesheet and CORS headers for Cloudflare Pages/Netlify. When deploying on another host, ensure the theme CSS response allows `Access-Control-Allow-Origin: *` (GitHub Pages provides permissive CORS). The production theme URL must be publicly reachable over HTTPS; localhost is only useful for local preview.
+
+Comments start loading when the section comes within 1,500 px of the viewport, including on internal navigation. The iframe is not additionally lazy-loaded. This hides much of the network wait while reading, but cannot guarantee readiness during fast scrolling or slow GitHub responses. The homepage does not request giscus. Without JavaScript, posts link to GitHub Discussions. Keep pathname URLs stable: domains can change, but slugs and deployment base paths change the mapping. Reading/loading comments requires third-party requests to giscus and GitHub.
+
 ### Loading and caching
 
-The initial page is complete static HTML with minified styles inlined, so rendering does not wait for a stylesheet request or navigation data. DM Sans and Playfair Display remain self-hosted Latin-only variable fonts for navigation/branding, with `font-display: optional`.
+The initial page is complete static HTML with minified styles inlined, so rendering does not wait for a stylesheet request or navigation data. After an internal link is followed, `theme/app.js` handles navigation and renders the destination client-side. This means a route such as `/` has two render paths: its generated HTML in `scripts/build.mjs` and its client-side markup in `theme/app.js`. Keep route-dependent body classes and visual behavior in sync across the generated page and `setReadingMode`; keep duplicated display formatting (especially dates) in the same timezone. When changing page structure or styling, check both a direct load and an internal-navigation visit. The build checks assert key homepage contracts, but they do not replace a browser check of both paths. DM Sans and Playfair Display remain self-hosted Latin-only variable fonts for navigation/branding, with `font-display: optional`.
 
 The reading area uses **Noto Serif → Noto Serif SC → Noto Serif KR**, following [Google's recommended family order](https://fonts.google.com/noto/use#use-noto-fonts-as-web-fonts). Latin, Greek, Cyrillic, numbers, and shared punctuation come from Noto Serif, with a matching italic face; Han/kanji and kana use one SC variant. The tiny KR subset supplies Hangul only, never a second regional Han variant. Builds automatically collect published text, titles, tags, excerpts, search snippets, and navigation and generate shared, content-hashed WOFF2 subsets. Adding text needs no manual font processing. Pinned sources come from Google's `fonts.gstatic.com`, not GitHub; neither builds nor visitors fetch remote font sources. See `fonts/noto/README.md` for provenance and licensing.
 

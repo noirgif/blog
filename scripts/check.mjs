@@ -17,6 +17,7 @@ for(const record of records){
 }
 assert((await fs.stat(path.join(root,info.assets.records))).size<128*1024,'Navigation metadata exceeds its 128 KiB budget');
 const home=load(await fs.readFile(path.join(root,'index.html'),'utf8'));
+assert(home('body').hasClass('home-page'),'The pre-rendered homepage must carry its route class before JavaScript runs');
 assert.equal(home('#content .preview-images img').first().attr('loading'),'eager','The first homepage preview must not be lazy-loaded');
 assert.equal(home('#content .preview-images img').first().attr('fetchpriority'),'high','Missing LCP image priority');
 assert.equal(home('#content .preview-images img[loading="eager"]').length,1,'Only the first homepage preview should be eager-loaded');
@@ -41,12 +42,19 @@ for(const face of info.readingFonts.faces){
 assert.equal(readingFaces.filter(face=>face.family==='Noto Serif SC').length,1,'Exactly one SC regional face is required');
 assert(readingFaces.some(face=>face.family==='Noto Serif'&&face.style==='italic'),'Missing matching Latin italic face');
 const siteStyle=home('style[data-site-style]').text();
+assert(siteStyle.includes('.home-page #content>.post-card:first-of-type')&&siteStyle.includes('.home-page #content>.reveal:first-child .post-card'),'The first homepage post divider must be hidden in both static and client-rendered markup');
 assert(/--reading-font:\s*(['"])Noto Serif\1\s*,\s*(['"])Noto Serif SC\2/.test(siteStyle),'Noto Serif must precede the CJK family');
 assert(!/@font-face\s*\{[^}]*Noto Serif/.test(siteStyle),'Reading fonts must not be requested before asynchronous loading');
 for(const link of home('link[rel="preload"][as="font"]').toArray())assert(!home(link).attr('href').includes('noto-serif'),'Do not preload noncritical reading fonts');
 const publishedReadingText=[];
 const cacheHeaders=await fs.readFile(path.join(root,'_headers'),'utf8');
 for(const directory of ['static','media','data'])assert(cacheHeaders.includes(`${base}/${directory}/*\n  Cache-Control: public, max-age=31536000, immutable`),`Missing immutable cache policy: ${directory}`);
+if(info.assets.giscus){
+ const theme=await fs.readFile(path.join(root,info.assets.giscus),'utf8');
+ assert(!/@import|@font-face/.test(theme),'Comment theme must not introduce font downloads or stylesheet chains');
+ assert(cacheHeaders.includes(`${base}${info.assets.giscus}\n  Access-Control-Allow-Origin: *`),'Custom comment theme needs cross-origin access');
+}
+assert.equal(home('.comments-section').length,0,'Homepage must not show a comment widget');
 const errors=[];
 async function allFiles(d){const result=[];for(const e of await fs.readdir(d,{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory())result.push(...await allFiles(p));else result.push(p)}return result}
 const deploymentFiles=await allFiles(root);assert(deploymentFiles.length<=20000,'Cloudflare Pages Free permits at most 20,000 files');let largest=0;
@@ -66,8 +74,14 @@ for(const [route,key] of Object.entries(routes)){
  const file=path.join(root,decodeURIComponent(route),'index.html');assert(await exists(file),`Missing direct-entry HTML: ${route}`);
  const html=await fs.readFile(file,'utf8'),$=load(html);assert($('#content h1').length,`Missing pre-rendered heading: ${route}`);assert.equal($('body').hasClass('post-view'),route.startsWith('/posts/'),`Incorrect static sidebar state: ${route}`);assert.equal($('.sidebar').attr('aria-hidden')==='true',route.startsWith('/posts/'),`Incorrect sidebar accessibility state: ${route}`);assert($('#content').text().trim().length>0,`Empty pre-rendered content: ${route}`);for(const [selector,description] of [['.footnote-ref a[href^="#"]','footnote'],['.footnote-backref[href^="#"]','footnote backlink']])for(const link of $(selector).toArray()){const id=$(link).attr('href').slice(1);assert.equal($(`[id="${id}"]`).length,1,`Broken ${description} target on ${route}: ${id}`)}
  assert.equal($('.home-logo').attr('href'),base+'/','Post logo must link home');assert($('.home-logo-name').text().trim(),'Missing site wordmark');assert($('.home-logo').attr('aria-label').includes('return to the journal'),'Missing logo accessibility label');
- if(route.startsWith('/posts/')){const recommendation=$('.related-post');assert.equal(recommendation.length,1,`Expected one recommendation: ${route}`);const target=records.find(p=>base+p.path+'/'===recommendation.find('a').attr('href'));assert(target&&target.path!==route,`Invalid recommendation: ${route}`);assert.equal(recommendation.find('p').text(),target.firstSentence);const current=records.find(p=>p.path===route),sharedTag=current.tags.find(tag=>target.tags.includes(tag)),label=sharedTag?`Other post with #${sharedTag}`:'Other post';assert.equal(recommendation.find('.related-label').text(),label,`Incorrect recommendation label: ${route}`);assert.equal(recommendation.attr('aria-label'),label,`Incorrect recommendation accessible label: ${route}`);const overlap=p=>p.tags.filter(t=>current.tags.includes(t)).length;assert.equal(overlap(target),Math.max(...records.filter(p=>p.path.startsWith('/posts/')&&p.path!==route).map(overlap)),`Recommendation missed more similar tags: ${route}`);assert.equal($('.back-link').length,0)}
+ if(route.startsWith('/posts/')){const firstArticleImage=$('#content .article-body img').first();if(firstArticleImage.length){assert.equal(firstArticleImage.attr('loading'),'eager',`The first post image must not be lazy-loaded: ${route}`);assert.equal(firstArticleImage.attr('fetchpriority'),'high',`The first post image must have high fetch priority: ${route}`)}const recommendation=$('.related-post');assert.equal(recommendation.length,1,`Expected one recommendation: ${route}`);const target=records.find(p=>base+p.path+'/'===recommendation.find('a').attr('href'));assert(target&&target.path!==route,`Invalid recommendation: ${route}`);assert.equal(recommendation.find('p').text(),target.firstSentence);const current=records.find(p=>p.path===route),sharedTag=current.tags.find(tag=>target.tags.includes(tag)),label=sharedTag?`Other post with #${sharedTag}`:'Other post';assert.equal(recommendation.find('.related-label').text(),label,`Incorrect recommendation label: ${route}`);assert.equal(recommendation.attr('aria-label'),label,`Incorrect recommendation accessible label: ${route}`);const overlap=p=>p.tags.filter(t=>current.tags.includes(t)).length;assert.equal(overlap(target),Math.max(...records.filter(p=>p.path.startsWith('/posts/')&&p.path!==route).map(overlap)),`Recommendation missed more similar tags: ${route}`);assert.equal($('.back-link').length,0)}
  const payload=(await fs.readFile(path.join(root,'data',key+'.ndjson'),'utf8')).trim().split('\n').map(s=>JSON.parse(s));assert(payload[0].title);assert(payload.length>1);
+ const commentBlocks=payload.filter(block=>block.kind==='comments');
+ const current=records.find(record=>record.path===route);
+ const commentsExpected=Boolean(info.assets.giscus&&home.html().includes('"giscus":{')&&current.comments);
+ assert.equal($('.comments-section').length,commentsExpected?1:0,`Incorrect comment eligibility: ${route}`);
+ assert.equal(commentBlocks.some(block=>block.html.includes('comments-section')),commentsExpected,`Streamed comments disagree with static HTML: ${route}`);
+ assert.equal($('script[src="https://giscus.app/client.js"]').length,0,'Do not load comments before the viewport trigger');
  assert.equal(payload[0].hasMath,$('#content .katex').length>0,`Incorrect streamed math metadata: ${route}`);
  assert.equal($('link[data-katex]').length,payload[0].hasMath?1:0,`Math CSS must load only on math pages: ${route}`);
 }

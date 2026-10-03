@@ -30,6 +30,7 @@ http.createServer(async (req, res) => {
       ETag: 'W/"' + crypto.createHash('sha256').update(data).digest('hex').slice(0, 16) + '"',
       Vary: 'Accept-Encoding',
     };
+    if (/^\/static\/giscus-[a-f0-9]+\.css$/.test(pathname)) headers['Access-Control-Allow-Origin'] = '*';
     if (req.headers['if-none-match'] === headers.ETag) { res.writeHead(304, headers); res.end(); return; }
     if (/\.(html|css|js|json|ndjson|xml|svg)$/.test(entry)) {
       const accepts = req.headers['accept-encoding'] || '';

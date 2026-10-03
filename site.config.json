@@ -6,5 +6,12 @@
   "basePath": "",
   "cover": "/media/77fbe546f6546acc.jpg",
   "avatar": "/media/39445d81ef64ee8d.jpg",
-  "postsPerPage": 8
+  "postsPerPage": 8,
+  "giscus": {
+    "repo": "noirgif/blog",
+    "repoId": "MDEwOlJlcG9zaXRvcnkxODQzNDg5NjM=",
+    "category": "Announcements",
+    "categoryId": "DIC_kwDOCvzxI84DG8w1",
+    "lang": "en"
+  }
 }

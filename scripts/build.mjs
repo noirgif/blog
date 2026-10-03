@@ -61,10 +61,11 @@ function renderFootnotes(md){
  const items=labels.map(label=>{const key=Buffer.from(label,'utf8').toString('hex'),body=marked.parseInline(definitions.get(label)||''),backlinks=(references.get(label)||[]).map((ref,i)=>` <a class="footnote-backref" href="#${ref}" aria-label="Back to footnote reference ${i+1}">↩</a>`).join('');return `<li id="fn-${key}">${body}${backlinks}</li>`}).join('');
  return {content,html:`<section class="footnotes" aria-label="Footnotes"><ol>${items}</ol></section>`};
 }
-async function renderMarkdown(md,title){
+async function renderMarkdown(md,title,post=false){
  const source=legacy(md),footnotes=renderFootnotes(source),$=load(marked.parse(footnotes.content)+footnotes.html,null,false);
  $('script').remove();$('[onclick],[onload],[onerror]').each((i,el)=>{for(const attr of Object.keys(el.attribs))if(attr.startsWith('on'))$(el).removeAttr(attr)});
  await Promise.all($('img').toArray().map(async el=>{const img=$(el),src=img.attr('src')||'';const converted=await image(src);if(converted){imageByUrl.set(converted.src,converted);img.attr({src:converted.src,srcset:converted.srcset,sizes:ARTICLE_SIZES,'data-preview':converted.preview,width:converted.width,height:converted.height,class:'progressive sharp',loading:'lazy',decoding:'async',alt:img.attr('alt')||title+' photograph'})}else {if(src.startsWith('/assets/')||src.startsWith('assets/')){img.replaceWith('<p class="empty">This photograph is unavailable from the original source.</p>');return;}const width=Number(img.attr('width')),height=Number(img.attr('height'));if(width>0&&height>0)img.attr('loading','lazy');else img.removeAttr('loading');img.attr({decoding:'async',alt:img.attr('alt')||title+' photograph'})}}));
+ if(post){const firstImage=$('img').first();if(firstImage.length)firstImage.attr({loading:'eager',fetchpriority:'high'})}
  $('a[href]').each((i,el)=>{const a=$(el),href=a.attr('href');if(/^javascript:/i.test(href))a.removeAttr('href');else if(/^\/\d{4}\/\d{2}\/\d{2}\//.test(href))a.attr('href','/posts/'+href.split('/').filter(Boolean).at(-1)+'/');else if(href.startsWith('https://nir.moe/'))a.attr('href',new URL(href).pathname+new URL(href).hash);else if(/^https?:\/\//.test(href))a.attr({target:'_blank',rel:'noopener'})});
  return $.root().contents().toArray().map(el=>$.html(el)).filter(x=>x.trim());
 }
@@ -78,23 +79,23 @@ for(const file of await files('source')){
  const slug=String(d.slug||path.basename(file,'.md'));
  const route=validRoute(d.permalink?'/'+String(d.permalink).replace(/^\/+|\/+$/g,''):post?'/posts/'+slug:'/'+path.relative('source',file).split(path.sep).join('/').replace(/(?:\/index)?\.md$/,''));
  const date=post?timestamp(d.date,file):d.date?timestamp(d.date,file):'';
- const blocks=await renderMarkdown(parsed.content,d.title),body=blocks.join('');const $=load(body,null,false);
+ const blocks=await renderMarkdown(parsed.content,d.title,post),body=blocks.join('');const $=load(body,null,false);
  const searchText=$.root().text().replace(/\s+/g,' ').trim();
  const paragraphs=$('p').toArray().map(el=>$(el).text().replace(/\s+/g,' ').trim()).filter(Boolean);
  const firstText=paragraphs.find(t=>!t.startsWith('This photograph is unavailable'))||String(d.description||searchText);
  const firstSentence=[...new Intl.Segmenter(d.lang||'en',{granularity:'sentence'}).segment(firstText)][0]?.segment.trim()||d.title;
  const preview=imageByUrl.get($('img[data-preview]').first().attr('src'));
  const thumbnail=post&&preview?await media.thumbnail(preview):null;
- documents.push({path:route,title:d.title,date,category:list(d.categories??d.category)[0]||'uncategorized',tags:list(d.tags),excerpt:String(d.description||searchText.slice(0,180)),searchText,paragraphs,firstSentence,image:thumbnail?.src||null,imageSrcset:thumbnail?.srcset||null,imagePreview:thumbnail?.preview||null,imageWidth:thumbnail?.width||null,imageHeight:thumbnail?.height||null,hasMath:$('.katex').length>0,blocks,post,lang:d.lang||'en',aliases:list(d.alias||d.aliases),sitemap:d.sitemap!==false});
+ documents.push({path:route,title:d.title,date,category:list(d.categories??d.category)[0]||'uncategorized',tags:list(d.tags),excerpt:String(d.description||searchText.slice(0,180)),searchText,paragraphs,firstSentence,image:thumbnail?.src||null,imageSrcset:thumbnail?.srcset||null,imagePreview:thumbnail?.preview||null,imageWidth:thumbnail?.width||null,imageHeight:thumbnail?.height||null,hasMath:$('.katex').length>0,blocks,post,comments:post&&d.comments!==false,lang:d.lang||'en',aliases:list(d.alias||d.aliases),sitemap:d.sitemap!==false});
 }
 documents.sort((a,b)=>b.date.localeCompare(a.date)||a.path.localeCompare(b.path));
 const posts=documents.filter(d=>d.post);const paths=new Set();for(const d of documents){if(paths.has(d.path))throw Error('Duplicate permalink: '+d.path);paths.add(d.path)}
 const template=await fs.readFile('theme/index.html','utf8');
 const readingFonts=await createReadingFonts([load(template)('body').text(),config.title,config.description,config.author,'…',...documents.flatMap(d=>[d.title,d.category,...d.tags,d.excerpt,d.searchText,d.firstSentence])],out);
-for(const [name,extension,loader] of [['style','css','css'],['app','js','js']]){
+for(const [name,extension,loader] of [['style','css','css'],['app','js','js'],['giscus','css','css']]){
  const source=await fs.readFile(`theme/${name}.${extension}`,'utf8');
- const {code}=await transform((loader==='css'?fontCSS:'')+source,{loader,minify:true,target:['chrome100','firefox100','safari15.4'],legalComments:'none'});
- if(loader==='css')styleCode=code;
+ const {code}=await transform((name==='style'?fontCSS:'')+source,{loader,minify:true,target:['chrome100','firefox100','safari15.4'],legalComments:'none'});
+ if(name==='style')styleCode=code;
  const asset=`/static/${name}-${hash(code)}.${extension}`;
  await fs.writeFile(path.join(out,asset),code);staticAssets[name]=asset;
 }
@@ -104,10 +105,12 @@ const row=p=>`<div class="row"><time class="date">${esc(stamp(p.date))}</time><a
 const card=(p,priority=false)=>`<article class="post-card"><div class="meta"><time>${esc(stamp(p.date))}</time><span>·</span>${category(p)}</div><h2><a href="${esc(p.path)}/">${esc(p.title)}</a></h2>${p.image?`<a href="${esc(p.path)}/" class="preview-images"><img class="progressive sharp" src="${p.image}" srcset="${p.imageSrcset}" sizes="${CARD_SIZES}" data-preview="${p.imagePreview}" width="${p.imageWidth}" height="${p.imageHeight}" loading="${priority?'eager':'lazy'}" fetchpriority="${priority?'high':'auto'}" decoding="async" alt="${esc(p.title)}"></a>`:''}<p>${esc(p.excerpt.slice(0,165))}…</p></article>`;
 const heading=(title,sub='',kicker='JOURNAL')=>`<div class="section-heading"><h1 tabindex="-1">${esc(title)}</h1></div>`;
 function related(d){if(!d.post)return '';const ranked=posts.filter(p=>p.path!==d.path).map(p=>({p,overlap:p.tags.filter(t=>d.tags.includes(t)).length})).sort((a,b)=>b.overlap-a.overlap||Number(b.p.category===d.category)-Number(a.p.category===d.category)||b.p.date.localeCompare(a.p.date)||a.p.path.localeCompare(b.p.path));const p=ranked[0]?.p;if(!p)return '';const tag=d.tags.find(t=>p.tags.includes(t)),label=tag?`Other post with #${tag}`:'Other post';return `<aside class="related-post" aria-label="${esc(label)}"><span class="related-label">${esc(label)}</span><h2><a href="${esc(p.path)}/">${esc(p.title)}</a></h2><p>${esc(p.firstSentence)}</p></aside>`}
-const article=d=>`<div class="article-head"><div class="meta"><time>${esc(stamp(d.date))}</time>${d.post?'<span>·</span>'+category(d):''}</div><h1 tabindex="-1">${esc(d.title)}</h1></div>${d.blocks.map(b=>`<div class="article-body">${b}</div>`).join('')}${related(d)}`;
+const postTags=d=>d.tags.length?`<div class="post-tags" aria-label="Tags">${d.tags.map(tag=>`<a class="post-tag" href="/tags/${encodeURIComponent(tag)}/">#${esc(tag)}</a>`).join('')}</div>`:'';
+const comments=d=>config.giscus&&d.comments?'<section class="comments-section" id="comments" aria-labelledby="comments-heading"><h2 id="comments-heading">Comments</h2><p class="comments-status" role="status">Comments load as you approach this section.</p><div class="giscus"></div><noscript><p>Enable JavaScript to read and write comments, or visit <a href="https://github.com/'+esc(config.giscus.repo)+'/discussions" target="_blank" rel="noopener">GitHub Discussions</a>.</p></noscript></section>':'';
+const article=d=>`<div class="article-head"><div class="meta"><time>${esc(stamp(d.date))}</time>${d.post?'<span>·</span>'+category(d):''}</div><h1 tabindex="-1">${esc(d.title)}</h1></div>${d.blocks.map(b=>`<div class="article-body">${b}</div>`).join('')}${d.post?postTags(d):''}${related(d)}${comments(d)}`;
 const routes={};
 for(const d of documents){
- const payload=[{title:d.title,date:d.date,category:d.post?d.category:'',hasMath:d.hasMath},...d.blocks.map(html=>({html})),...(d.post?[{html:related(d),kind:'related'}]:[])].map(x=>JSON.stringify(x)).join('\n')+'\n';
+ const payload=[{title:d.title,date:d.date,category:d.post?d.category:'',tags:d.post?d.tags:[],hasMath:d.hasMath},...d.blocks.map(html=>({html})),...(d.post?[{html:postTags(d),kind:'tags'},{html:related(d),kind:'related'},{html:comments(d),kind:'comments'}]:[])].map(x=>JSON.stringify(x)).join('\n')+'\n';
  const key=hash(payload);routes[d.path]=key;await fs.writeFile(path.join(out,'data',key+'.ndjson'),payload);
 }
 async function dataAsset(name,value){const data=JSON.stringify(value),asset=`/data/${name}-${hash(data)}.json`;await fs.writeFile(path.join(out,asset),data);return asset}
@@ -126,7 +129,7 @@ function prefixed(html){
 const generated=[];
 async function page(route,title,body,kicker='Journal',lang='en'){
  route=validRoute(route);const $=load(template),post=documents.find(d=>d.path===route)?.post;
- $('html').attr('lang',lang);if(post){$('body').addClass('post-view');$('.sidebar').attr({'inert':'','aria-hidden':'true'})}
+ $('html').attr('lang',lang);if(route==='/')$('body').addClass('home-page');if(post){$('body').addClass('post-view');$('.sidebar').attr({'inert':'','aria-hidden':'true'})}
  $('title').text(title===config.title?title:title+' · '+config.title);$('meta[name="description"]').attr('content',config.description);
  $('.wordmark').contents().first().replaceWith(esc(config.title.toUpperCase()));$('.home-logo-name').text(config.title.toUpperCase());$('.home-logo').attr('aria-label',config.title+' — return to the journal');
  if(cover){
@@ -141,10 +144,11 @@ async function page(route,title,body,kicker='Journal',lang='en'){
  $('head').append($('<link>').attr({rel:'preload',as:'font',href:fonts[1],type:'font/woff2',crossorigin:'',media:'(orientation: landscape), (min-width: 801px) and (hover: hover)'}));
  $('head').append($('<link>').attr({rel:'icon',href:assets.favicon,type:'image/svg+xml'}));
  if($('#content .katex').length)$('head').append($('<link>').attr({rel:'stylesheet',href:assets.katex,'data-katex':''}));
- const clientAssets={records:assets.records,routes:assets.routes,search:assets.search,katex:assets.katex,cardSizes:CARD_SIZES,readingFonts:readingFonts.faces.map(({bytes,...face})=>face)};
+ const clientAssets={records:assets.records,routes:assets.routes,search:assets.search,katex:assets.katex,cardSizes:CARD_SIZES,readingFonts:readingFonts.faces.map(({bytes,...face})=>face),giscus:config.giscus?{...config.giscus,theme:assets.giscus}:null};
  $('head').append(`<script>window.__SITE_BASE__=${JSON.stringify(BASE).replace(/</g,'\\u003c')};window.__POSTS_PER_PAGE__=${Number(config.postsPerPage)||8};window.__SITE_ASSETS__=${JSON.stringify(clientAssets).replace(/</g,'\\u003c')};</script>`);
  // Our deferred script and configuration must not be rewritten by Rocket Loader.
  $('script').attr('data-cfasync','false');
+ if(config.giscus&&post)$('head').append($('<link>').attr({rel:'preconnect',href:'https://giscus.app',crossorigin:''}));
  if(origin)$('head').append(`<link rel="canonical" href="${esc(origin+url(route==='/'?'/':route+'/'))}">`);
  const final=prefixed($.html()),destination=path.join(out,route==='/'?'':decodeURIComponent(route));await fs.mkdir(destination,{recursive:true});await fs.writeFile(path.join(destination,'index.html'),final);generated.push(route);return final;
 }
@@ -166,7 +170,7 @@ if(origin){await fs.writeFile(path.join(out,'sitemap.xml'),`<?xml version="1.0" 
 const rssContent=`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>${xml(config.title)}</title><link>${xml(origin+url('/'))}</link><description>${xml(config.description)}</description>${posts.slice(0,20).map(p=>`<item><title>${xml(p.title)}</title><link>${xml(origin+url(p.path+'/'))}</link><guid>${xml(origin+url(p.path+'/'))}</guid><pubDate>${new Date(p.date).toUTCString()}</pubDate><description>${xml(p.excerpt)}</description></item>`).join('')}</channel></rss>`;await fs.writeFile(path.join(out,'rss.xml'),rssContent);for(const alias of ['rss2.xml','rss-all.xml','zh-cn/rss.xml','en/rss.xml']){await fs.mkdir(path.dirname(path.join(out,alias)),{recursive:true});await fs.writeFile(path.join(out,alias),rssContent)}
 try{await fs.copyFile('others/_redirects',path.join(out,'_redirects'))}catch(e){if(e.code!=='ENOENT')throw e}
 const cacheHeaders=['/static/*','/media/*','/data/*',katexDirectory+'/*'].map(route=>`${url(route)}\n  Cache-Control: public, max-age=31536000, immutable`).join('\n\n')+'\n';
-await fs.writeFile(path.join(out,'_headers'),cacheHeaders);
+await fs.writeFile(path.join(out,'_headers'),cacheHeaders+`\n${url(staticAssets.giscus)}\n  Access-Control-Allow-Origin: *\n`);
 await fs.writeFile(path.join(out,'build-info.json'),JSON.stringify({basePath:BASE,posts:posts.length,pages:generated.length,images:imageCache.size,assets,fonts,readingFonts}));
 for(const warning of warnings)console.warn(warning);
 console.log(`Built ${posts.length} Markdown posts, ${generated.length} HTML pages (${BASE||'/'}).`);

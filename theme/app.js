@@ -33,6 +33,31 @@ function scheduleReadingFonts(){
  if(document.readyState==='complete')painted();else window.addEventListener('load',painted,{once:true});
 }
 scheduleReadingFonts();
+let commentsObserver=null,commentsScriptPending=Promise.resolve();
+function stopComments(){commentsObserver?.disconnect();commentsObserver=null}
+function prepareComments(){
+ stopComments();
+ const section=main.querySelector('.comments-section'),config=ASSETS.giscus;
+ if(!section||!config)return;
+ const status=section.querySelector('.comments-status'),container=section.querySelector('.giscus');
+ // Only the active embed may carry the class used by giscus's global loader.
+ container.classList.remove('giscus');
+ let started=false;
+ const start=()=>{
+  if(started)return;started=true;stopComments();status.textContent='Loading comments…';
+  commentsScriptPending=commentsScriptPending.catch(()=>{}).then(()=>new Promise(resolve=>{
+   if(!section.isConnected){resolve();return}
+   container.classList.add('giscus');
+   const script=document.createElement('script');script.src='https://giscus.app/client.js';script.async=true;script.crossOrigin='anonymous';
+   const theme=new URL(siteUrl(config.theme),location.origin).href;
+   Object.assign(script.dataset,{repo:config.repo,repoId:config.repoId,category:config.category,categoryId:config.categoryId,mapping:'pathname',strict:'1',reactionsEnabled:'1',emitMetadata:'0',inputPosition:'bottom',theme,lang:config.lang||'en'});
+   script.onload=()=>{if(section.isConnected){status.textContent='';status.hidden=true}resolve()};
+   script.onerror=()=>{if(section.isConnected){status.textContent='Comments could not load. ';const link=document.createElement('a');link.href=`https://github.com/${config.repo}/discussions`;link.target='_blank';link.rel='noopener';link.textContent='Visit GitHub Discussions';status.append(link)}resolve()};
+   section.append(script);
+  }));
+ };
+ if('IntersectionObserver' in window){commentsObserver=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting))start()},{rootMargin:'1500px 0px'});commentsObserver.observe(section)}else start();
+}
 function prefixLinks(root){
  for(const el of root.querySelectorAll('[href],[src],[data-preview]'))for(const attr of ['href','src','data-preview']){const value=el.getAttribute(attr);if(value?.startsWith('/')&&!value.startsWith('//')&&!(BASE&&value.startsWith(BASE+'/')))el.setAttribute(attr,siteUrl(value));}
  for(const el of root.querySelectorAll('[srcset]'))el.setAttribute('srcset',el.getAttribute('srcset').replace(/(^|,\s*)(\/(?!\/)[^\s,]+)/g,(_,separator,src)=>separator+(BASE&&src.startsWith(BASE+'/')?src:siteUrl(src))));
@@ -56,9 +81,9 @@ function ensureMathStyles(){
 }
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const normalize=p=>decodeURI(BASE&&p.startsWith(BASE+'/')?p.slice(BASE.length):p===BASE?'/':p).replace(/\/index\.html$/,'/').replace(/\/$/,'')||'/';
-function setReadingMode(path){closeMobileMenu();const post=path.startsWith('/posts/'),sidebar=document.querySelector('.sidebar');const moveFocus=post&&sidebar.contains(document.activeElement)||!post&&document.activeElement===document.querySelector('.home-logo');document.body.classList.toggle('post-view',post);if(moveFocus)document.querySelector(post?'.home-logo':'#breadcrumb').focus({preventScroll:true});sidebar.inert=post;if(post)sidebar.setAttribute('aria-hidden','true');else sidebar.removeAttribute('aria-hidden');}
+function setReadingMode(path){closeMobileMenu();const post=path.startsWith('/posts/'),sidebar=document.querySelector('.sidebar');const moveFocus=post&&sidebar.contains(document.activeElement)||!post&&document.activeElement===document.querySelector('.home-logo');document.body.classList.toggle('post-view',post);document.body.classList.toggle('home-page',path==='/');if(moveFocus)document.querySelector(post?'.home-logo':'#breadcrumb').focus({preventScroll:true});sidebar.inert=post;if(post)sidebar.setAttribute('aria-hidden','true');else sidebar.removeAttribute('aria-hidden');}
 function updateRouteChrome(path){document.querySelectorAll('[data-nav]').forEach(a=>{const active=a.dataset.nav===path;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});document.querySelector('#breadcrumb').textContent=path==='/'?'Journal':path.startsWith('/posts/')?'Journal / Entry':path.includes('categories')?'Journal / Categories':path.includes('tags')?'Journal / Tags':path.includes('archives')?'Journal / Archives':path==='/search'?'Journal / Search':path==='/about'?'Journal / About':'Journal / Links';}
-const date=s=>s?new Date(s).toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric'}):'';
+const date=s=>s?new Date(s).toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric',timeZone:'UTC'}):'';
 const posts=()=>records.filter(r=>r.path.startsWith('/posts/'));
 function element(html,cls='',target=main){const d=document.createElement('div');d.className=(target===main?'reveal ':'')+cls;d.innerHTML=html;prefixLinks(d);target.append(d);enhanceImages(d);return d}
 const enhancedImages=new WeakSet();
@@ -82,8 +107,9 @@ function card(p,priority=false){return `<article class="post-card"><div class="m
 function articleHead(post){return `<div class="article-head"><div class="meta"><time>${escape(date(post.date))}</time>${post.category?`<span>·</span><a class="category" href="/categories/${encodeURIComponent(post.category)}">${escape(post.category)}</a>`:''}</div><h1 tabindex="-1">${escape(post.title)}</h1></div>`}
 async function prefetchPost(path){if(!path.startsWith('/posts/'))return;await ensureReady();if(!routes[path]||prefetchedPosts.has(path))return;const request={controller:new AbortController()};request.promise=fetch(siteUrl(`/data/${routes[path]}.ndjson`),{signal:request.controller.signal});prefetchedPosts.set(path,request);while(prefetchedPosts.size>2){const [oldPath,oldRequest]=prefetchedPosts.entries().next().value;prefetchedPosts.delete(oldPath);oldRequest.controller.abort()}request.promise.catch(()=>{if(prefetchedPosts.get(path)===request)prefetchedPosts.delete(path)})}
 async function streamPost(path,signal,id,target=main,onHead=null,skipHead=false){const cached=prefetchedPosts.get(path);if(cached){prefetchedPosts.delete(path);if(signal.aborted)cached.controller.abort();else signal.addEventListener('abort',()=>cached.controller.abort(),{once:true})}const response=await(cached?cached.promise:fetch(siteUrl(`/data/${routes[path]}.ndjson`),{signal}));if(!response.ok)throw Error('This entry could not be loaded.');const reader=response.body.getReader(), decoder=new TextDecoder();let buffer='',title='',head=false;
- async function line(s){if(!s.trim()||id!==sequence)return;const data=JSON.parse(s);if(!head){head=true;title=data.title;if(data.hasMath)await ensureMathStyles();if(id!==sequence||signal.aborted)return;if(!skipHead){element(articleHead(data),'',target);if(onHead)target=await onHead(title)||target}}else element(data.html,data.kind==='related'?'':'article-body',target)}
+ async function line(s){if(!s.trim()||id!==sequence)return;const data=JSON.parse(s);if(!head){head=true;title=data.title;if(data.hasMath)await ensureMathStyles();if(id!==sequence||signal.aborted)return;if(!skipHead){element(articleHead(data),'',target);if(onHead)target=await onHead(title)||target}}else if(data.kind==='tags')element(data.html,'',target);else element(data.html,data.kind==='related'?'':'article-body',target)}
  while(true){const {done,value}=await reader.read();buffer+=decoder.decode(value,{stream:!done});let n;while((n=buffer.indexOf('\n'))>=0){await line(buffer.slice(0,n));buffer=buffer.slice(n+1)}if(done){await line(buffer);break}}
+ if(id===sequence&&!signal.aborted)prepareComments();
  return title;
 }
 async function render(path,signal,id,target=main,onHead=null,skipHead=false){await ensureReady();if(signal.aborted||id!==sequence)return;const all=posts();
@@ -102,7 +128,7 @@ async function render(path,signal,id,target=main,onHead=null,skipHead=false){awa
 }
 function saveScroll(){history.replaceState({...history.state,scroll:window.scrollY},'')}
 function commitHomePost(path,content,sourceCard,title,id){const commit=()=>{if(id!==sequence)return;window.scrollTo({top:0,behavior:'instant'});setReadingMode(path);updateRouteChrome(path);main.replaceChildren(content);if(title)document.title=title+' · Goddess Unknown';statusEl.textContent='';main.querySelector('h1')?.focus({preventScroll:true})};commit();return Promise.resolve(main)}
-async function navigate(raw,{push=true,restore=null,sourceCard=null}={}){const url=new URL(raw,location.origin),path=normalize(url.pathname),fromHome=push&&normalize(location.pathname)==='/'&&path.startsWith('/posts/')&&sourceCard;const id=++sequence;let committedHomePost=false;controller?.abort();controller=new AbortController();if(push)saveScroll();if(!fromHome){setReadingMode(path);main.replaceChildren();main.setAttribute('aria-busy','true');statusEl.textContent='Loading…';window.scrollTo({top:0,behavior:'instant'});updateRouteChrome(path);document.title='Goddess Unknown'}else main.setAttribute('aria-busy','true');progress.classList.add('busy');if(push)history.pushState({scroll:0},'',url.pathname+url.search+url.hash);const staging=fromHome?document.createDocumentFragment():main;
+async function navigate(raw,{push=true,restore=null,sourceCard=null}={}){const url=new URL(raw,location.origin),path=normalize(url.pathname),fromHome=push&&normalize(location.pathname)==='/'&&path.startsWith('/posts/')&&sourceCard;const id=++sequence;stopComments();let committedHomePost=false;controller?.abort();controller=new AbortController();if(push)saveScroll();if(!fromHome){setReadingMode(path);main.replaceChildren();main.setAttribute('aria-busy','true');statusEl.textContent='Loading…';window.scrollTo({top:0,behavior:'instant'});updateRouteChrome(path);document.title='Goddess Unknown'}else main.setAttribute('aria-busy','true');progress.classList.add('busy');if(push)history.pushState({scroll:0},'',url.pathname+url.search+url.hash);const staging=fromHome?document.createDocumentFragment():main;
  try{if(fromHome){await ensureReady();if(id!==sequence||controller.signal.aborted)return;const record=records.find(post=>post.path===path);if(record){element(articleHead(record),'',staging);committedHomePost=true;await commitHomePost(path,staging,sourceCard,record.title,id);if(id!==sequence)return}}
  const target=fromHome&&committedHomePost?main:staging,onHead=fromHome&&!committedHomePost?title=>{if(id!==sequence)return null;committedHomePost=true;return commitHomePost(path,staging,sourceCard,title,id)}:null;const title=await render(path,controller.signal,id,target,onHead,committedHomePost);if(id!==sequence)return;if(fromHome&&!committedHomePost)await commitHomePost(path,staging,sourceCard,title,id);else if(!fromHome){if(title)document.title=title+' · Goddess Unknown';statusEl.textContent='';if(push)main.querySelector('h1')?.focus({preventScroll:true});if(restore!==null)requestAnimationFrame(()=>window.scrollTo({top:restore,behavior:'instant'}));else if(url.hash)document.getElementById(decodeURIComponent(url.hash.slice(1)))?.scrollIntoView();}}
  catch(e){if(e.name==='AbortError'||id!==sequence)return;if(fromHome&&!committedHomePost){staging.replaceChildren();element('<h1>Couldn’t load this page.</h1><p>Please try again.</p><button class="retry">Retry</button>','',staging);commitHomePost(path,staging,sourceCard,null,id);main.querySelector('.retry').onclick=()=>navigate(raw,{push:false})}else{statusEl.textContent='';element('<h1>Couldn’t load this page.</h1><p>Please try again.</p><button class="retry">Retry</button>');main.querySelector('.retry').onclick=()=>navigate(raw,{push:false})}}
@@ -120,4 +146,4 @@ function scheduleSnow(reducedMotion){snowTimer=setTimeout(()=>{const f=document.
 function countSnowClick(flake=null){snowClicks++;const red=Math.min(255,40+Math.max(0,snowClicks-1)*20),shade=255-red;for(const item of document.querySelectorAll('.snowflake')){item.style.fontSize=`${parseFloat(item.style.fontSize||'12')+.7}px`;item.style.color=`rgb(255,${shade},${shade})`}if(flake)flake.style.animationPlayState='paused';snowButton.style.color=`rgb(255,${shade},${shade})`;snowButton.style.fontSize=`${23+snowClicks*1.2}px`;if(snowTint)snowTint.style.backgroundColor=`rgba(220,0,0,${Math.min(.85,Math.max(0,snowClicks-1)*.055)})`;if(snowClicks>=12)finishSnow()}
 snowButton.onclick=()=>{if(snowEnding)return;if(!snowTimer){snowTint=document.createElement('div');snowTint.className='snow-tint';document.body.append(snowTint);snowButton.setAttribute('aria-pressed','true');scheduleSnow(matchMedia('(prefers-reduced-motion: reduce)').matches);return}countSnowClick()};
 // The static page already has the correct sidebar state; avoid initial layout mutations.
-if(main.dataset.prebuilt&&normalize(location.pathname)!=='/search')enhanceImages(main,true);else navigate(location.href,{push:false});
+if(main.dataset.prebuilt&&normalize(location.pathname)!=='/search'){enhanceImages(main,true);prepareComments()}else navigate(location.href,{push:false});
