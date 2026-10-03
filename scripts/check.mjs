@@ -5,6 +5,8 @@ import assert from 'node:assert/strict';
 import matter from 'gray-matter';
 import crypto from 'node:crypto';
 import sharp from 'sharp';
+import { create } from 'fontkit';
+import { readingCharacters, assertReadingCoverage } from './fonts.mjs';
 const root=path.resolve('dist'),info=JSON.parse(await fs.readFile(path.join(root,'build-info.json'),'utf8')),base=info.basePath;
 const routes=JSON.parse(await fs.readFile(path.join(root,info.assets.routes),'utf8')),records=JSON.parse(await fs.readFile(path.join(root,info.assets.records),'utf8'));
 const search=JSON.parse(await fs.readFile(path.join(root,info.assets.search),'utf8'));
@@ -23,7 +25,26 @@ assert.equal(home('link[rel="stylesheet"]').length,0,'The homepage must not have
 assert(home('style[data-site-style]').length,'Missing inline critical styles');
 for(const script of home('script').toArray())assert.equal(home(script).attr('data-cfasync'),'false','Site scripts must opt out of Rocket Loader');
 assert(home('#content .preview-images img').first().attr('srcset').includes('640w'),'Missing close-fitting mobile thumbnail');
-assert(!home.html().includes('fonts.googleapis.com')&&!home.html().includes('Noto Sans SC'),'Large external font dependency returned');
+assert(!home.html().includes('fonts.googleapis.com')&&!home.html().includes('fonts.gstatic.com')&&!home.html().includes('Noto Sans SC'),'External font dependency returned');
+const readingFaces=[];
+for(const face of info.readingFonts.faces){
+ assert(face.src.startsWith('/static/')&&face.src.endsWith('.woff2')&&!face.src.includes('-full'),'Reading font must be a hashed local subset');
+ const buffer=await fs.readFile(path.join(root,face.src));
+ assert.equal(buffer.length,face.bytes,'Incorrect reading font byte count');
+ const font=create(buffer);assert(font.familyName.startsWith(face.family),'Unexpected reading typeface');
+ assert.equal(font.italicAngle!==0,face.style==='italic','Reading emphasis must use a real matching italic font');
+ assert.equal(`${font.variationAxes.wght.min} ${font.variationAxes.wght.max}`,face.weight,'Reading font weight descriptor must match its axis');
+ if(face.family==='Noto Serif KR')assert(font.characterSet.every(codePoint=>codePoint===0xffff||/\p{Script=Hangul}/u.test(String.fromCodePoint(codePoint))),'KR must not introduce regional Han glyphs');
+ if(face.family!=='Noto Serif')for(const feature of ['hwid','pwid','palt','halt','chws','vert','vrt2'])assert(!font.availableFeatures.includes(feature),`Unexpected width/vertical alternate: ${feature}`);
+ readingFaces.push({...face,font});
+}
+assert.equal(readingFaces.filter(face=>face.family==='Noto Serif SC').length,1,'Exactly one SC regional face is required');
+assert(readingFaces.some(face=>face.family==='Noto Serif'&&face.style==='italic'),'Missing matching Latin italic face');
+const siteStyle=home('style[data-site-style]').text();
+assert(/--reading-font:\s*(['"])Noto Serif\1\s*,\s*(['"])Noto Serif SC\2/.test(siteStyle),'Noto Serif must precede the CJK family');
+assert(!/@font-face\s*\{[^}]*Noto Serif/.test(siteStyle),'Reading fonts must not be requested before asynchronous loading');
+for(const link of home('link[rel="preload"][as="font"]').toArray())assert(!home(link).attr('href').includes('noto-serif'),'Do not preload noncritical reading fonts');
+const publishedReadingText=[];
 const cacheHeaders=await fs.readFile(path.join(root,'_headers'),'utf8');
 for(const directory of ['static','media','data'])assert(cacheHeaders.includes(`${base}/${directory}/*\n  Cache-Control: public, max-age=31536000, immutable`),`Missing immutable cache policy: ${directory}`);
 const errors=[];
@@ -53,6 +74,7 @@ for(const [route,key] of Object.entries(routes)){
 const imageMetadata=new Map();
 for(const file of await files(root)){
  const $=load(await fs.readFile(file,'utf8'));
+ const reading=load($('#content').html()||'');reading('script,style,.katex,pre,code').remove();publishedReadingText.push(reading.root().text());
  for(const el of $('[srcset]').toArray()){
   const descriptors=new Set();
   for(const candidate of $(el).attr('srcset').split(',')){
@@ -80,6 +102,8 @@ for(const file of await files(root)){
  }
 }
 
+assertReadingCoverage(readingFaces,readingCharacters([...publishedReadingText,home('nav').text(),...records.flatMap(record=>[record.title,record.category,...record.tags,record.excerpt,record.firstSentence]),...search.map(record=>record.searchText)]));
+console.log(`Reading font checks: published glyph coverage, matching Latin italics, full-width Han/kana, and Hangul-only Korean fallback (${info.readingFonts.cjkCharacters} CJK characters).`);
 for(const filename of await fs.readdir('source/_posts')){if(!filename.endsWith('.md'))continue;const {data}=matter(await fs.readFile(path.join('source/_posts',filename),'utf8'));if(data.draft===true||data.published===false){const route='/posts/'+String(data.slug||filename.slice(0,-3));assert(!routes[route],`Unpublished post leaked: ${filename}`)}}
 if(errors.length){console.error([...new Set(errors)].slice(0,35).join('\n'));process.exit(1)}
 console.log(`Free-tier asset checks: ${deploymentFiles.length} files, largest ${(largest/1024/1024).toFixed(2)} MiB. No runtime services.\nValidated ${info.posts} posts and ${info.pages} static HTML routes at ${base||'/'}, including pre-rendered content and local asset/link references.`);

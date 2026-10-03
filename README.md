@@ -128,18 +128,26 @@ No serverless functions or catch-all redirects are used. Each deep link has its 
 - `theme/app.js`: optional browser enhancements.
 - `scripts/build.mjs`: Markdown-to-HTML generation, archives, tags, categories, RSS, sitemap, minification, and content-hashed assets.
 - `scripts/images.mjs`: automatic responsive article images, cropped card thumbnails, sidebar variants, and tiny previews.
-- `scripts/check.mjs`: generated routes, responsive image widths, content hashes, loading priorities, and local asset checks.
+- `scripts/fonts.mjs`: automatic published-text Noto subsets, source checksums, script coverage, and Han/kana width checks.
+- `fonts/noto/`: pinned, licensed Google Fonts build inputs and provenance; never copied wholesale into deployment.
+- `scripts/check.mjs`: generated routes, responsive image widths, content hashes, loading priorities, reading-font coverage, and local asset checks.
 - `dist/`: generated deployable files. Do not edit these by hand.
 
 Set `SITE_URL` (origin only, such as `https://nir.moe`) to generate canonical links and `sitemap.xml`. RSS is generated on every build; setting `SITE_URL` makes its links absolute. `BASE_PATH` overrides `site.config.json`'s `basePath`.
 
 ### Loading and caching
 
-The initial page is complete static HTML with minified styles inlined, so rendering does not wait for a stylesheet request or navigation data. DM Sans and Playfair Display are self-hosted Latin-only variable fonts with `font-display: optional`; Chinese text uses system fonts. Font licenses are included in `dist/licenses/`. KaTeX styles load only on math pages, including when navigating to them without a full reload.
+The initial page is complete static HTML with minified styles inlined, so rendering does not wait for a stylesheet request or navigation data. DM Sans and Playfair Display remain self-hosted Latin-only variable fonts for navigation/branding, with `font-display: optional`.
+
+The reading area uses **Noto Serif → Noto Serif SC → Noto Serif KR**, following [Google's recommended family order](https://fonts.google.com/noto/use#use-noto-fonts-as-web-fonts). Latin, Greek, Cyrillic, numbers, and shared punctuation come from Noto Serif, with a matching italic face; Han/kanji and kana use one SC variant. The tiny KR subset supplies Hangul only, never a second regional Han variant. Builds automatically collect published text, titles, tags, excerpts, search snippets, and navigation and generate shared, content-hashed WOFF2 subsets. Adding text needs no manual font processing. Pinned sources come from Google's `fonts.gstatic.com`, not GitHub; neither builds nor visitors fetch remote font sources. See `fonts/noto/README.md` for provenance and licensing.
+
+Reading fonts are **not preloaded or requested by initial CSS**. After the window load event and the observed first contentful paint (or two animation frames on browsers without Paint Timing), an idle task fetches them at low priority, then registers the complete loaded cohort with `FontFace`/`document.fonts` in one step. Text is always visible in serif fallbacks; a failed or timed-out cohort stays on those fallbacks. With JavaScript disabled, the fallback remains readable. Switching to the loaded font can still change Latin wrapping and layout; asynchronous loading is not a promise of zero layout shift. CSS disables half/proportional-width CJK alternates, and checks enforce published glyph coverage and one-em Han/kana advances. Original half-width text is not rewritten. Emoji/icons, monospace code, and KaTeX retain their appropriate fonts.
+
+Font licenses are included in `dist/licenses/`. KaTeX styles load only on math pages, including when navigating to them without a full reload.
 
 Navigation fetches a small metadata manifest on demand. The full-text search index is downloaded only when Search is opened, and reused for subsequent searches. Initial pages never replace their real images with tiny previews.
 
-Generated media, JavaScript, fonts, and JSON/NDJSON have content-hashed URLs. `dist/_headers` enables one-year immutable caching for those assets on Cloudflare Pages and Netlify; HTML keeps the hosting platform's normal revalidation behavior. GitHub Pages controls its own HTTP cache headers. The preview server supports Brotli/gzip, ETags, and the same asset-versus-HTML cache policy. Production compression is supplied by the static host.
+Generated media, JavaScript, all fonts (including the new Noto subsets), and JSON/NDJSON have content-hashed URLs. `dist/_headers` enables **one-year immutable caching** for those assets on Cloudflare Pages and Netlify; new glyphs or source changes produce new font URLs. HTML keeps the hosting platform's normal revalidation behavior rather than long-lived caching. First-party cache headers do not change Cloudflare Web Analytics' third-party cache policy, and visit collection remains enabled. GitHub Pages controls its own HTTP cache headers. The preview server supports Brotli/gzip, ETags, and the same asset-versus-HTML cache policy. Production compression is supplied by the static host.
 
 The Sites publication uses `.openai/hosting.json`. That manifest is unnecessary for GitHub Pages or Netlify and is omitted from the portable download.
 

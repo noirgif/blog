@@ -1,0 +1,47 @@
+[
+  {
+    "family": "Noto Serif SC",
+    "style": "normal",
+    "file": "noto-serif-sc-full.woff2",
+    "license": "noto-serif-sc-OFL.txt",
+    "source": "https://fonts.gstatic.com/s/notoserifsc/v36/H4chBXePl9DZ0Xe7gG9cyOj7oqacbzhqDtg.ttf",
+    "sourceSha256": "e553aa4a7eb6e45ba39d7a562ef4b51ac5764d21ce9ea12995f264a9b3e63cd7",
+    "sha256": "edbfb610750bbfd53a79ea35e42b00bf868ecd6c5abb3153877a031118e8d5bc",
+    "version": "Version 2.003-H1;hotconv 1.1.1;makeotfexe 2.6.0",
+    "weight": "200 900"
+  },
+  {
+    "family": "Noto Serif",
+    "style": "normal",
+    "file": "noto-serif-full.woff2",
+    "license": "noto-serif-OFL.txt",
+    "source": "https://fonts.gstatic.com/s/notoserif/v33/ga6Iaw1J5X9T9RW6j9bNTFAcaRi_bMQ.ttf",
+    "sourceSha256": "26485cbd00507110de7a77cd63d0ec99d356f38e5d9c0c5d07ecea1c7827ea24",
+    "sha256": "fa31c6d0443bb2bfa87dccf4c920e4d828d7069858717e10a54174621c7925eb",
+    "version": "Version 2.015",
+    "weight": "400 700"
+  },
+  {
+    "family": "Noto Serif",
+    "style": "italic",
+    "file": "noto-serif-italic-full.woff2",
+    "license": "noto-serif-OFL.txt",
+    "source": "https://fonts.gstatic.com/s/notoserif/v33/ga6Kaw1J5X9T9RW6j9bNfFIWbTq6fMRRMw.ttf",
+    "sourceSha256": "061daf34bfdd0e0635ce3d4f701398772ce2944ee0b24f584e0273366bbea468",
+    "sha256": "140d6c411c960e846b4d8e7cf58f99cf5768fe0b8ede7be4c939587fa622cefb",
+    "version": "Version 2.013",
+    "weight": "400 700"
+  },
+  {
+    "family": "Noto Serif KR",
+    "style": "normal",
+    "file": "noto-serif-kr-hangul.woff2",
+    "license": "noto-serif-kr-OFL.txt",
+    "source": "https://fonts.gstatic.com/s/notoserifkr/v32/3Jn7SDn90Gmq2mr3blnHaTZXduBp1ONyKHQ.ttf",
+    "sourceSha256": "a3b3d0d23506675bbd4a209c708dae332d4f1a46b724850a37780287d8a8f6f1",
+    "sha256": "00f23d3a36907cd35d9b0137ee603605df4cf41b4d378b1b1ee5107baa4d792c",
+    "version": "Version 2.003-H1;hotconv 1.1.1;makeotfexe 2.6.0",
+    "weight": "200 900",
+    "script": "Hangul"
+  }
+]

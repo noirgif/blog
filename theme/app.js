@@ -1,6 +1,38 @@
 const BASE=window.__SITE_BASE__||'';
 const siteUrl=p=>BASE+p;
 const ASSETS=window.__SITE_ASSETS__;
+async function loadReadingFonts(){
+ if(!window.FontFace||!document.fonts||!ASSETS.readingFonts)return;
+ const state=document.documentElement,controller=new AbortController();
+ const timeout=setTimeout(()=>controller.abort(),30000);
+ state.dataset.readingFont='loading';
+ try{
+  const faces=await Promise.all(ASSETS.readingFonts.map(async font=>{
+   const response=await fetch(siteUrl(font.src),{priority:'low',signal:controller.signal});
+   if(!response.ok)throw Error('Reading font unavailable');
+   const face=new FontFace(font.family,await response.arrayBuffer(),{weight:font.weight,style:font.style});
+   return face.load();
+  }));
+  // Publish the complete Latin/SC cohort together, never a partially loaded mix.
+  for(const face of faces)document.fonts.add(face);
+  state.dataset.readingFont='ready';
+ }catch{
+  controller.abort();state.dataset.readingFont='fallback';
+ }finally{clearTimeout(timeout)}
+}
+function scheduleReadingFonts(){
+ const idle=()=>{if('requestIdleCallback' in window)requestIdleCallback(loadReadingFonts,{timeout:1000});else setTimeout(loadReadingFonts,0)};
+ const painted=()=>{
+  if(performance.getEntriesByName('first-contentful-paint').length){idle();return}
+  if(window.PerformanceObserver?.supportedEntryTypes?.includes('paint')){
+   const observer=new PerformanceObserver(entries=>{if(entries.getEntries().some(entry=>entry.name==='first-contentful-paint')){observer.disconnect();idle()}});
+   observer.observe({type:'paint',buffered:true});
+  }else requestAnimationFrame(()=>requestAnimationFrame(idle));
+ };
+ // Critical images and an observed first paint take precedence; no font CSS/preload.
+ if(document.readyState==='complete')painted();else window.addEventListener('load',painted,{once:true});
+}
+scheduleReadingFonts();
 function prefixLinks(root){
  for(const el of root.querySelectorAll('[href],[src],[data-preview]'))for(const attr of ['href','src','data-preview']){const value=el.getAttribute(attr);if(value?.startsWith('/')&&!value.startsWith('//')&&!(BASE&&value.startsWith(BASE+'/')))el.setAttribute(attr,siteUrl(value));}
  for(const el of root.querySelectorAll('[srcset]'))el.setAttribute('srcset',el.getAttribute('srcset').replace(/(^|,\s*)(\/(?!\/)[^\s,]+)/g,(_,separator,src)=>separator+(BASE&&src.startsWith(BASE+'/')?src:siteUrl(src))));

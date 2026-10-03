@@ -7,6 +7,7 @@ import { load } from 'cheerio';
 import katex from 'katex';
 import { transform } from 'esbuild';
 import { createImagePipeline, ARTICLE_SIZES, CARD_SIZES, PORTRAIT_MEDIA, COVER_SIZES } from './images.mjs';
+import { createReadingFonts } from './fonts.mjs';
 
 const root=process.cwd(), out=path.join(root,'dist');
 const config=JSON.parse(await fs.readFile('site.config.json','utf8'));
@@ -35,13 +36,6 @@ for(const [slug,family,weight] of [['dm-sans','DM Sans','100 1000'],['playfair-d
  const buffer=await fs.readFile(`${directory}/files/${slug}-latin-wght-normal.woff2`),asset=`/static/${slug}-${hash(buffer)}.woff2`;
  await fs.writeFile(path.join(out,asset),buffer);await fs.copyFile(`${directory}/LICENSE`,path.join(out,'licenses',slug+'.txt'));fonts.push(asset);
  fontCSS+=`@font-face{font-family:'${family}';font-style:normal;font-weight:${weight};font-display:optional;src:url('${url(asset)}') format('woff2');unicode-range:${latinRange}}`;
-}
-for(const [name,extension,loader] of [['style','css','css'],['app','js','js']]){
- const source=await fs.readFile(`theme/${name}.${extension}`,'utf8');
- const {code}=await transform((loader==='css'?fontCSS:'')+source,{loader,minify:true,target:['chrome100','firefox100','safari15.4'],legalComments:'none'});
- if(loader==='css')styleCode=code;
- const asset=`/static/${name}-${hash(code)}.${extension}`;
- await fs.writeFile(path.join(out,asset),code);staticAssets[name]=asset;
 }
 
 async function files(dir){const result=[];for(const e of await fs.readdir(dir,{withFileTypes:true})){const p=path.join(dir,e.name);if(e.isDirectory())result.push(...await files(p));else if(e.name.endsWith('.md'))result.push(p)}return result.sort()}
@@ -95,6 +89,15 @@ for(const file of await files('source')){
 }
 documents.sort((a,b)=>b.date.localeCompare(a.date)||a.path.localeCompare(b.path));
 const posts=documents.filter(d=>d.post);const paths=new Set();for(const d of documents){if(paths.has(d.path))throw Error('Duplicate permalink: '+d.path);paths.add(d.path)}
+const template=await fs.readFile('theme/index.html','utf8');
+const readingFonts=await createReadingFonts([load(template)('body').text(),config.title,config.description,config.author,'…',...documents.flatMap(d=>[d.title,d.category,...d.tags,d.excerpt,d.searchText,d.firstSentence])],out);
+for(const [name,extension,loader] of [['style','css','css'],['app','js','js']]){
+ const source=await fs.readFile(`theme/${name}.${extension}`,'utf8');
+ const {code}=await transform((loader==='css'?fontCSS:'')+source,{loader,minify:true,target:['chrome100','firefox100','safari15.4'],legalComments:'none'});
+ if(loader==='css')styleCode=code;
+ const asset=`/static/${name}-${hash(code)}.${extension}`;
+ await fs.writeFile(path.join(out,asset),code);staticAssets[name]=asset;
+}
 const stamp=s=>s?new Date(s).toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric',timeZone:'UTC'}):'';
 const category=p=>`<a class="category" href="/categories/${encodeURIComponent(p.category)}">${esc(p.category)}</a>`;
 const row=p=>`<div class="row"><time class="date">${esc(stamp(p.date))}</time><a href="${esc(p.path)}/">${esc(p.title)}</a></div>`;
@@ -114,7 +117,6 @@ const assets={...staticAssets,katex:katexDirectory+'/katex.min.css',
  search:await dataAsset('search',posts.map(({path,title,date,category,tags,searchText,paragraphs})=>({path,title,date,category,tags,searchText,paragraphs}))),
 };
 const cover=await media.sidebar(config.cover),avatar=await media.sidebar(config.avatar,true);
-const template=await fs.readFile('theme/index.html','utf8');
 function prefixed(html){
  const $=load(html);
  $('[href],[src],[data-preview]').each((i,el)=>{for(const a of ['href','src','data-preview']){const v=$(el).attr(a);if(v?.startsWith('/')&&!v.startsWith('//'))$(el).attr(a,url(v))}});
@@ -139,7 +141,7 @@ async function page(route,title,body,kicker='Journal',lang='en'){
  $('head').append($('<link>').attr({rel:'preload',as:'font',href:fonts[1],type:'font/woff2',crossorigin:'',media:'(orientation: landscape), (min-width: 801px) and (hover: hover)'}));
  $('head').append($('<link>').attr({rel:'icon',href:assets.favicon,type:'image/svg+xml'}));
  if($('#content .katex').length)$('head').append($('<link>').attr({rel:'stylesheet',href:assets.katex,'data-katex':''}));
- const clientAssets={records:assets.records,routes:assets.routes,search:assets.search,katex:assets.katex,cardSizes:CARD_SIZES};
+ const clientAssets={records:assets.records,routes:assets.routes,search:assets.search,katex:assets.katex,cardSizes:CARD_SIZES,readingFonts:readingFonts.faces.map(({bytes,...face})=>face)};
  $('head').append(`<script>window.__SITE_BASE__=${JSON.stringify(BASE).replace(/</g,'\\u003c')};window.__POSTS_PER_PAGE__=${Number(config.postsPerPage)||8};window.__SITE_ASSETS__=${JSON.stringify(clientAssets).replace(/</g,'\\u003c')};</script>`);
  // Our deferred script and configuration must not be rewritten by Rocket Loader.
  $('script').attr('data-cfasync','false');
@@ -165,6 +167,7 @@ const rssContent=`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><chan
 try{await fs.copyFile('others/_redirects',path.join(out,'_redirects'))}catch(e){if(e.code!=='ENOENT')throw e}
 const cacheHeaders=['/static/*','/media/*','/data/*',katexDirectory+'/*'].map(route=>`${url(route)}\n  Cache-Control: public, max-age=31536000, immutable`).join('\n\n')+'\n';
 await fs.writeFile(path.join(out,'_headers'),cacheHeaders);
-await fs.writeFile(path.join(out,'build-info.json'),JSON.stringify({basePath:BASE,posts:posts.length,pages:generated.length,images:imageCache.size,assets,fonts}));
+await fs.writeFile(path.join(out,'build-info.json'),JSON.stringify({basePath:BASE,posts:posts.length,pages:generated.length,images:imageCache.size,assets,fonts,readingFonts}));
 for(const warning of warnings)console.warn(warning);
 console.log(`Built ${posts.length} Markdown posts, ${generated.length} HTML pages (${BASE||'/'}).`);
+console.log(`Reading fonts: ${readingFonts.characters} characters (${readingFonts.cjkCharacters} CJK), ${(readingFonts.faces.reduce((bytes,face)=>bytes+face.bytes,0)/1024).toFixed(1)} KiB, self-hosted and asynchronous.`);
