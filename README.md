@@ -6,7 +6,7 @@ Every route has a complete `index.html` generated at build time. Reading posts a
 
 ## Write a post
 
-Requires Node.js 22 or newer.
+Requires Bun `>=1.4.2` and Node.js `^24.15.0` (Node.js 24.x, starting at 24.15.0). Bun is used to install dependencies and run the build scripts.
 
 ```sh
 bun install --frozen-lockfile
@@ -76,7 +76,7 @@ Use Cloudflare Pages **build system v3** and set:
 | `BASE_PATH` | Empty |
 | `SITE_URL` | `https://nir.moe` for the production domain, or leave unset to use `CF_PAGES_URL` |
 
-The `.node-version` file records Node 22. The build copies `others/_redirects` into `dist/_redirects`, preserving the RSS redirects from your original repository.
+The `.node-version` file records the required Node.js version, `24.15.0`. The build copies `others/_redirects` into `dist/_redirects`, preserving the RSS redirects from your original repository.
 
 The original Hexo/Tranquilpeak workflow builds the legacy site and publishes `public`. This reimagined project keeps the Markdown writing format but uses its own generator, so use the build command above and publish `dist`. It is a separate project, not a drop-in Tranquilpeak theme.
 
@@ -110,7 +110,7 @@ Connect the repository to Netlify. The included `netlify.toml` sets:
 
 - Build command: `bun run build && bun run check`
 - Publish directory: `dist`
-- Node.js: `22`
+- Node.js: `24.15.0`
 - Base path: root
 
 Netlify supplies its site URL at build time. You can override `SITE_URL` for a custom canonical URL. For manual deployment, build locally and upload the contents of `dist/`.

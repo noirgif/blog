@@ -2,7 +2,7 @@
 
 ## Build and validate
 
-Use Bun to install dependencies, build the static site, and run checks:
+Use Bun `>=1.4.2` to install dependencies, build the static site, and run checks. The project requires Node.js `^24.15.0` (Node.js 24.x, starting at 24.15.0):
 
 ```sh
 bun install
