@@ -63,11 +63,50 @@ bun run preview  # serves dist/ at http://localhost:4173/
 
 ## Submit a PageSpeed Insights test
 
-Submit a fresh analysis yourself; do not ask the user to submit it or substitute an existing report for a new run.
+Submit fresh tests through the official [PageSpeed Insights API](https://developers.google.com/speed/docs/insights/v5/get-started), using `PAGESPEED_API_KEY` from the environment. Do not ask the user to submit a report or substitute browser `vitals` for PSI results.
 
 1. Verify that the requested deployment is live. Use `https://nir.moe/` for production, not localhost or an unrelated preview.
-2. Use native `agent_browser` to open <https://pagespeed.web.dev/> and run `snapshot -i`. Keep the returned session identity for all follow-up commands. If the cookie notice is present, dismiss it and refresh the snapshot.
-3. Fill the current required textbox ref with `https://nir.moe/`. Verify its value with `get value <ref>`, then click the current **Analyze** button once. Refresh refs after any rerender; do not reuse another session's refs.
-4. Wait for the analysis to finish, checking for either a completed report or an explicit error. `Running analysis`, click dispatch, and the intermediate `/analysis?url=...` URL do not prove success. Do not wait for the generic word `Performance`: footer text can satisfy it before results exist. Verify the report's timestamp, target URL, selected Mobile/Desktop tab, category scores, and FCP/LCP/TBT/CLS/Speed Index values.
-5. Use **Copy Link** to capture the generated report permalink, normally `/analysis/<site-slug>/<report-id>?form_factor=mobile` (or `desktop`). Select the other form-factor tab and verify its results if both are requested; do not resubmit unnecessarily. Report only values read from the completed report.
-6. If PSI shows `Unable to resolve`, inspect `network requests` in that same session and use its `network request <request-id>` follow-up to inspect the failed `POST /_/PagespeedUi/data/batchexecute` status and response body before deciding what failed. HTTP 429 with Google's automated-query refusal is an automation/rate-limit block, not evidence of bad site DNS. Stop on that block; do not rotate domains, browser identities, or networks to evade it. A shell HTTP 200 cannot establish that PSI accepted the test. Report the blocker honestly rather than using browser `vitals` as PSI results.
+2. Confirm the API key is configured without printing it. Use the authenticated `GET https://www.googleapis.com/pagespeedonline/v5/runPagespeed` endpoint with `url`, `strategy=mobile` or `desktop`, and repeated `category` parameters for `performance`, `accessibility`, `best-practices`, and `seo`. Read the key directly from the environment; never paste it into tool arguments, logs, or committed files.
+3. Run the two strategies sequentially, allowing up to 180 seconds per request. Require HTTP success, a `lighthouseResult`, no `runtimeError`, and the expected target URL and `configSettings.formFactor`. Stop on authentication/quota errors instead of retrying rapidly or changing identities.
+4. Save each complete JSON response outside the repository. Report `fetchTime`, category scores multiplied by 100, and the FCP, LCP, TBT, CLS, and Speed Index audits. Use `numericValue`/`numericUnit` for precision and note any `runWarnings`. API results do not provide a PSI web-report permalink; retain the JSON artifact path rather than inventing one.
+
+Example (Node.js, run from Bash):
+
+```sh
+node --input-type=module <<'NODE'
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+const key = process.env.PAGESPEED_API_KEY;
+if (!key) throw Error('PAGESPEED_API_KEY is not configured');
+const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'nir-moe-pagespeed-'));
+for (const strategy of ['mobile', 'desktop']) {
+  const url = new URL('https://www.googleapis.com/pagespeedonline/v5/runPagespeed');
+  url.searchParams.set('url', 'https://nir.moe/');
+  url.searchParams.set('strategy', strategy);
+  for (const category of ['performance', 'accessibility', 'best-practices', 'seo']) {
+    url.searchParams.append('category', category);
+  }
+  url.searchParams.set('key', key);
+  const response = await fetch(url, { signal: AbortSignal.timeout(180000) });
+  if (!response.ok) throw Error(`PSI HTTP ${response.status}; stop and inspect the error without exposing the key`);
+  const report = await response.json();
+  const result = report.lighthouseResult;
+  if (!result || result.runtimeError || !result.categories?.performance
+      || result.requestedUrl !== 'https://nir.moe/'
+      || result.finalUrl !== 'https://nir.moe/'
+      || result.configSettings?.formFactor !== strategy) {
+    throw Error('Missing, failed, or unexpected Lighthouse result');
+  }
+  const file = path.join(directory, `${strategy}.json`);
+  await fs.writeFile(file, JSON.stringify(report, null, 2), { mode: 0o600 });
+  console.log(JSON.stringify({
+    strategy, file, fetchTime: result.fetchTime, warnings: result.runWarnings,
+    scores: Object.fromEntries(Object.entries(result.categories).map(([id, c]) => [id, c.score === null ? null : Math.round(c.score * 100)])),
+    metrics: Object.fromEntries(['first-contentful-paint', 'largest-contentful-paint', 'total-blocking-time', 'cumulative-layout-shift', 'speed-index'].map(id => [id, {
+      value: result.audits[id]?.numericValue, unit: result.audits[id]?.numericUnit
+    }]))
+  }, null, 2));
+}
+NODE
+```
