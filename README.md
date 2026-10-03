@@ -1,6 +1,6 @@
 # Goddess Unknown — static Markdown blog
 
-A static reimagining of [nir.moe](https://nir.moe), using Markdown posts from [noirgif/blog](https://github.com/noirgif/blog). The illustrated sidebar retracts while reading a post and returns on other pages, including Back/Forward navigation. In portrait on mobile, a compact header replaces the cover panel, and a menu button opens navigation, the profile, and social links. Landscape phones use the desktop-style side layout, with a sidebar that scrolls independently so all links remain accessible. The desktop sidebar scrolls when the window is short. Continuous navigation remains: clear the old reading area, update the URL, fetch static content, and reveal it as it arrives. Images sharpen from tiny blurred previews.
+A static reimagining of [nir.moe](https://nir.moe), using Markdown posts from [noirgif/blog](https://github.com/noirgif/blog). The illustrated sidebar retracts while reading a post and returns on other pages, including Back/Forward navigation. In portrait on mobile, a compact header replaces the cover panel, and a menu button opens navigation, the profile, and social links. Landscape phones use the desktop-style side layout, with a sidebar that scrolls independently so all links remain accessible. The desktop sidebar scrolls when the window is short. Continuous navigation remains: clear the old reading area, update the URL, fetch static content, and reveal it as it arrives. Responsive WebP images load natively; images inserted during navigation reveal over tiny previews without replacing an already-rendered image.
 
 Every route has a complete `index.html` generated at build time. Reading posts and following links works without JavaScript. JavaScript adds in-place navigation, search, and progressive image reveals. There is no application server, database, or runtime API.
 
@@ -32,7 +32,7 @@ Write normal Markdown here.
 ![A photograph](/assets/image/my-photo.jpg)
 ```
 
-Put local images in `public/assets/image/`. Their `/assets/image/...` paths are resolved at build time; the build generates optimized progressive JPEGs and tiny previews. External images are allowed, but new remote images are displayed directly and do not automatically receive generated previews. Builds never download external content.
+Put local images in `public/assets/image/` and reference them normally in Markdown. **No manual thumbnail step is needed.** Every build automatically generates responsive WebP article images and tiny previews. The first available local image in each published post also gets cropped homepage thumbnails at multiple widths; the browser chooses the appropriate size for its viewport and pixel density. Full article images are not cropped. The first homepage preview is eager-loaded with high priority, while later images load lazily. External images are allowed, but new remote images are displayed directly and do not automatically receive generated variants unless a local copy is already available. Builds never download external content.
 
 Dates without a timezone are interpreted as UTC, matching the migrated timestamps. Explicit `Z` or numeric timezone offsets are supported.
 
@@ -71,7 +71,8 @@ Use Cloudflare Pages **build system v3** and set:
 | Root directory | Repository root |
 | Build command | `bun install --frozen-lockfile && bun run build:cloudflare` |
 | Build output directory | `dist` |
-| `NODE_VERSION` | `22` |
+| `BUN_VERSION` | `1.4.2` |
+| `NODE_VERSION` | `24` |
 | `BASE_PATH` | Empty |
 | `SITE_URL` | `https://nir.moe` for the production domain, or leave unset to use `CF_PAGES_URL` |
 
@@ -125,11 +126,20 @@ No serverless functions or catch-all redirects are used. Each deep link has its 
 - `theme/index.html`: shared page shell and navigation.
 - `theme/style.css`: styles.
 - `theme/app.js`: optional browser enhancements.
-- `scripts/build.mjs`: Markdown-to-HTML generation, image previews, archives, tags, categories, RSS, and sitemap.
-- `scripts/check.mjs`: generated route and local asset checks.
+- `scripts/build.mjs`: Markdown-to-HTML generation, archives, tags, categories, RSS, sitemap, minification, and content-hashed assets.
+- `scripts/images.mjs`: automatic responsive article images, cropped card thumbnails, sidebar variants, and tiny previews.
+- `scripts/check.mjs`: generated routes, responsive image widths, content hashes, loading priorities, and local asset checks.
 - `dist/`: generated deployable files. Do not edit these by hand.
 
 Set `SITE_URL` (origin only, such as `https://nir.moe`) to generate canonical links and `sitemap.xml`. RSS is generated on every build; setting `SITE_URL` makes its links absolute. `BASE_PATH` overrides `site.config.json`'s `basePath`.
+
+### Loading and caching
+
+The initial page is complete static HTML with minified styles inlined, so rendering does not wait for a stylesheet request or navigation data. DM Sans and Playfair Display are self-hosted Latin-only variable fonts with `font-display: optional`; Chinese text uses system fonts. Font licenses are included in `dist/licenses/`. KaTeX styles load only on math pages, including when navigating to them without a full reload.
+
+Navigation fetches a small metadata manifest on demand. The full-text search index is downloaded only when Search is opened, and reused for subsequent searches. Initial pages never replace their real images with tiny previews.
+
+Generated media, JavaScript, fonts, and JSON/NDJSON have content-hashed URLs. `dist/_headers` enables one-year immutable caching for those assets on Cloudflare Pages and Netlify; HTML keeps the hosting platform's normal revalidation behavior. GitHub Pages controls its own HTTP cache headers. The preview server supports Brotli/gzip, ETags, and the same asset-versus-HTML cache policy. Production compression is supplied by the static host.
 
 The Sites publication uses `.openai/hosting.json`. That manifest is unnecessary for GitHub Pages or Netlify and is omitted from the portable download.
 

@@ -14,15 +14,19 @@
     "build:cloudflare": "node scripts/build.mjs && node scripts/check.mjs"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "5.3.0",
+    "@fontsource-variable/playfair-display": "5.3.0",
     "cheerio": "1.2.0",
+    "esbuild": "0.25.10",
     "gray-matter": "4.0.3",
+    "katex": "0.16.22",
     "marked": "16.4.2",
-    "sharp": "0.34.4",
-    "katex": "0.16.22"
+    "sharp": "0.34.4"
   },
   "packageManager": "pnpm@10.11.1",
   "pnpm": {
     "onlyBuiltDependencies": [
+      "esbuild",
       "sharp"
     ]
   }
