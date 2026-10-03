@@ -2,8 +2,8 @@
 title: 故事的终结
 date: 2017-11-06 00:01:10
 tags:
-	- story
-	- meta
+  - story
+  - meta
 lang: zh-cn
 label: end of story
 ---

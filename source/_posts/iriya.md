@@ -4,10 +4,10 @@ date: 2019-11-20 21:56:34
 category:
   - commentary
 tags:
-	- iriya no sora
-	- mizuto akiyama
-	- sekaikei
-	- lightnovel
+  - iriya no sora
+  - mizuto akiyama
+  - sekaikei
+  - lightnovel
 lang: zh-cn
 label: uchiagehanabi
 ---

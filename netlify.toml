@@ -1,0 +1,10 @@
+[build]
+  command = "pnpm build && pnpm check"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  PNPM_VERSION = "10.11.1"
+  BASE_PATH = ""
+
+# Pages have their own HTML files; no SPA catch-all redirect is needed.
