@@ -1,41 +1,35 @@
 {
-  "name": "hexo-site",
-  "version": "0.0.0",
+  "name": "goddess-unknown-static",
+  "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@9.15.9",
+  "type": "module",
   "engines": {
-    "node": ">=22.0.0"
+    "node": "^24.15.0"
   },
-  "hexo": {
-    "version": "7.3.0"
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "new": "node scripts/new-post.mjs",
+    "preview": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs",
+    "build:cloudflare": "node scripts/build.mjs && node scripts/check.mjs"
   },
   "dependencies": {
-    "algoliasearch": "5.48.1",
-    "deepmerge": "4.3.1",
-    "hexo": "8.1.1",
-    "hexo-algoliasearch": "github:noirgif/hexo-algoliasearch",
-    "hexo-cli": "4.3.2",
-    "hexo-deployer-git": "4.0.0",
-    "hexo-deployer-rsync": "3.0.0",
-    "hexo-generator-alias": "1.0.0",
-    "hexo-generator-archive": "2.0.0",
-    "hexo-generator-basic-set": "0.1.1",
-    "hexo-generator-category": "2.0.0",
-    "hexo-generator-feed": "4.0.0",
-    "hexo-generator-index": "4.0.0",
-    "hexo-generator-search": "2.4.3",
-    "hexo-generator-sitemap": "3.0.1",
-    "hexo-generator-tag": "2.0.0",
-    "hexo-math": "^5.0.0",
-    "hexo-multilingual": "0.6.0",
-    "hexo-renderer-ejs": "2.0.0",
-    "hexo-renderer-markdown-it": "7.1.1",
-    "hexo-renderer-stylus": "3.0.1",
-    "hexo-server": "3.0.0",
-    "hexo-util": "^4.0.0",
-    "highlight.js": "11.11.1",
-    "jquery": "4.0.0",
-    "jsdom": "28.1.0",
-    "strip-indent": "^4.0.0"
+    "@fontsource-variable/dm-sans": "5.3.0",
+    "@fontsource-variable/playfair-display": "5.3.0",
+    "cheerio": "1.2.0",
+    "esbuild": "0.25.10",
+    "fontkit": "2.0.4",
+    "gray-matter": "4.0.3",
+    "katex": "0.16.22",
+    "marked": "16.4.2",
+    "sharp": "0.34.4",
+    "subset-font": "2.9.0"
+  },
+  "packageManager": "pnpm@10.11.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
   }
 }

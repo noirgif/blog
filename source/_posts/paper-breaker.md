@@ -2,7 +2,7 @@
 title: paper breaker
 date: 2017-10-29 00:47:24
 tags:
-	- paper
+  - paper
 lang: zh-cn
 label: paper breaker
 ---

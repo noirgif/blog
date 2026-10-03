@@ -1,4 +1,0 @@
-feed:
-  type: rss2
-  path: rss.xml
-  limit: 20
