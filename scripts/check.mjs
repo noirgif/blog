@@ -21,6 +21,8 @@ assert.equal(home('#content .preview-images img[loading="eager"]').length,1,'Onl
 assert.equal(home('link[data-katex]').length,0,'The homepage must not load math CSS');
 assert.equal(home('link[rel="stylesheet"]').length,0,'The homepage must not have render-blocking stylesheet requests');
 assert(home('style[data-site-style]').length,'Missing inline critical styles');
+for(const script of home('script').toArray())assert.equal(home(script).attr('data-cfasync'),'false','Site scripts must opt out of Rocket Loader');
+assert(home('#content .preview-images img').first().attr('srcset').includes('640w'),'Missing close-fitting mobile thumbnail');
 assert(!home.html().includes('fonts.googleapis.com')&&!home.html().includes('Noto Sans SC'),'Large external font dependency returned');
 const cacheHeaders=await fs.readFile(path.join(root,'_headers'),'utf8');
 for(const directory of ['static','media','data'])assert(cacheHeaders.includes(`${base}/${directory}/*\n  Cache-Control: public, max-age=31536000, immutable`),`Missing immutable cache policy: ${directory}`);

@@ -136,10 +136,13 @@ async function page(route,title,body,kicker='Journal',lang='en'){
  $('nav a[data-nav]').each((i,el)=>{if($(el).attr('data-nav')===route)$(el).addClass('active').attr('aria-current','page')});
  $('link[href="/style.css"]').replaceWith($('<style data-site-style></style>').text(styleCode));$('script[src="/app.js"]').attr('src',assets.app);
  $('head').prepend($('<link>').attr({rel:'preload',as:'font',href:fonts[0],type:'font/woff2',crossorigin:''}));
+ $('head').append($('<link>').attr({rel:'preload',as:'font',href:fonts[1],type:'font/woff2',crossorigin:'',media:'(orientation: landscape), (min-width: 801px) and (hover: hover)'}));
  $('head').append($('<link>').attr({rel:'icon',href:assets.favicon,type:'image/svg+xml'}));
  if($('#content .katex').length)$('head').append($('<link>').attr({rel:'stylesheet',href:assets.katex,'data-katex':''}));
  const clientAssets={records:assets.records,routes:assets.routes,search:assets.search,katex:assets.katex,cardSizes:CARD_SIZES};
  $('head').append(`<script>window.__SITE_BASE__=${JSON.stringify(BASE).replace(/</g,'\\u003c')};window.__POSTS_PER_PAGE__=${Number(config.postsPerPage)||8};window.__SITE_ASSETS__=${JSON.stringify(clientAssets).replace(/</g,'\\u003c')};</script>`);
+ // Our deferred script and configuration must not be rewritten by Rocket Loader.
+ $('script').attr('data-cfasync','false');
  if(origin)$('head').append(`<link rel="canonical" href="${esc(origin+url(route==='/'?'/':route+'/'))}">`);
  const final=prefixed($.html()),destination=path.join(out,route==='/'?'':decodeURIComponent(route));await fs.mkdir(destination,{recursive:true});await fs.writeFile(path.join(destination,'index.html'),final);generated.push(route);return final;
 }

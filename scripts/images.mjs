@@ -70,7 +70,7 @@ export function createImagePipeline(sourceDir, outputDir, warn) {
     if (thumbnails.has(image.file)) return thumbnails.get(image.file);
     const task = (async () => {
       const input = await fs.readFile(image.file);
-      const result = await variants(input, [480, 960, 1440], { maxWidth: Math.min(image.width, Math.floor(image.height * 8 / 5)), height: width => width * 5 / 8, quality: 75 });
+      const result = await variants(input, [480, 640, 960, 1440], { maxWidth: Math.min(image.width, Math.floor(image.height * 8 / 5)), height: width => width * 5 / 8, quality: 75 });
       const tiny = await sharp(input, { animated: false }).rotate().resize({ width: 36, height: 23, fit: 'cover' }).jpeg({ quality: 45 }).toBuffer();
       return { ...result, preview: await write(tiny, 'jpg') };
     })();
