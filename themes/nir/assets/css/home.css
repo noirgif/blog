@@ -24,6 +24,8 @@
   .card-excerpt { -webkit-line-clamp: 2; font-size: .95rem; }
 }
 .pagination { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.pagination .btn { min-width: 7.5rem; justify-content: center; }
+.pagination [rel=prev] { justify-self: start; }
 .pagination [rel=next] { justify-self: end; }
 .pagination-info { color: var(--muted); font-size: .9rem; font-variant-numeric: tabular-nums; }
 
