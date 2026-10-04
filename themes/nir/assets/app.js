@@ -145,8 +145,11 @@ async function navigate(url, { push = true, scroll = 0, highlight = null } = {})
       const from = $(sel, doc.head), to = $(sel);
       if (from && to) for (const attr of ['content', 'href']) if (from.hasAttribute(attr)) to.setAttribute(attr, from.getAttribute(attr));
     }
-    const css = $('style[data-page-css]', doc.head), mine = $('style[data-page-css]');
-    if (css && mine && css.textContent !== mine.textContent) mine.textContent = css.textContent;
+    for (const sel of ['style[data-page-css]', 'style[data-font-css]']) {
+      const css = $(sel, doc.head), mine = $(sel);
+      if (css && mine && css.textContent !== mine.textContent) mine.textContent = css.textContent;
+    }
+    $('style[data-font-css]').media = 'all';
     main.replaceWith(next);
     main = next;
     markActiveNav();
