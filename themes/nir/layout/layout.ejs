@@ -26,8 +26,8 @@ const canonical = full_url_for(page.__404 ? '/404.html' : page.path.replace(/ind
 <link rel="alternate" type="application/rss+xml" title="<%= config.title %>" href="<%= url_for('/rss-all.xml') %>">
 <style><%- inline_css() %></style>
 <style data-page-css><%- inline_css(kind) %></style>
-<%# Enhancements start after the page has loaded, so they never compete with first render. %>
-<script>addEventListener('load',function(){var s=document.createElement('script');s.type='module';s.fetchPriority='low';s.src='<%= asset('app.js') %>';document.head.append(s)},{once:true})</script>
+<%# Enhancements start once the page has loaded and painted, so they never compete with first render. %>
+<script>addEventListener('load',function(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(function(){var s=document.createElement('script');s.type='module';s.fetchPriority='low';s.src='<%= asset('app.js') %>';document.head.append(s)})})})},{once:true})</script>
 </head>
 <body class="page-<%= kind %>"<% if (theme.cloudflare_analytics_token) { %> data-cf-beacon="<%= theme.cloudflare_analytics_token %>"<% } %>>
 <a class="skip-link" href="#main"><%= t('skip') %></a>
