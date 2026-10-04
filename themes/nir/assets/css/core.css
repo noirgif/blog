@@ -30,7 +30,7 @@
   --hl-title: #6d46c7; --hl-attr: #a75b00; --hl-meta: #5b6772;
 
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
-  --font-read: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", serif;
+  --font-read: Merriweather, Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, "Noto Serif", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", "Songti SC", STSong, "Noto Serif JP", "Yu Mincho", serif;
   --font-mono: ui-monospace, "Cascadia Code", SFMono-Regular, Menlo, Consolas, monospace;
   color-scheme: light dark;
 }

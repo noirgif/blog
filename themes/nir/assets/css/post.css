@@ -5,7 +5,7 @@
 .prose:lang(zh-CN), .prose:lang(ja) { line-height: 1.95; letter-spacing: .02em; }
 .prose > :first-child { margin-top: 0; }
 .prose p, .prose ul, .prose ol, .prose dl, .prose blockquote, .prose pre, .prose table, .prose figure, .prose .alert { margin: 0 0 1.2em; }
-.prose h1, .prose h2, .prose h3, .prose h4 { font-family: var(--font-sans); margin: 2em 0 .7em; }
+.prose h1, .prose h2, .prose h3, .prose h4 { font-family: var(--font-read); margin: 2em 0 .7em; }
 .prose h1 { font-size: 1.6rem; } .prose h2 { font-size: 1.4rem; } .prose h3 { font-size: 1.2rem; } .prose h4 { font-size: 1.05rem; }
 .prose ul, .prose ol { padding-left: 1.4em; }
 .prose li + li { margin-top: .25em; }
