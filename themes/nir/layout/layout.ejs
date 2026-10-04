@@ -28,7 +28,7 @@ const canonical = full_url_for(page.__404 ? '/404.html' : page.path.replace(/ind
 <style data-page-css><%- inline_css(kind) %></style>
 <script type="module" src="<%= asset('app.js') %>" fetchpriority="low"></script>
 </head>
-<body class="page-<%= kind %>">
+<body class="page-<%= kind %>"<% if (theme.cloudflare_analytics_token) { %> data-cf-beacon="<%= theme.cloudflare_analytics_token %>"<% } %>>
 <a class="skip-link" href="#main"><%= t('skip') %></a>
 <%- partial('_partial/topbar') %>
 <%- partial('_partial/sidebar', { kind }) %>

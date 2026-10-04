@@ -405,6 +405,20 @@ document.addEventListener('click', e => {
   import(__SNOW_URL__).then(m => m.snow(r.left + r.width / 2, r.top + r.height / 2));
 });
 
+/* ---------------- analytics, after the first interaction ---------------- */
+if (body.dataset.cfBeacon) {
+  const events = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
+  const load = () => {
+    events.forEach(e => removeEventListener(e, load, true));
+    const s = document.createElement('script');
+    s.defer = true;
+    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    s.dataset.cfBeacon = JSON.stringify({ token: body.dataset.cfBeacon, spa: true });
+    document.head.append(s);
+  };
+  events.forEach(e => addEventListener(e, load, { capture: true, passive: true }));
+}
+
 /* ---------------- per page setup ---------------- */
 function initPage(highlight) {
   setupComments();
