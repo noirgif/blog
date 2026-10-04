@@ -1,0 +1,45 @@
+<%
+const isPost = is_post();
+const isHome = is_home();
+const kind = page.__404 ? 'not-found' : isPost ? 'post' : isHome ? 'home' : (is_archive() || is_category() || is_tag() || ['all-archives', 'all-categories', 'all-tags'].includes(page.layout)) ? 'list' : 'page';
+const pageTitle = page.__404 ? t('not_found_title') : page.title || (page.category ? page.category : page.tag ? '#' + page.tag : '');
+const fullTitle = pageTitle && !isHome ? pageTitle + ' · ' + config.title : config.title + (page.current > 1 ? ' · ' + t('page_n', page.current) : '');
+const description = isPost || (page.title && kind === 'page') ? plain_excerpt(page, 150) || config.description : config.description;
+const canonical = full_url_for(page.__404 ? '/404.html' : page.path.replace(/index\.html$/, ''));
+%><!doctype html>
+<html lang="<%= isPost || kind === 'page' ? page_lang(page) : 'en' %>">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= fullTitle %></title>
+<meta name="description" content="<%= description %>">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f7f8fb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d141b" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="<%= canonical %>">
+<meta property="og:type" content="<%= isPost ? 'article' : 'website' %>">
+<meta property="og:title" content="<%= pageTitle || config.title %>">
+<meta property="og:description" content="<%= description %>">
+<meta property="og:url" content="<%= canonical %>">
+<meta property="og:site_name" content="<%= config.title %>">
+<link rel="icon" href="<%= url_for('/favicon.ico') %>" sizes="32x32">
+<link rel="alternate" type="application/rss+xml" title="<%= config.title %>" href="<%= url_for('/rss-all.xml') %>">
+<style><%- inline_css() %></style>
+<script type="module" src="<%= asset('app.js') %>"></script>
+</head>
+<body class="page-<%= kind %>">
+<a class="skip-link" href="#main"><%= t('skip') %></a>
+<%- partial('_partial/topbar') %>
+<%- partial('_partial/sidebar', { kind }) %>
+<div class="scrim" data-close-menu hidden></div>
+<div class="shell">
+<main id="main" class="main" tabindex="-1" data-kind="<%= kind %>">
+<%- body %>
+</main>
+<footer class="site-footer">
+  <p>© 2017–<%= new Date().getFullYear() %> <%= config.author %> · <a href="<%= url_for('/feeds/') %>">RSS</a> · Powered by <a href="https://hexo.io">Hexo</a></p>
+</footer>
+</div>
+<%- partial('_partial/search') %>
+</body>
+</html>

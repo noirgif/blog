@@ -1,0 +1,8 @@
+<dialog class="search-dialog" id="search-dialog" aria-label="<%= t('menu.search') %>">
+  <form class="search-form" method="dialog" role="search">
+    <%- icon('search') %>
+    <input class="search-input" type="search" name="q" autocomplete="off" spellcheck="false" placeholder="<%= t('search_placeholder') %>" aria-label="<%= t('search_placeholder') %>">
+    <button class="icon-btn" type="button" data-close-search aria-label="<%= t('search_close') %>"><%- icon('close') %></button>
+  </form>
+  <div class="search-results" aria-live="polite" data-hint="<%= t('search_hint') %>" data-empty="<%= t('search_empty') %>"></div>
+</dialog>

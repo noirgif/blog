@@ -1,0 +1,30 @@
+/* giscus theme for nir.moe: follows the OS colour scheme and the site palette. */
+@import url("https://giscus.app/themes/light.css");
+@import url("https://giscus.app/themes/dark.css") (prefers-color-scheme: dark);
+
+main {
+  --color-canvas-default: #ffffff;
+  --color-canvas-subtle: #f6f7fa;
+  --color-border-default: #e0e5ec;
+  --color-border-muted: #e0e5ec;
+  --color-accent-fg: #1a6dbd;
+  --color-accent-emphasis: #1a6dbd;
+  --color-btn-primary-bg: #1a6dbd;
+  --color-btn-primary-hover-bg: #6d46c7;
+  --color-fg-default: #36424c;
+  --color-fg-muted: #5b6772;
+}
+@media (prefers-color-scheme: dark) {
+  main {
+    --color-canvas-default: #131c26;
+    --color-canvas-subtle: #0d141b;
+    --color-border-default: #233140;
+    --color-border-muted: #233140;
+    --color-accent-fg: #72b9f8;
+    --color-accent-emphasis: #2f80c9;
+    --color-btn-primary-bg: #2f80c9;
+    --color-btn-primary-hover-bg: #6d46c7;
+    --color-fg-default: #c5ced6;
+    --color-fg-muted: #96a3ae;
+  }
+}

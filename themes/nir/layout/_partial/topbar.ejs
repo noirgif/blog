@@ -1,0 +1,6 @@
+<header class="topbar">
+  <button class="icon-btn" type="button" data-open-menu aria-controls="sidebar" aria-expanded="false" aria-label="<%= t('open_menu') %>"><%- icon('menu') %></button>
+  <a class="brand" href="<%= url_for('/') %>"><%= config.title %></a>
+  <a class="icon-btn" href="<%= url_for('/search/') %>" data-action="search" aria-label="<%= t('menu.search') %>"><%- icon('search') %></a>
+  <div class="progress" aria-hidden="true"></div>
+</header>

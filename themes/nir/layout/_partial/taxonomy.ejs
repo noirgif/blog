@@ -1,0 +1,12 @@
+<header class="list-header">
+  <h1><%= title %></h1>
+</header>
+<ul class="chips cloud">
+<% items.forEach(function (item, i) { %><li><a class="chip" href="#<%= prefix %>-<%= i %>"><%= prefix === 'tag' ? '#' : '' %><%= item.name %> <small><%= item.length %></small></a></li><% }) %>
+</ul>
+<% items.forEach(function (item, i) { %>
+<section class="taxonomy-group">
+  <h2 class="year" id="<%= prefix %>-<%= i %>"><a href="<%= url_for(item.path) %>"><%= prefix === 'tag' ? '#' : '' %><%= item.name %></a></h2>
+  <ul class="rows"><% item.posts.sort('date', -1).each(function (post) { %><%- partial('_partial/row', { post }) %><% }) %></ul>
+</section>
+<% }) %>

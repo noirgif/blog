@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal blog built with Hexo (v7.3.0), using the Tranquilpeak theme. The blog is multilingual (English and Chinese) and deployed to GitHub Pages at nir.moe and noirgif.github.io.
+This is a personal blog built with Hexo (v8), using the in-repo `themes/nir` theme (a lightweight reimagining of the old Tranquilpeak look). The blog is multilingual (English and Chinese) and deployed to GitHub Pages at nir.moe and noirgif.github.io.
 
 ## Common Commands
 
@@ -33,7 +33,7 @@ hexo new draft "Draft Title"
 hexo publish "Draft Title"
 ```
 
-### Deployment
+### Deployment (legacy GitHub Pages)
 ```bash
 # Deploy to GitHub Pages (configured for git@github.com:noirgif/noirgif.github.io)
 hexo deploy
@@ -44,21 +44,11 @@ hexo d
 hexo g -d
 ```
 
-### Search Indexing
+### Cloudflare Pages build
 ```bash
-# Index posts on Algolia search
-hexo algolia
+bun install --frozen-lockfile && bun run build:cloudflare   # hexo clean + generate into dist/ + tools/check.mjs
 ```
-
-### Theme Development
-The theme is located in `themes/tranquilpeak/` (see `themes/tranquilpeak/CLAUDE.md` for detail). Prefer **pnpm** in that directory; the theme repo ships `pnpm-lock.yaml`:
-```bash
-cd themes/tranquilpeak
-pnpm install
-pnpm start              # Dev build + Grunt watch
-pnpm run grunt -- build # One-shot dev build (Grunt `build`)
-pnpm run build          # Production build (Grunt `buildProd`; minified assets)
-```
+Use **bun** (lockfile `bun.lock`). Output directory is `dist/` (`public_dir` in `_config.yml`).
 
 ## Architecture
 
@@ -67,11 +57,12 @@ pnpm run build          # Production build (Grunt `buildProd`; minified assets)
 - `source/_drafts/` - Draft posts not yet published
 - `source/_data/` - Per-language configuration files (`config_en.yml`, `config_zh-cn.yml`)
 - `scaffolds/` - Templates for new posts, pages, drafts, and diary entries
-- `themes/tranquilpeak/` - The Tranquilpeak theme (customized fork)
-- `public/` - Generated static files (git-ignored)
+- `themes/nir/` - The site theme
+- `tools/check.mjs` - Post-build sanity checks
+- `dist/` - Generated static files (git-ignored)
 
 ### Multilingual Support
-The blog uses `hexo-multilingual` plugin for i18n support. Language-specific configurations are in:
+The blog uses `per-post `lang:` front matter for i18n (feeds at `/en/rss.xml`, `/zh-cn/rss.xml`). Language-specific configurations are in:
 - `source/_data/config_en.yml` - English configuration
 - `source/_data/config_zh-cn.yml` - Chinese configuration
 
@@ -79,20 +70,21 @@ Posts can specify language in their front matter. The main site language is conf
 
 ### Content Features
 - **Math support**: KaTeX and MathJax are configured for mathematical equations
-- **Search**: Algolia search integration with app ID "4VZ5FRVLMP"
-- **Comments**: Disqus integration (shortname: noirina-moe)
-- **Custom tags**: The theme provides custom tags for images, videos, alerts, tabbed code blocks, and more (in `themes/tranquilpeak/scripts/tags/`)
+- **Search**: local, client-side over `/search.json` (generated at build time), with match highlighting
+- **Comments**: giscus (GitHub Discussions of noirgif/blog)
+- **Custom tags**: `{% image %}` and `{% alert %}` (in `themes/nir/scripts/content.js`); KaTeX renders to MathML at build time
 
-### Theme Customization
-The Tranquilpeak theme is customized with:
-- Custom helpers in `themes/tranquilpeak/scripts/helpers/`
-- Custom filters in `themes/tranquilpeak/scripts/filters/`
-- Custom tags for enhanced content formatting
-- Theme configuration in `themes/tranquilpeak/_config.yml`
+### Theme (`themes/nir`)
+- `layout/` — EJS templates; `layout/_partial/` for sidebar, topbar, cards, comments, search dialog
+- `assets/` — `style.css` (minified and inlined into every page), `app.js` (PJAX navigation with View Transitions, search, giscus, lightbox), `snow.js` (loaded on demand), `giscus.css`
+- `scripts/assets.js` — esbuild minification + fingerprinted URLs (`/js/*.<hash>.js`), `t()`/`icon()` helpers
+- `scripts/images.js` — build-time WebP variants (`/img/v/`) for local images and `<img>` rewriting (srcset, width/height, lazy loading); cached in `.cache/images`
+- `scripts/content.js` — `alert`/`image` tags, excerpt and photo-diary filters, `search.json`, per-language feeds, `_headers`, `_redirects`, `404.html`, `robots.txt`
+- `_config.yml` — menu, avatar/cover, giscus settings; `languages/` — UI strings
 
 ### Rendering
 - **Markdown**: Uses `hexo-renderer-markdown-it` with plugins for footnotes and abbreviations
-- **Syntax highlighting**: Uses highlight.js (v11.10.0)
+- **Syntax highlighting**: highlight.js at build time (colors in the theme stylesheet)
 - **Asset post folder**: Enabled (`post_asset_folder: true`) - each post can have its own asset folder
 
 ### Content Generation
@@ -111,6 +103,6 @@ The site deploys to:
 
 - The blog posts are primarily in Chinese and English
 - Scaffolds include templates for `post`, `page`, `draft`, and `diary`
-- The theme has custom snow effect JavaScript (attributed to soul-plus theme)
-- Image assets should use CDN for better performance (as recommended in theme config)
-- Favicon is `neptune.ico`, cover image is `cover.jpg`
+- The snow easter egg (`themes/nir/assets/snow.js`) descends from the soul-plus/Tranquilpeak snow script
+- Local images are optimized automatically; no CDN needed
+- Favicon is `themes/nir/source/favicon.ico`, cover/avatar are in `themes/nir/source/img/`

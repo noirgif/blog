@@ -1,0 +1,1 @@
+<%- partial('_partial/taxonomy', { title: t('menu.tags'), items: site.tags.sort('name').toArray().filter(c => c.length), prefix: 'tag' }) %>

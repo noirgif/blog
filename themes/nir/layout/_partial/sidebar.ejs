@@ -1,0 +1,29 @@
+<aside class="sidebar" id="sidebar" aria-label="<%= config.title %>">
+  <picture class="sidebar-cover">
+    <source media="(max-width: 1023.98px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <img src="<%= url_for(theme.cover) %>" alt="" data-sizes="300px" <% if (kind === 'post') { %>loading="lazy"<% } else { %>loading="eager" fetchpriority="high"<% } %>>
+  </picture>
+  <div class="sidebar-inner">
+    <button class="icon-btn sidebar-close" type="button" data-close-menu aria-label="<%= t('close_menu') %>"><%- icon('close') %></button>
+    <div class="profile">
+      <a class="avatar-link" href="<%= url_for('/about/') %>" aria-label="<%= t('menu.about') %>">
+        <img class="avatar" src="<%= url_for(theme.avatar) %>" alt="<%= config.author %>" width="96" height="96" data-sizes="96px" loading="lazy">
+      </a>
+      <p class="profile-name"><%= config.author %></p>
+      <p class="profile-bio"><%= t('bio') %></p>
+      <button class="snow-btn" type="button" data-snow aria-label="Let it snow (click again for more)" title="Click again for more">(<%= t('snow') %> <%- icon('snow', 'inline') %>)</button>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <ul>
+      <% theme.menu.forEach(function (item) { %>
+        <li><a class="nav-link" href="<%= url_for(item.url) %>" data-nav="<%= item.url %>"<% if (item.action) { %> data-action="<%= item.action %>"<% } %>><%- icon(item.icon) %><span><%= t('menu.' + item.key) %></span></a></li>
+      <% }) %>
+      </ul>
+      <ul class="nav-secondary">
+      <% theme.author_links.forEach(function (item) { %>
+        <li><a class="nav-link" href="<%= /^https?:/.test(item.url) ? item.url : url_for(item.url) %>"<% if (/^https?:/.test(item.url)) { %> rel="me noopener" target="_blank"<% } %>><%- icon(item.icon) %><span><%= t('menu.' + item.key) %></span></a></li>
+      <% }) %>
+      </ul>
+    </nav>
+  </div>
+</aside>

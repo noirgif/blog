@@ -1,0 +1,31 @@
+# Theme "nir" — a lightweight reimagining of the Tranquilpeak look used on nir.moe.
+# Everything here is optional; posts and drafts are managed with the usual `hexo new` commands.
+
+menu:
+  - { key: home,       url: /,               icon: home }
+  - { key: categories, url: /all-categories/, icon: bookmark }
+  - { key: tags,       url: /all-tags/,       icon: tag }
+  - { key: archives,   url: /all-archives/,   icon: archive }
+  - { key: search,     url: /search/,         icon: search, action: search }
+  - { key: about,      url: /about/,          icon: help }
+  - { key: links,      url: /links/,          icon: link }
+
+author_links:
+  - { key: github, url: https://github.com/noirgif, icon: github }
+  - { key: rss,    url: /feeds/,                    icon: rss }
+
+# Images in the theme's `source/img` folder (optimized automatically at build time)
+avatar: /img/avatar.jpg
+cover: /img/cover.jpg
+
+# Comments: https://giscus.app
+giscus:
+  repo: noirgif/blog
+  repo_id: MDEwOlJlcG9zaXRvcnkxODQzNDg5NjM=
+  category: Announcements
+  category_id: DIC_kwDOCvzxI84DG8w1
+  mapping: pathname
+
+# Responsive image widths generated for local photos
+image_widths: [240, 480, 800, 1200, 1600, 2000]
+image_quality: 78

@@ -1,0 +1,9 @@
+<header class="list-header"><h1><%= t('menu.search') %></h1></header>
+<div class="search-page" data-search-page>
+  <form class="search-form" role="search" action="<%= url_for('/search/') %>">
+    <%- icon('search') %>
+    <input class="search-input" type="search" name="q" autocomplete="off" spellcheck="false" placeholder="<%= t('search_placeholder') %>" aria-label="<%= t('search_placeholder') %>">
+  </form>
+  <div class="search-results" aria-live="polite" data-hint="<%= t('search_hint') %>" data-empty="<%= t('search_empty') %>"></div>
+  <noscript><p><a href="<%= url_for('/all-archives/') %>"><%= t('menu.archives') %></a></p></noscript>
+</div>

@@ -1,0 +1,10 @@
+<% if (theme.giscus && theme.giscus.repo && page.comments !== false) { %>
+<section class="comments" id="comments" aria-labelledby="comments-title"
+  data-repo="<%= theme.giscus.repo %>" data-repo-id="<%= theme.giscus.repo_id %>"
+  data-category="<%= theme.giscus.category %>" data-category-id="<%= theme.giscus.category_id %>"
+  data-mapping="<%= theme.giscus.mapping || 'pathname' %>" data-lang="<%= /^zh/i.test(page.lang || '') ? 'zh-CN' : 'en' %>">
+  <h2 id="comments-title"><%= t('comments') %></h2>
+  <p class="comments-status" data-failed="<%= t('comments_failed') %>"><%= t('comments_load') %></p>
+  <noscript><p><a href="https://github.com/<%= theme.giscus.repo %>/discussions">GitHub Discussions</a></p></noscript>
+</section>
+<% } %>

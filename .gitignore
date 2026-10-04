@@ -1,5 +1,9 @@
 node_modules
 public
+dist
 db.json
 pnpm-lock.yaml
+package-lock.json
 /assets
+.cache
+.claude/

@@ -1,0 +1,7 @@
+<% if (page.total > 1) { %>
+<nav class="pagination" aria-label="Pagination">
+  <% if (page.prev) { %><a class="btn" rel="prev" href="<%= url_for(page.prev_link) %>"><%- icon('back') %><%= t('newer') %></a><% } else { %><span></span><% } %>
+  <span class="pagination-info"><%= page.current %> / <%= page.total %></span>
+  <% if (page.next) { %><a class="btn" rel="next" href="<%= url_for(page.next_link) %>"><%= t('older') %><%- icon('next') %></a><% } else { %><span></span><% } %>
+</nav>
+<% } %>

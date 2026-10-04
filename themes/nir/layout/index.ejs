@@ -1,0 +1,12 @@
+<% if (page.current === 1) { %>
+<header class="intro">
+  <h1 class="intro-title"><%= config.title %></h1>
+  <p class="intro-text"><%= config.description %></p>
+</header>
+<% } else { %>
+<header class="list-header"><h1><%= t('page_n', page.current) %></h1></header>
+<% } %>
+<div class="cards">
+<% page.posts.each(function (post) { %><%- partial('_partial/card', { post }) %><% }) %>
+</div>
+<%- partial('_partial/pagination') %>
