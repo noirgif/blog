@@ -51,7 +51,6 @@ function markActiveNav() {
 /* ---------------- seamless navigation ---------------- */
 const pages = new Map();
 const progress = $('.route-progress');
-history.scrollRestoration = 'manual';
 
 function eligible(a, e) {
   if (!a || !a.href || a.target || a.hasAttribute('download') || a.dataset.noPjax != null) return false;
@@ -270,7 +269,6 @@ document.addEventListener('keydown', e => {
   if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typing)) { e.preventDefault(); openSearch(); }
   else if (e.key === 'Escape' && body.classList.contains('menu-open')) setMenu(false);
 });
-renderDialog();
 
 /* ---------------- highlight search matches inside a page ---------------- */
 let hitsBar = null;
@@ -445,6 +443,10 @@ function initPage(highlight) {
   }
 }
 
-markActiveNav();
-if (history.state?.scroll) window.scrollTo(0, history.state.scroll);
-initPage(history.state?.highlight);
+// Start-up work waits until the first frame is painted, so it never forces an early layout.
+requestAnimationFrame(() => setTimeout(() => {
+  history.scrollRestoration = 'manual';
+  markActiveNav();
+  if (history.state?.scroll) window.scrollTo(0, history.state.scroll);
+  initPage(history.state?.highlight);
+}));

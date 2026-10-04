@@ -99,6 +99,7 @@ h1, h2, h3, h4, h5, h6 { color: var(--heading); line-height: 1.3; font-weight: 7
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(13, 20, 30, .5) 0%, rgba(13, 20, 30, .62) 50%, rgba(13, 20, 30, .86) 100%);
 }
+.sidebar-inner { content-visibility: auto; contain-intrinsic-size: auto 100vh; }
 .sidebar-inner { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100%; padding: 2.75rem 1.5rem 2rem; }
 .sidebar .sidebar-close { display: none; position: absolute; top: .75rem; right: .75rem; color: var(--sidebar-text); }
 .profile { text-align: center; margin-bottom: 2rem; }

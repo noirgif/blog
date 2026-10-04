@@ -8,6 +8,7 @@
   padding: 1.5rem 0; border-top: 1px solid var(--border);
 }
 .card.has-thumb { grid-template-columns: 1fr 160px; }
+.card:nth-child(n+4) { content-visibility: auto; contain-intrinsic-size: auto 11rem; }
 .card-title { margin: .25rem 0 .4rem; font-size: 1.35rem; }
 .card-title a { color: var(--heading); text-decoration: none; background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 2px no-repeat; transition: background-size .35s var(--ease), color .2s; }
 .card-title a::after { content: ""; position: absolute; inset: 0; }

@@ -16,7 +16,7 @@ const exists = url => fs.existsSync(path.join(dist, decodeURIComponent(url.split
 for (const file of html) {
   const text = fs.readFileSync(file, 'utf8');
   if (/<html/i.test(text) && !/<style>[^<]{1000,}<\/style>/.test(text) && !text.includes('http-equiv="refresh"')) errors.push(`${path.relative(dist, file)}: inline stylesheet missing`);
-  for (const [, url] of text.matchAll(/\s(?:src|href)="(\/(?:js|css|img)\/[^"]+)"/g)) {
+  for (const [, url] of text.matchAll(/(?:\s(?:src|href)="|\.src=')(\/(?:js|css|img)\/[^"']+)["']/g)) {
     if (!exists(url)) errors.push(`${path.relative(dist, file)}: broken asset ${url}`);
   }
 }
