@@ -422,7 +422,7 @@ if (body.dataset.cfBeacon) {
 /* ---------------- per page setup ---------------- */
 function initPage(highlight) {
   setupComments();
-  requestAnimationFrame(updateProgress);
+  topbar.style.setProperty('--read', '0'); // measured on scroll only, never during load
   if (highlight) highlightPage(highlight);
   const searchPage = $('[data-search-page]', main);
   if (searchPage) {
