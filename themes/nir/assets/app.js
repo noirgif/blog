@@ -10,8 +10,8 @@ const esc = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 let main = $('#main');
 
-// Run `fn` once the visitor first interacts (third-party embeds wait for this,
-// so a page load alone never pulls them in).
+// Resolves once the visitor first interacts; third-party embeds wait for this,
+// so a page load alone never pulls them in.
 const interacted = new Promise(resolve => {
   const events = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
   const done = () => { events.forEach(e => removeEventListener(e, done, true)); resolve(); };
@@ -414,17 +414,6 @@ document.addEventListener('click', e => {
   const r = btn.getBoundingClientRect();
   import(__SNOW_URL__).then(m => m.snow(r.left + r.width / 2, r.top + r.height / 2));
 });
-
-/* ---------------- analytics, after the first interaction ---------------- */
-if (body.dataset.cfBeacon) {
-  interacted.then(() => {
-    const s = document.createElement('script');
-    s.defer = true;
-    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-    s.dataset.cfBeacon = JSON.stringify({ token: body.dataset.cfBeacon, spa: true });
-    document.head.append(s);
-  });
-}
 
 /* ---------------- per page setup ---------------- */
 function initPage(highlight) {

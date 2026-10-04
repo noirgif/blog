@@ -29,7 +29,7 @@ const canonical = full_url_for(page.__404 ? '/404.html' : page.path.replace(/ind
 <%# Enhancements start once the page has loaded and painted, so they never compete with first render. %>
 <script>addEventListener('load',function(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(function(){var s=document.createElement('script');s.type='module';s.fetchPriority='low';s.src='<%= asset('app.js') %>';document.head.append(s)})})})},{once:true})</script>
 </head>
-<body class="page-<%= kind %>"<% if (theme.cloudflare_analytics_token) { %> data-cf-beacon="<%= theme.cloudflare_analytics_token %>"<% } %>>
+<body class="page-<%= kind %>">
 <a class="skip-link" href="#main"><%= t('skip') %></a>
 <%- partial('_partial/topbar') %>
 <%- partial('_partial/sidebar', { kind }) %>
@@ -44,4 +44,5 @@ const canonical = full_url_for(page.__404 ? '/404.html' : page.path.replace(/ind
 </footer>
 </div>
 <%- partial('_partial/search') %>
-<%# </body> and </html> are optional in HTML and deliberately omitted: Cloudflare injects its analytics beacon at the body end tag, which the theme instead loads on first interaction. %>
+</body>
+</html>
