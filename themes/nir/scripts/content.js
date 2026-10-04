@@ -137,6 +137,7 @@ hexo.extend.generator.register('nir-platform', () => {
         '/js/*', '  ' + immutable,
         '/css/*', '  ' + immutable, '  Access-Control-Allow-Origin: *',
         '/img/*', '  ' + immutable,
+        '/fonts/*', '  ' + immutable,
         '/assets/*', '  Cache-Control: public, max-age=604800',
         '/favicon.ico', '  Cache-Control: public, max-age=604800',
         ''

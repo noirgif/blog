@@ -26,6 +26,10 @@ const canonical = full_url_for(page.__404 ? '/404.html' : page.path.replace(/ind
 <link rel="alternate" type="application/rss+xml" title="<%= config.title %>" href="<%= url_for('/rss-all.xml') %>">
 <style><%- inline_css() %></style>
 <style data-page-css><%- inline_css(kind) %></style>
+<%# CJK webfonts start once the page has loaded and its first content is on screen: text shows at
+    once in the system's CJK font, the swap moves nothing, and the download stays off the LCP path. %>
+<style data-font-css media="print" data-urls="<%= font_urls(page) %>"><%- font_css(page) %></style>
+<script>(function(){var s=document.querySelector('style[data-font-css]'),u=s.dataset.urls,n=2;if(!u)return;function go(){if(--n)return;u.split(' ').forEach(function(h){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='';l.href=h;document.head.append(l)});s.media='all'}addEventListener('load',function(){setTimeout(go)},{once:true});try{new PerformanceObserver(function(l,o){if(l.getEntriesByName('first-contentful-paint').length){o.disconnect();setTimeout(go)}}).observe({type:'paint',buffered:true})}catch(e){go()}})()</script>
 <%# Enhancements start once the page has loaded and painted, so they never compete with first render. %>
 <script>addEventListener('load',function(){requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(function(){var s=document.createElement('script');s.type='module';s.fetchPriority='low';s.src='<%= asset('app.js') %>';document.head.append(s)})})})},{once:true})</script>
 </head>

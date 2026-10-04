@@ -19,6 +19,9 @@ for (const file of html) {
   for (const [, url] of text.matchAll(/(?:\s(?:src|href)="|\.src=')(\/(?:js|css|img)\/[^"']+)["']/g)) {
     if (!exists(url)) errors.push(`${path.relative(dist, file)}: broken asset ${url}`);
   }
+  for (const [, url] of text.matchAll(/url\((\/fonts\/[^)]+)\)/g)) {
+    if (!exists(url)) errors.push(`${path.relative(dist, file)}: broken font ${url}`);
+  }
 }
 JSON.parse(fs.readFileSync(path.join(dist, 'search.json'), 'utf8'));
 
