@@ -42,5 +42,4 @@ const canonical = full_url_for(page.__404 ? '/404.html' : page.path.replace(/ind
 </footer>
 </div>
 <%- partial('_partial/search') %>
-</body>
-</html>
+<%# </body> and </html> are optional in HTML and deliberately omitted: Cloudflare injects its analytics beacon at the body end tag, which the theme instead loads on first interaction. %>

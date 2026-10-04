@@ -129,12 +129,11 @@ hexo.extend.generator.register('nir-platform', () => {
       path: '_headers',
       data: [
         '/*',
-        // no-transform: keep Cloudflare from rewriting pages (e.g. injecting the analytics beacon at load)
         '  Cache-Control: public, max-age=0, must-revalidate, no-transform',
         '  X-Content-Type-Options: nosniff',
         '  Referrer-Policy: strict-origin-when-cross-origin',
         '  Strict-Transport-Security: max-age=31536000; includeSubDomains',
-        '  Cross-Origin-Opener-Policy: same-origin',
+        '  Cross-Origin-Opener-Policy: same-origin-allow-popups',
         '  X-Frame-Options: SAMEORIGIN',
         '/js/*', '  ! Cache-Control', '  ' + immutable,
         '/css/*', '  ! Cache-Control', '  ' + immutable, '  Access-Control-Allow-Origin: *',

@@ -26,8 +26,8 @@ giscus:
   category_id: DIC_kwDOCvzxI84DG8w1
   mapping: pathname
 
-# Cloudflare Web Analytics. HTML is served with `no-transform`, so Cloudflare does not inject
-# its beacon at load; the theme loads it on the visitor's first interaction instead.
+# Cloudflare Web Analytics, loaded on the visitor's first interaction (pages leave out the
+# optional </body> tag where Cloudflare would otherwise inject the beacon at load).
 cloudflare_analytics_token: 698f0e73d46444e2a2b2220b0a6de77b
 
 # Responsive image widths generated for local photos. 736 is the text column on desktop,
