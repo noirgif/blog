@@ -5,5 +5,5 @@
     <h2 class="card-title"><a href="<%= url_for(post.path) %>"><%= post.title || '(untitled)' %></a></h2>
     <p class="card-excerpt" lang="<%= page_lang(post) %>"><%= plain_excerpt(post, 160) %></p>
   </div>
-  <% if (thumb) { %><a class="card-thumb" href="<%= url_for(post.path) %>" tabindex="-1" aria-hidden="true"><img src="<%= thumb %>" alt="" data-sizes="(min-width: 640px) 160px, 112px"></a><% } %>
+  <% if (thumb) { %><a class="card-thumb" href="<%= url_for(post.path) %>" tabindex="-1" aria-hidden="true"><img src="<%= thumb %>" alt="" data-thumb data-sizes="(min-width: 640px) 160px, 112px"></a><% } %>
 </article>

@@ -138,6 +138,8 @@ async function navigate(url, { push = true, scroll = 0, highlight = null } = {})
       const from = $(sel, doc.head), to = $(sel);
       if (from && to) for (const attr of ['content', 'href']) if (from.hasAttribute(attr)) to.setAttribute(attr, from.getAttribute(attr));
     }
+    const css = $('style[data-page-css]', doc.head), mine = $('style[data-page-css]');
+    if (css && mine && css.textContent !== mine.textContent) mine.textContent = css.textContent;
     main.replaceWith(next);
     main = next;
     markActiveNav();
@@ -406,7 +408,7 @@ document.addEventListener('click', e => {
 /* ---------------- per page setup ---------------- */
 function initPage(highlight) {
   setupComments();
-  updateProgress();
+  requestAnimationFrame(updateProgress);
   if (highlight) highlightPage(highlight);
   const searchPage = $('[data-search-page]', main);
   if (searchPage) {

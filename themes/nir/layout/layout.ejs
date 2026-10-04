@@ -25,7 +25,8 @@ const canonical = full_url_for(page.__404 ? '/404.html' : page.path.replace(/ind
 <link rel="icon" href="<%= url_for('/favicon.ico') %>" sizes="32x32">
 <link rel="alternate" type="application/rss+xml" title="<%= config.title %>" href="<%= url_for('/rss-all.xml') %>">
 <style><%- inline_css() %></style>
-<script type="module" src="<%= asset('app.js') %>"></script>
+<style data-page-css><%- inline_css(kind) %></style>
+<script type="module" src="<%= asset('app.js') %>" fetchpriority="low"></script>
 </head>
 <body class="page-<%= kind %>">
 <a class="skip-link" href="#main"><%= t('skip') %></a>

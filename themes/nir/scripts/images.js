@@ -20,7 +20,7 @@ let scanned = null;
 
 const conf = () => hexo.theme.config || {};
 const widthsFor = width => {
-  const list = (conf().image_widths || [240, 480, 800, 1200, 1600, 2000]).filter(w => w < width);
+  const list = (conf().image_widths || [160, 240, 320, 480, 656, 736, 960, 1200, 1472, 2000]).filter(w => w < width);
   if (width <= 2000) list.push(width); else if (!list.includes(2000)) list.push(2000);
   return [...new Set(list)].sort((a, b) => a - b);
 };
@@ -74,24 +74,32 @@ const limit = fn => new Promise((resolve, reject) => {
   active < 3 ? run() : queue.push(run);
 });
 
+// Card thumbnails are cropped to 4:3 so the file matches the box it is shown in.
+const THUMB_WIDTHS = [112, 160, 224, 320];
+
 function variants(img) {
   if (!jobs.has(img.key)) {
     jobs.set(img.key, limit(async () => {
-      const quality = conf().image_quality || 78;
+      const quality = conf().image_quality || 72;
+      const wanted = [...img.widths.map(w => ['v', w]), ...THUMB_WIDTHS.map(w => ['t', w])];
       const out = new Map();
       const missing = [];
-      for (const w of img.widths) {
-        const cached = path.join(CACHE_DIR, `${img.key}-${w}-q${quality}.webp`);
-        try { out.set(w, await fsp.readFile(cached)); } catch { missing.push(w); }
+      for (const [kind, w] of wanted) {
+        const cached = path.join(CACHE_DIR, `${img.key}-${kind}${w}-q${quality}s.webp`);
+        try { out.set(kind + w, await fsp.readFile(cached)); } catch { missing.push([kind, w]); }
       }
       if (missing.length) {
         const base = sharp(img.file, { failOn: 'none' }).rotate();
         await fsp.mkdir(CACHE_DIR, { recursive: true });
-        for (const w of missing) {
-          const data = await base.clone().resize({ width: w, withoutEnlargement: true })
-            .webp({ quality, effort: 4, smartSubsample: true }).toBuffer();
-          out.set(w, data);
-          await fsp.writeFile(path.join(CACHE_DIR, `${img.key}-${w}-q${quality}.webp`), data).catch(() => {});
+        for (const [kind, w] of missing) {
+          const resized = kind === 't'
+            ? base.clone().resize({ width: w, height: Math.round(w * 3 / 4), fit: 'cover', position: 'attention' })
+            : base.clone().resize({ width: w, withoutEnlargement: true });
+          // Small renditions tolerate stronger compression (they are shown small or on dense screens).
+          const q = w <= 320 ? Math.min(quality, 60) : quality;
+          const data = await resized.webp({ quality: q, effort: 6, smartSubsample: true }).toBuffer();
+          out.set(kind + w, data);
+          await fsp.writeFile(path.join(CACHE_DIR, `${img.key}-${kind}${w}-q${quality}s.webp`), data).catch(() => {});
         }
       }
       return out;
@@ -100,7 +108,7 @@ function variants(img) {
   return jobs.get(img.key);
 }
 
-const variantUrl = (img, w) => `${hexo.config.root}img/v/${img.key}-${w}.webp`;
+const variantUrl = (img, w, kind = 'v') => `${hexo.config.root}img/${kind}/${img.key}-${w}.webp`;
 
 hexo.extend.generator.register('nir-images', async () => {
   scanned = scan();
@@ -108,7 +116,10 @@ hexo.extend.generator.register('nir-images', async () => {
   const routes = [];
   for (const img of images.values()) {
     for (const w of img.widths) {
-      routes.push({ path: variantUrl(img, w).slice(hexo.config.root.length), data: () => variants(img).then(m => m.get(w)) });
+      routes.push({ path: variantUrl(img, w).slice(hexo.config.root.length), data: () => variants(img).then(m => m.get('v' + w)) });
+    }
+    for (const w of THUMB_WIDTHS) {
+      routes.push({ path: variantUrl(img, w, 't').slice(hexo.config.root.length), data: () => variants(img).then(m => m.get('t' + w)) });
     }
   }
   return routes;
@@ -138,7 +149,7 @@ function lookup(src, pagePath) {
 }
 
 // Default rendered width of images in a post: the text column is at most ~46rem wide.
-const DEFAULT_SIZES = '(min-width: 800px) 736px, calc(100vw - 2rem)';
+const DEFAULT_SIZES = '(min-width: 776px) 736px, calc(100vw - 2.5rem)';
 
 // Runs once per generated HTML route (after layouts and injectors), so it may be async.
 hexo.extend.filter.register('_after_html_render', async function (html, locals) {
@@ -156,10 +167,23 @@ hexo.extend.filter.register('_after_html_render', async function (html, locals) 
         warned.add(src);
         hexo.log.warn('[images] %s references a missing image: %s', pagePath, src);
       }
-      return tag;
+      // A broken local image only produces a 404 and an empty box; leave the alt text instead.
+      const alt = attr(tag, 'alt');
+      return src && EXT.test(src) && !/^(data:|https?:|\/\/)/i.test(src) ? (alt ? `<span class="missing-image">${alt}</span>` : '') : tag;
+    }
+    if (/\sdata-thumb(?=[\s>=/])/i.test(tag)) {
+      let out = tag.replace(/\sdata-thumb(?=[\s>=/])/i, '');
+      out = setAttr(out, 'src', variantUrl(img, 224, 't'));
+      out = setAttr(out, 'srcset', THUMB_WIDTHS.map(w => `${variantUrl(img, w, 't')} ${w}w`).join(', '));
+      out = setAttr(out, 'sizes', attr(tag, 'data-sizes') || '160px');
+      out = setAttr(out, 'data-sizes', null);
+      out = setAttr(out, 'width', 320);
+      out = setAttr(out, 'height', 240);
+      out = setAttr(out, 'loading', attr(out, 'loading') || 'lazy');
+      return setAttr(out, 'decoding', 'async');
     }
     const sizes = attr(tag, 'data-sizes') || attr(tag, 'sizes') || DEFAULT_SIZES;
-    const fallback = img.widths.find(w => w >= 800) || img.widths[img.widths.length - 1];
+    const fallback = img.widths.find(w => w >= 736) || img.widths[img.widths.length - 1];
     let out = setAttr(tag, 'src', variantUrl(img, fallback));
     out = setAttr(out, 'data-sizes', null);
     out = setAttr(out, 'srcset', img.widths.map(w => `${variantUrl(img, w)} ${w}w`).join(', '));

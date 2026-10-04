@@ -11,7 +11,8 @@ const esbuild = require('esbuild');
 
 const ASSET_DIR = path.join(hexo.theme_dir, 'assets');
 const TARGET = ['chrome100', 'firefox100', 'safari15.4'];
-const built = { css: '', urls: {} };
+const built = { css: {}, urls: {} };
+const PAGE_CSS = { home: ['home'], list: ['list', 'home'], post: ['post'], page: ['post', 'list'], 'not-found': ['post'] };
 
 const hash = data => crypto.createHash('sha256').update(data).digest('hex').slice(0, 10);
 
@@ -19,11 +20,15 @@ async function buildAssets() {
   const routes = [];
   built.urls = {};
 
-  // The stylesheet is small enough to inline in every page; this removes a render-blocking request.
-  const css = await esbuild.transform(fs.readFileSync(path.join(ASSET_DIR, 'style.css'), 'utf8'), {
-    loader: 'css', minify: true, target: TARGET, legalComments: 'none'
-  });
-  built.css = css.code.trim();
+  // Stylesheets are small enough to inline; this removes render-blocking requests.
+  // `core` goes into every page, the rest only into the page types that use them.
+  built.css = {};
+  for (const name of ['core', 'home', 'list', 'post']) {
+    const css = await esbuild.transform(fs.readFileSync(path.join(ASSET_DIR, 'css', name + '.css'), 'utf8'), {
+      loader: 'css', minify: true, target: TARGET, legalComments: 'none'
+    });
+    built.css[name] = css.code.trim();
+  }
 
   // app.js is built last so it can embed the fingerprinted URLs of the on-demand assets.
   for (const name of ['snow.js', 'giscus.css', 'app.js']) {
@@ -48,7 +53,8 @@ async function buildAssets() {
 
 hexo.extend.generator.register('nir-assets', buildAssets);
 
-hexo.extend.helper.register('inline_css', () => built.css);
+hexo.extend.helper.register('inline_css', (kind = 'core') =>
+  kind === 'core' ? built.css.core : (PAGE_CSS[kind] || []).map(k => built.css[k]).join(''));
 hexo.extend.helper.register('asset', name => built.urls[name]);
 
 // UI strings always use the site language, so the persistent chrome does not
