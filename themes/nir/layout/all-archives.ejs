@@ -1,0 +1,7 @@
+<% let year = null; %>
+<header class="list-header">
+  <h1><%= t('menu.archives') %></h1>
+  <p class="meta"><%= t('posts_count', site.posts.length) %></p>
+</header>
+<% site.posts.sort('date', -1).each(function (post) { const y = post.date.year(); if (y !== year) { if (year !== null) { %></ul></section><% } year = y; %><section class="year-group"><h2 class="year" id="y<%= y %>"><%= y %></h2><ul class="rows"><% } %><%- partial('_partial/row', { post }) %><% }) %>
+<% if (year !== null) { %></ul></section><% } %>

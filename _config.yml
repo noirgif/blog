@@ -5,7 +5,7 @@
 # Site
 title: Goddess Unknown
 subtitle:
-description:
+description: Peek into the abyss, to find the way towards light.
 author: NoirGif
 language:
     - en
@@ -21,7 +21,7 @@ permalink_defaults:
 
 # Directory
 source_dir: source
-public_dir: public
+public_dir: dist
 tag_dir: tags
 archive_dir: archives
 category_dir: categories
@@ -40,11 +40,15 @@ render_drafts: false
 post_asset_folder: true
 relative_link: false
 future: true
+syntax_highlighter: highlight.js
 highlight:
-  enable: true
   line_number: false
   auto_detect: false
-  tab_replace: 
+  tab_replace: ''
+  wrap: false
+  hljs: true
+prismjs:
+  enable: false
 
 # Category & Tag
 default_category: uncategorized
@@ -66,21 +70,19 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: tranquilpeak
+theme: nir
 
 # math
-## math support
+## KaTeX renders at build time to MathML, so pages need no math CSS, fonts or JS.
 math:
-    mathjax:
-        src: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML" # no source
-        config:
-            # default config
-    katex:
-        css: # "https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0"
-        js: # "https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
-        options:
-          output: 'mathml'
-            # default config
+  mathjax:
+    css: false
+    options: {}
+  katex:
+    css: false
+    options:
+      output: 'mathml'
+      throwOnError: false
 
 # sitemap
 ## path: sitemap path
@@ -96,39 +98,21 @@ deploy:
     branch: master #published
     message:
 
-# algolia search
-algolia:
-  appId: "4VZ5FRVLMP"
-  apiKey: "1040be093d539de0ea08b83ce51244f9"
-  adminApiKey: "<ALGOLIA_ADMIN_API_KEY>" # the admin api key is specified in circleCI
-  chunkSize: 5000
-  indexName: "nir.moe"
-  fields:
-    - title
-    - date
-    - permalink
-    - thumbnailImageUrl
-    - tags
-    - categories
-    - excerpt
-    - excerpt:strip
-
-
 index_generator:
-  per_page: 5
+  per_page: 8
   order_by: -date
 
 archive_generator:
-  per_page: 3
+  per_page: 0
   yearly: true
   monthly: true
   daily: false
 
 category_generator:
-  per_page: 5
+  per_page: 0
 
 tag_generator:
-   per_page: 5
+   per_page: 0
    enable_index_page: false
   
 feed:

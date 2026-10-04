@@ -1,0 +1,11 @@
+<%
+const heading = is_category() ? page.category : is_tag() ? '#' + page.tag : page.year ? (page.month ? page.year + ' / ' + String(page.month).padStart(2, '0') : page.year) : t('menu.archives');
+let year = null;
+%>
+<header class="list-header">
+  <p class="meta"><%= is_category() ? t('menu.categories') : is_tag() ? t('menu.tags') : t('menu.archives') %></p>
+  <h1><%= heading %></h1>
+</header>
+<% page.posts.each(function (post) { const y = post.date.year(); if (y !== year) { if (year !== null) { %></ul><% } year = y; %><h2 class="year"><%= y %></h2><ul class="rows"><% } %><%- partial('_partial/row', { post }) %><% }) %>
+<% if (year !== null) { %></ul><% } %>
+<%- partial('_partial/pagination') %>

@@ -1,0 +1,38 @@
+menu:
+  home: Home
+  categories: Categories
+  tags: Tags
+  archives: Archives
+  search: Search
+  about: About
+  links: 友情链接
+  github: GitHub
+  rss: RSS
+bio: A prog@amer.
+snow: click me to see some
+skip: Skip to content
+open_menu: Open menu
+close_menu: Close menu
+read_more: Continue reading
+newer: Newer
+older: Older
+page_n: Page %d
+posts_count: "%d posts"
+in: in
+tagged: Tagged
+comments: Comments
+comments_load: Comments load when you reach this section.
+comments_failed: Comments could not load.
+search_placeholder: Search titles, text and tags
+search_hint: Type to search all posts
+search_empty: Nothing found for
+search_close: Close search
+prev_post: Previous
+next_post: Next
+back_home: Back to the journal
+not_found_title: This page has wandered off
+not_found_text: The page you are looking for does not exist, or has moved.
+all_posts: All posts
+matches: matches
+clear: Clear
+reading_time: "%d min read"

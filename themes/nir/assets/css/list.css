@@ -1,0 +1,14 @@
+/* ---------- lists: archives, categories, tags ---------- */
+.list-header { margin-bottom: 1.5rem; }
+.list-header h1 { margin: 0; font: 700 2rem/1.2 var(--font-read); }
+.list-header .meta { margin: .25rem 0; }
+.year { margin: 2rem 0 .5rem; font-size: 1.1rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.year a { color: inherit; text-decoration: none; }
+.year a:hover { color: var(--accent); }
+.rows { list-style: none; margin: 0; padding: 0; }
+.row { display: flex; gap: 1rem; align-items: baseline; padding: .45rem 0; border-bottom: 1px dashed var(--border); }
+.row time { flex: none; width: 3.75rem; color: var(--muted); font-size: .85rem; font-variant-numeric: tabular-nums; }
+.row a { color: var(--heading); text-decoration: none; }
+.row a:hover { color: var(--accent); }
+.cloud { margin-bottom: 1rem; }
+

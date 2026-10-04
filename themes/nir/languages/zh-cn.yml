@@ -1,0 +1,38 @@
+menu:
+  home: 首页
+  categories: 分类
+  tags: 标签
+  archives: 归档
+  search: 搜索
+  about: 关于
+  links: 友情链接
+  github: GitHub
+  rss: RSS
+bio: 宅
+snow: 点我看雪
+skip: 跳到正文
+open_menu: 打开菜单
+close_menu: 关闭菜单
+read_more: 继续阅读
+newer: 较新
+older: 较早
+page_n: 第 %d 页
+posts_count: "%d 篇文章"
+in: 分类于
+tagged: 标签
+comments: 评论
+comments_load: 滚动到此处时加载评论。
+comments_failed: 评论加载失败。
+search_placeholder: 搜索标题、正文与标签
+search_hint: 输入关键词搜索全部文章
+search_empty: 没有找到
+search_close: 关闭搜索
+prev_post: 上一篇
+next_post: 下一篇
+back_home: 回到首页
+not_found_title: 这个页面走丢了
+not_found_text: 你要找的页面不存在，或者已经搬走了。
+all_posts: 全部文章
+matches: 处匹配
+clear: 清除
+reading_time: "约 %d 分钟"

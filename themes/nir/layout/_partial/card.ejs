@@ -1,0 +1,9 @@
+<% const thumb = post_thumb(post); const cat = post.categories && post.categories.length ? post.categories.toArray()[0] : null; %>
+<article class="card<%= thumb ? ' has-thumb' : '' %>">
+  <div class="card-body">
+    <p class="meta"><time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MMM D, YYYY') %></time><% if (cat) { %> · <a href="<%= url_for(cat.path) %>"><%= cat.name %></a><% } %></p>
+    <h2 class="card-title"><a href="<%= url_for(post.path) %>"><%= post.title || '(untitled)' %></a></h2>
+    <p class="card-excerpt" lang="<%= page_lang(post) %>"><%= plain_excerpt(post, 160) %></p>
+  </div>
+  <% if (thumb) { %><a class="card-thumb" href="<%= url_for(post.path) %>" tabindex="-1" aria-hidden="true"><img src="<%= thumb %>" alt="" data-thumb data-sizes="(min-width: 640px) 160px, 112px"></a><% } %>
+</article>

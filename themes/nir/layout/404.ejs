@@ -1,0 +1,10 @@
+<article class="post page not-found">
+  <header class="post-header">
+    <p class="meta">404</p>
+    <h1 class="post-title"><%= t('not_found_title') %></h1>
+  </header>
+  <div class="prose">
+    <p><%= t('not_found_text') %></p>
+    <p class="actions"><a class="btn" href="<%= url_for('/') %>"><%- icon('back') %><%= t('back_home') %></a> <a class="btn" href="<%= url_for('/search/') %>" data-action="search"><%- icon('search') %><%= t('menu.search') %></a></p>
+  </div>
+</article>

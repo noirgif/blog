@@ -1,0 +1,1 @@
+<%- partial('_partial/taxonomy', { title: t('menu.categories'), items: site.categories.sort('name').toArray().filter(c => c.length), prefix: 'category' }) %>
