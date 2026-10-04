@@ -33,6 +33,7 @@ const canonical = full_url_for(page.__404 ? '/404.html' : page.path.replace(/ind
 <%- partial('_partial/topbar') %>
 <%- partial('_partial/sidebar', { kind }) %>
 <div class="scrim" data-close-menu hidden></div>
+<div class="route-progress" aria-hidden="true"></div>
 <div class="shell">
 <main id="main" class="main" tabindex="-1" data-kind="<%= kind %>">
 <%- body %>

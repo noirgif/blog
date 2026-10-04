@@ -31,7 +31,6 @@ menuBtn?.addEventListener('click', () => setMenu(true));
 document.addEventListener('click', e => { if (e.target.closest('[data-close-menu]')) setMenu(false); });
 
 function markActiveNav() {
-  if (!body.classList.contains('page-post') && matchMedia('(min-width: 1024px)').matches) sidebar.classList.add('seen');
   const path = location.pathname.replace(/index\.html$/, '');
   for (const a of $$('[data-nav]')) {
     const nav = a.dataset.nav;
@@ -43,8 +42,7 @@ function markActiveNav() {
 
 /* ---------------- seamless navigation ---------------- */
 const pages = new Map();
-const progress = Object.assign(document.createElement('div'), { className: 'route-progress' });
-body.append(progress);
+const progress = $('.route-progress');
 history.scrollRestoration = 'manual';
 
 function eligible(a, e) {
@@ -126,6 +124,8 @@ async function navigate(url, { push = true, scroll = 0, highlight = null } = {})
     saveScroll();
     history.pushState({ scroll: 0, highlight }, '', url.href);
   }
+  // Leaving a page where the sidebar was on screen: keep its images while it slides away.
+  if (!body.classList.contains('page-post')) sidebar.classList.add('seen');
   const swap = () => {
     clearHits();
     setMenu(false);

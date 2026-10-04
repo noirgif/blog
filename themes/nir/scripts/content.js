@@ -129,17 +129,16 @@ hexo.extend.generator.register('nir-platform', () => {
       path: '_headers',
       data: [
         '/*',
-        '  Cache-Control: public, max-age=0, must-revalidate, no-transform',
         '  X-Content-Type-Options: nosniff',
         '  Referrer-Policy: strict-origin-when-cross-origin',
         '  Strict-Transport-Security: max-age=31536000; includeSubDomains',
         '  Cross-Origin-Opener-Policy: same-origin-allow-popups',
         '  X-Frame-Options: SAMEORIGIN',
-        '/js/*', '  ! Cache-Control', '  ' + immutable,
-        '/css/*', '  ! Cache-Control', '  ' + immutable, '  Access-Control-Allow-Origin: *',
-        '/img/*', '  ! Cache-Control', '  ' + immutable,
-        '/assets/*', '  ! Cache-Control', '  Cache-Control: public, max-age=604800',
-        '/favicon.ico', '  ! Cache-Control', '  Cache-Control: public, max-age=604800',
+        '/js/*', '  ' + immutable,
+        '/css/*', '  ' + immutable, '  Access-Control-Allow-Origin: *',
+        '/img/*', '  ' + immutable,
+        '/assets/*', '  Cache-Control: public, max-age=604800',
+        '/favicon.ico', '  Cache-Control: public, max-age=604800',
         ''
       ].join('\n')
     },
