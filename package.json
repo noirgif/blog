@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "esbuild": "0.25.10",
-    "hexo": "8.1.1",
+    "hexo": "8.1.2",
     "hexo-cli": "4.3.2",
     "hexo-deployer-git": "4.0.0",
     "hexo-generator-alias": "1.0.0",
