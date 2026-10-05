@@ -46,6 +46,21 @@ hexo.extend.tag.register('image', args => {
 
 // ---------- excerpts, photo diary entries ----------
 
+hexo.extend.filter.register('before_post_render', data => {
+  if (data.layout !== 'photo-diary') return data;
+
+  // Markdown treats a single newline as the same paragraph. Separate standalone photos
+  // from the following caption/copy automatically so diary authors don't need a blank line.
+  data.content = data.content.replace(
+    /(<!--\s*entry\s*-->)([\s\S]*?)(<!--\s*\/entry\s*-->)/g,
+    (_, open, entry, close) => open + entry.replace(
+      /^([ \t]*!\[.*\]\([^\r\n]*\)[ \t]*)(\r?\n)(?=[ \t]*\S)/gm,
+      (_, image, newline) => image + newline + newline
+    ) + close
+  );
+  return data;
+});
+
 hexo.extend.filter.register('after_post_render', data => {
   // Tranquilpeak's `<!-- excerpt -->`: the text above becomes the excerpt and is removed from the post.
   const marker = /<!-- ?excerpt ?-->/;

@@ -10,6 +10,5 @@ lang: en
 
 <!-- entry -->
 ![](/images/photo.jpg)
-
 Your caption here
 <!-- /entry -->
