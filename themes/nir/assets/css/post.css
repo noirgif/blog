@@ -41,10 +41,16 @@
 .alert.danger { background: rgba(245, 49, 29, .1); border-color: #d1301f; }
 .alert.success { background: rgba(77, 198, 87, .12); border-color: #2f9a3a; }
 
-.photo-diary .diary-entry { margin: 0 0 3rem; }
-.photo-diary .diary-entry img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow); }
-.photo-diary .diary-entry p:has(> img) { margin: 0 0 .9rem; }
-.photo-diary .diary-entry p > img { margin: 0; }
+/* Keep photo, caption, and copy blocks visibly distinct in diary entries. */
+.photo-diary .diary-entry {
+  display: flex; flex-direction: column; gap: 1.15rem;
+  margin: 0 0 3rem;
+}
+.photo-diary .diary-entry > * { margin: 0; }
+.photo-diary .diary-entry img {
+  display: block; width: 100%; margin: 0 auto;
+  border-radius: var(--radius); box-shadow: var(--shadow);
+}
 
 .post-footer { margin-top: 3rem; display: grid; gap: 2rem; }
 .post-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
