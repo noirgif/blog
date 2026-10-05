@@ -15,7 +15,7 @@
     "check": "node tools/check.mjs"
   },
   "dependencies": {
-    "esbuild": "0.25.10",
+    "esbuild": "0.28.2",
     "hexo": "8.1.2",
     "hexo-cli": "4.3.2",
     "hexo-deployer-git": "4.0.0",
