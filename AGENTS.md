@@ -125,6 +125,10 @@ built page (`dist/`, served statically) before calling it done.
 - The faces cover only characters that every CJK font sets 1 em wide, never spaces or Latin
   text, so they are never a line's primary font: line heights come from the Latin face, and
   swapping from the system CJK font to the webfont moves nothing.
+- Kerning would break that (Noto Serif CJK kerns some kana pairs, and system fonts kern
+  differently), so subsets drop GPOS and CJK reading text sets `font-kerning: none`. The
+  ellipsis, which Latin faces set narrower than 1 em, comes from a `local()` CJK serif until the
+  webfont loads (`core.css`).
 - The font CSS starts as `media="print"` and is enabled (with preloads) only after both first
   contentful paint and `load`, so fonts never sit on the LCP path. Keep that order, and keep the
   shift-free property when switching fonts or ranges: re-check CLS on a Chinese and a Japanese
