@@ -39,15 +39,24 @@
   color-scheme: light dark;
 }
 
+/* Until the webfont arrives, the ellipsis would come from the Latin face, which sets it narrower
+   than 1em; these take it from the system's CJK serif instead, so the swap moves nothing. */
+@font-face { font-family: "Nir Ellipsis SC"; unicode-range: U+2026; src: local("Noto Serif CJK SC"), local("NotoSerifCJKsc-Regular"), local("Source Han Serif SC"), local("SourceHanSerifSC-Regular"), local("Songti SC"), local("STSongti-SC-Regular"), local("STSong"), local("SimSun"); }
+@font-face { font-family: "Nir Ellipsis JP"; unicode-range: U+2026; src: local("Noto Serif CJK JP"), local("NotoSerifCJKjp-Regular"), local("Source Han Serif"), local("SourceHanSerif-Regular"), local("Hiragino Mincho ProN"), local("HiraMinProN-W3"), local("Yu Mincho"), local("YuMincho-Regular"), local("MS Mincho"); }
+
 /* Chinese and Japanese text puts its own CJK faces first. */
 :lang(zh) {
   --font-sans: var(--latin-sans), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
-  --font-read: "Nir Serif SC", var(--latin-serif), serif;
+  --font-read: "Nir Serif SC", "Nir Ellipsis SC", var(--latin-serif), serif;
 }
 :lang(ja) {
   --font-sans: var(--latin-sans), "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, "Noto Sans CJK JP", "Source Han Sans JP", sans-serif;
-  --font-read: "Nir Serif JP", var(--latin-serif), serif;
+  --font-read: "Nir Serif JP", "Nir Ellipsis JP", var(--latin-serif), serif;
 }
+/* CJK fonts kern some kana pairs (e.g. Noto Serif CJK narrows 「す」), and the system font and the
+   webfont would not kern alike, so lines could rewrap on swap. `font` shorthands reset kerning,
+   hence the list of every element that sets one in the reading face. */
+:is(.prose, .prose *, .post-title, .intro-title, .intro-text, .list-header h1):is(:lang(zh), :lang(ja)) { font-kerning: none; }
 
 @media (prefers-color-scheme: dark) {
   :root {

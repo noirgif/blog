@@ -39,8 +39,10 @@ const SOURCES = {
 const CACHE_DIR = path.join(hexo.base_dir, '.cache', 'fonts');
 
 // Horizontal text only, and no half-width punctuation features (`text-spacing-trim` is off, see
-// core.css): vertical metrics and alternate glyphs would roughly double the size.
-const SUBSET_OPTIONS = { targetFormat: 'sfnt', keepFeatures: ['kern', 'ccmp'], dropTables: ['vhea', 'vmtx', 'VORG'] };
+// core.css): vertical metrics and alternate glyphs would roughly double the size. No positioning
+// either: the kana kerning in GPOS narrows pairs like 「す」 below 1em, so lines would rewrap when the
+// webfont replaces the system font.
+const SUBSET_OPTIONS = { targetFormat: 'sfnt', keepFeatures: ['ccmp'], dropTables: ['vhea', 'vmtx', 'VORG', 'GPOS'] };
 
 // Characters drawn from the CJK face: ideographs, kana, CJK and full-width punctuation, and the
 // ellipsis. Only characters every CJK font sets 1em wide are included, so the system font shown
