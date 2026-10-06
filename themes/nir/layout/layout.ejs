@@ -17,7 +17,8 @@ const canonical = full_url_for(page.__404 ? '/404.html' : page.path.replace(/ind
 <meta name="theme-color" content="#f7f8fb" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0d141b" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="<%= canonical %>">
-<meta property="og:type" content="<%= isPost ? 'article' : 'website' %>">
+<% if (is_preview_build()) { %><meta name="robots" content="noindex, nofollow">
+<% } %><meta property="og:type" content="<%= isPost ? 'article' : 'website' %>">
 <meta property="og:title" content="<%= pageTitle || config.title %>">
 <meta property="og:description" content="<%= description %>">
 <meta property="og:url" content="<%= canonical %>">

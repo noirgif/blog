@@ -25,6 +25,11 @@ for (const file of html) {
 }
 JSON.parse(fs.readFileSync(path.join(dist, 'search.json'), 'utf8'));
 
+// Production must stay indexable; Cloudflare preview builds (any other branch) must not be.
+const preview = process.env.CF_PAGES === '1' && !!process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== (process.env.PRODUCTION_BRANCH || 'master');
+const noindex = /<meta name="robots" content="noindex/.test(fs.readFileSync(path.join(dist, 'index.html'), 'utf8'));
+if (noindex !== preview) errors.push(preview ? 'preview build: index.html lacks noindex' : 'production build: index.html is noindex');
+
 if (errors.length) {
   console.error(errors.slice(0, 50).join('\n'));
   console.error(`\n${errors.length} problem(s) found.`);
