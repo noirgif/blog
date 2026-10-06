@@ -1,14 +1,21 @@
 # AGENTS.md
 
-Guidance for coding agents working in this repository. `CLAUDE.md` has the wider project
-overview (directory layout, multilingual setup, deployment targets); this file covers how to
-build and run the site, and the performance rules every change must keep.
+Guidance for coding agents (Claude Code reads it through `CLAUDE.md`). Writing posts, front
+matter and deployment are in [README.md](README.md); this file covers the code: how to build
+and verify it, where things live, and the performance rules every change must keep.
 
-## Build and run
+## Project
+
+A personal blog (English, Chinese, a little Japanese) built with Hexo 8 and the in-repo theme
+`themes/nir`, served from `dist/` by Cloudflare Pages at nir.moe and mirrored to
+`noirgif/noirgif.github.io`. Everything the site needs is generated at build time; there is no
+server-side code and no runtime CDN.
+
+## Build and verify
 
 Requirements: Node ≥ 22 (`.node-version`) and **bun ≥ 1.4**. `bun.lock` is a v2 lockfile, which
 bun 1.3 cannot read (`UnknownLockfileVersion`); if the installed bun is older, run it as
-`npx -y bun@latest` instead of upgrading globally.
+`npx -y bun@latest` instead of upgrading globally. Use bun only; do not add npm/pnpm lockfiles.
 
 ```sh
 bun install --frozen-lockfile   # install exactly what bun.lock pins
@@ -16,7 +23,6 @@ bun run build:cloudflare        # hexo clean + hexo generate into dist/ + tools/
 bun run build                   # same, without the checks
 bun run check                   # run tools/check.mjs against an existing dist/
 npx hexo server                 # dev server at http://localhost:4000 (-p to change the port)
-npx hexo new "Post Title"       # new post; `hexo new draft` / `hexo publish` for drafts
 ```
 
 - `bun run build:cloudflare` is what Cloudflare Pages runs, so it is the command to verify a
@@ -31,8 +37,32 @@ npx hexo new "Post Title"       # new post; `hexo new draft` / `hexo publish` fo
   that churn (`git checkout package.json`) unless the change is about dependencies.
 - `hexo server` renders on request from `source/` and does not use `dist/`; use it for quick
   visual checks, and the full build for anything that ships.
-- Legacy GitHub Pages deploy: `npx hexo deploy` (pushes to `noirgif/noirgif.github.io`). Do not
-  run it unless asked.
+- Every push gets a Cloudflare Pages preview (linked by the bot on the PR); use it for
+  Lighthouse runs. Do not run `hexo deploy` unless asked.
+
+## Layout
+
+- `_config.yml`: site config. Index 8 posts per page; archives, categories and tags unpaginated;
+  `post_asset_folder: true`; highlight.js and KaTeX (MathML output) run at build time.
+- `source/_posts/`, `source/_drafts/`, `source/assets/` (site images), `source/{about,links,…}/`
+  (pages); `scaffolds/` holds `post`, `page`, `draft` and `diary` (photo diary) templates.
+- `themes/nir/_config.yml`: menu, avatar/cover, giscus, `image_widths`, `image_quality`;
+  `languages/`: UI strings.
+- `themes/nir/layout/`: EJS templates (`layout.ejs` is the page shell), `_partial/` for
+  sidebar, top bar, cards, pagination, comments and the search dialog.
+- `themes/nir/assets/`: `css/{core,home,list,post}.css`, `app.js` (navigation, search,
+  comments, lightbox), `snow.js`, `giscus.css`.
+- `themes/nir/scripts/` (Hexo plugins, run at build time):
+  - `assets.js`: esbuild minify, CSS inlining, fingerprinted JS/CSS, `t()` and `icon()` helpers.
+  - `images.js`: WebP variants and `<img>` rewriting.
+  - `fonts.js`: per-page CJK webfont subsets.
+  - `content.js`: `{% alert %}` / `{% image %}` tags, excerpts, photo-diary filter,
+    `search.json`, per-language feeds, `_headers`, `_redirects`, `404.html`, `robots.txt`.
+- `tools/check.mjs`: post-build checks. `others/`: legacy files, not part of the build.
+
+Language comes from each post's `lang:` front matter (`en`, `zh-cn`, `ja-jp`), defaulting to
+the first entry of `language` in `_config.yml`. Compare it case-insensitively and trimmed, as
+existing posts mix `zh-cn` and `zh-CN `.
 
 ## Performance designs to uphold
 
