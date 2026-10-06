@@ -48,7 +48,9 @@ hexo g -d
 ```bash
 bun install --frozen-lockfile && bun run build:cloudflare   # hexo clean + generate into dist/ + tools/check.mjs
 ```
-Use **bun** (lockfile `bun.lock`). Output directory is `dist/` (`public_dir` in `_config.yml`).
+Use **bun ≥ 1.4** (lockfile `bun.lock`). Output directory is `dist/` (`public_dir` in `_config.yml`).
+
+See `AGENTS.md` for build/run details and the performance rules every change must uphold.
 
 ## Architecture
 
