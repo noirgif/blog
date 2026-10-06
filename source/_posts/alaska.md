@@ -6,6 +6,7 @@ tags:
     - travel
 category:
     - diary
+lang: zh-cn
 ---
 
 <!-- entry -->
