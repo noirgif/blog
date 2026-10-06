@@ -16,6 +16,12 @@ const plain = html => stripHTML(String(html || '')
   .replace(/&#39;/g, "'").replace(/&amp;/g, '&')
   .replace(/\s+/g, ' ').trim();
 
+// Cloudflare Pages builds every pushed branch as a preview; only the production branch should be indexed.
+// Cloudflare already sends `X-Robots-Tag: noindex` on preview URLs, this makes the build itself say so too.
+const productionBranch = process.env.PRODUCTION_BRANCH || 'master';
+const isPreview = process.env.CF_PAGES === '1' && !!process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== productionBranch;
+hexo.extend.helper.register('is_preview_build', () => isPreview);
+
 // ---------- tag plugins used by existing posts ----------
 
 // {% alert [classes] %}markdown{% endalert %}
@@ -149,6 +155,8 @@ hexo.extend.generator.register('nir-platform', () => {
         '  Strict-Transport-Security: max-age=31536000; includeSubDomains',
         '  Cross-Origin-Opener-Policy: same-origin-allow-popups',
         '  X-Frame-Options: SAMEORIGIN',
+        // Previews are noindex everywhere; production is noindex only on its *.pages.dev alias (nir.moe is canonical).
+        ...(isPreview ? ['  X-Robots-Tag: noindex'] : ['https://:project.pages.dev/*', '  X-Robots-Tag: noindex']),
         '/js/*', '  ' + immutable,
         '/css/*', '  ' + immutable, '  Access-Control-Allow-Origin: *',
         '/img/*', '  ' + immutable,
