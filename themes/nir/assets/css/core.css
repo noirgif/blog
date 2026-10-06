@@ -30,7 +30,7 @@
   --hl-title: #6d46c7; --hl-attr: #a75b00; --hl-meta: #5b6772;
 
   /* CJK fonts are picked per language so hanzi and kanji never mix glyph forms. The "Nir Serif"
-     faces are per-page subsets of Noto Serif CJK (scripts/fonts.js). */
+     faces are per-page subsets of Clear Han Serif (Chinese) and Noto Serif CJK JP (scripts/fonts.js). */
   --latin-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue";
   --latin-serif: Merriweather, Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, "Noto Serif";
   --font-sans: var(--latin-sans), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;

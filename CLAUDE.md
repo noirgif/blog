@@ -78,7 +78,7 @@ Posts can specify language in their front matter. The main site language is conf
 - `layout/` — EJS templates; `layout/_partial/` for sidebar, topbar, cards, comments, search dialog
 - `assets/` — `style.css` (minified and inlined into every page), `app.js` (PJAX navigation with View Transitions, search, giscus, lightbox), `snow.js` (loaded on demand), `giscus.css`
 - `scripts/assets.js` — esbuild minification + fingerprinted URLs (`/js/*.<hash>.js`), `t()`/`icon()` helpers
-- `scripts/fonts.js` — serif CJK webfonts: per-page Noto Serif CJK SC/JP subsets (`/fonts/`), chosen by post `lang:`, loaded after first paint; source OTFs are downloaded once (pinned + checksummed) into `.cache/fonts`
+- `scripts/fonts.js` — serif CJK webfonts: per-page subsets (`/fonts/`) of Clear Han Serif with Noto Serif CJK SC Black as its bold (Chinese) or Noto Serif CJK JP (`lang: ja-jp`), chosen by post `lang:`, loaded after first paint; source fonts are downloaded once (pinned + checksummed) into `.cache/fonts`
 - `scripts/images.js` — build-time WebP variants (`/img/v/`) for local images and `<img>` rewriting (srcset, width/height, lazy loading); cached in `.cache/images`
 - `scripts/content.js` — `alert`/`image` tags, excerpt and photo-diary filters, `search.json`, per-language feeds, `_headers`, `_redirects`, `404.html`, `robots.txt`
 - `_config.yml` — menu, avatar/cover, giscus settings; `languages/` — UI strings

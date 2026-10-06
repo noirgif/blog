@@ -3,10 +3,16 @@
 
 // Self-hosted serif CJK webfonts, subset per page.
 // Each post (or page) gets a WOFF2 holding exactly the Chinese/Japanese characters it uses,
-// cut from Noto Serif CJK in the page's own region (SC, or JP for `lang: ja-jp`), so kanji and
-// hanzi never mix glyph forms from different fonts. The faces cover only characters that every
+// cut from a serif in the page's own region (SC, or JP for `lang: ja-jp`), so kanji and hanzi
+// never mix glyph forms from different fonts. The faces cover only characters that every
 // CJK font sets 1em wide, and never the space, so they are never a line's primary font: line
 // heights come from the Latin face and the swap from the system's CJK font moves nothing.
+//
+// Chinese is set in Clear Han Serif (屏显臻宋, by chncwk, OFL), a Source Han Serif derivative
+// tuned for screens, with heavier horizontals. It has one weight, about Source Han's SemiBold,
+// so its bold is Noto Serif CJK SC Black: the same Source Han design two steps heavier, with the
+// same glyph forms and advance widths. Japanese stays on Noto Serif CJK JP, as Clear Han Serif
+// draws Chinese forms only.
 
 const fs = require('fs');
 const fsp = fs.promises;
@@ -15,16 +21,19 @@ const zlib = require('zlib');
 const crypto = require('crypto');
 const subsetFont = require('subset-font');
 
-const VERSION = 'Serif2.003';
-const SOURCE = `https://raw.githubusercontent.com/notofonts/noto-cjk/${VERSION}/Serif/OTF/`;
+const NOTO = 'https://raw.githubusercontent.com/notofonts/noto-cjk/Serif2.003/Serif/OTF/';
+// Clear Han Serif v1.07, as republished on npm (its upstream is a download page); the font is
+// read out of the package tarball.
+const CLEAR_HAN = 'https://registry.npmjs.org/clear-han-serif-subset/-/clear-han-serif-subset-1.7.0.tgz';
+// { url, member of a .tgz (optional), sha256 of the font file }
 const SOURCES = {
   sc: {
-    400: ['SimplifiedChinese/NotoSerifCJKsc-Regular.otf', '2a2eae2628df83556c54018c41e20fa532c1b862c5256ae8b3f23feb918d12ca'],
-    700: ['SimplifiedChinese/NotoSerifCJKsc-Bold.otf', '8af07d4b6c2e82bcc72a30e066eaf295f11b9424f4aad2eaa9fe0e9c3b38fc73']
+    400: { url: CLEAR_HAN, member: 'package/ttf/clearhanserif.original.v1.07.ttf', sha: 'f481ff9dcdab92c938b6e87afb53822e6e0da278a8e4cbf7b1de211ac64afbf2' },
+    700: { url: NOTO + 'SimplifiedChinese/NotoSerifCJKsc-Black.otf', sha: '2c2af226af6170ac28730be03b16ee7ffa6144fe54471d9ebe8a03de97b58160' }
   },
   jp: {
-    400: ['Japanese/NotoSerifCJKjp-Regular.otf', 'd9854c7a8ef170b5a7932558856fd64eb8de0b007cd823fed6f9f514ad2803d3'],
-    700: ['Japanese/NotoSerifCJKjp-Bold.otf', '861a2b2c0e24b23745c262be8c3fdef63f12628f0492fb120ee51aa55c503af8']
+    400: { url: NOTO + 'Japanese/NotoSerifCJKjp-Regular.otf', sha: 'd9854c7a8ef170b5a7932558856fd64eb8de0b007cd823fed6f9f514ad2803d3' },
+    700: { url: NOTO + 'Japanese/NotoSerifCJKjp-Bold.otf', sha: '861a2b2c0e24b23745c262be8c3fdef63f12628f0492fb120ee51aa55c503af8' }
   }
 };
 const CACHE_DIR = path.join(hexo.base_dir, '.cache', 'fonts');
@@ -85,19 +94,33 @@ function collect(locals) {
 
 // ---------- subsetting and WOFF2 encoding ----------
 
+// One file out of an uncompressed tar archive.
+function untar(tar, name) {
+  for (let o = 0; o + 512 <= tar.length;) {
+    const field = (at, len) => tar.toString('latin1', o + at, o + at + len).replace(/\0[\s\S]*$/, '');
+    if (!field(0, 100)) break;
+    const size = parseInt(field(124, 12).trim() || '0', 8);
+    const prefix = field(345, 155);
+    if ((prefix ? prefix + '/' : '') + field(0, 100) === name) return tar.subarray(o + 512, o + 512 + size);
+    o += 512 + Math.ceil(size / 512) * 512;
+  }
+  throw new Error(`[fonts] ${name} not found in archive`);
+}
+
 async function sourceFont(region, weight) {
-  const [file, sha] = SOURCES[region][weight];
-  const local = path.join(CACHE_DIR, 'src', VERSION, path.basename(file));
+  const { url, member, sha } = SOURCES[region][weight];
+  const local = path.join(CACHE_DIR, 'src', sha.slice(0, 16), path.basename(member || url));
   const verify = buf => crypto.createHash('sha256').update(buf).digest('hex') === sha;
   try {
     const buf = await fsp.readFile(local);
     if (verify(buf)) return buf;
   } catch {}
-  hexo.log.info('[fonts] downloading %s', path.basename(file));
-  const res = await fetch(SOURCE + file);
-  if (!res.ok) throw new Error(`[fonts] ${SOURCE + file}: HTTP ${res.status}`);
-  const buf = Buffer.from(await res.arrayBuffer());
-  if (!verify(buf)) throw new Error(`[fonts] ${file}: checksum mismatch`);
+  hexo.log.info('[fonts] downloading %s', path.basename(member || url));
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`[fonts] ${url}: HTTP ${res.status}`);
+  let buf = Buffer.from(await res.arrayBuffer());
+  if (member) buf = untar(zlib.gunzipSync(buf), member);
+  if (!verify(buf)) throw new Error(`[fonts] ${path.basename(member || url)}: checksum mismatch`);
   await fsp.mkdir(path.dirname(local), { recursive: true });
   await fsp.writeFile(local, buf);
   return buf;
@@ -115,9 +138,9 @@ const baseFont = (region, weight) => {
   return bases.get(key);
 };
 
-// Minimal WOFF2 encoder for CFF-flavoured fonts: those have no glyf/loca tables, so every table
-// goes in untransformed and the whole file is a single Brotli stream (native zlib is much faster
-// than a wasm encoder).
+// Minimal WOFF2 encoder: every table goes in untransformed (glyf and loca with the explicit null
+// transform), and the whole file is a single Brotli stream (native zlib is much faster than a
+// wasm encoder).
 function woff2(sfnt) {
   const numTables = sfnt.readUInt16BE(4);
   const tables = [];
@@ -131,7 +154,8 @@ function woff2(sfnt) {
     while ((n >>>= 7)) bytes.unshift(0x80 | (n & 0x7f));
     return Buffer.from(bytes);
   };
-  const directory = Buffer.concat(tables.flatMap(t => [Buffer.from([0x3f]), t.tag, base128(t.length)]));
+  const nullTransform = t => /^(glyf|loca)$/.test(t.tag.toString('latin1')) ? 0xc0 : 0;
+  const directory = Buffer.concat(tables.flatMap(t => [Buffer.from([0x3f | nullTransform(t)]), t.tag, base128(t.length)]));
   const data = Buffer.concat(tables.map(t => sfnt.subarray(t.offset, t.offset + t.length)));
   return new Promise((resolve, reject) => zlib.brotliCompress(data, {
     params: {
@@ -144,7 +168,7 @@ function woff2(sfnt) {
     const padded = Math.ceil((48 + directory.length + compressed.length) / 4) * 4;
     const header = Buffer.alloc(48);
     header.write('wOF2', 0, 'latin1');
-    sfnt.copy(header, 4, 0, 4); // flavor ('OTTO')
+    sfnt.copy(header, 4, 0, 4); // flavor ('OTTO' or TrueType)
     header.writeUInt32BE(padded, 8);
     header.writeUInt16BE(numTables, 12);
     header.writeUInt32BE(12 + 16 * numTables + tables.reduce((n, t) => n + Math.ceil(t.length / 4) * 4, 0), 16);
@@ -158,7 +182,7 @@ const files = new Map(); // route path -> { id, region, weight, text }
 function fileFor(region, weight, chars) {
   if (!chars.size) return null;
   const text = [...chars].sort().join('');
-  const id = crypto.createHash('sha256').update([VERSION, JSON.stringify(SUBSET_OPTIONS), region, weight, text].join('\n')).digest('hex').slice(0, 12);
+  const id = crypto.createHash('sha256').update([SOURCES[region][weight].sha, JSON.stringify(SUBSET_OPTIONS), region, weight, text].join('\n')).digest('hex').slice(0, 12);
   const route = `fonts/${region}-${weight}.${id}.woff2`;
   if (!files.has(route)) {
     files.set(route, { id, region, weight, text });
