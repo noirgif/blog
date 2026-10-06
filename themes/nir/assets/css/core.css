@@ -7,7 +7,7 @@
   --navy-2: #1a2440;
   --sidebar-text: #eef1f4;
   --sidebar-muted: #b4bfcb;
-  --sidebar-w: 300px;
+  --sidebar-w: 18.75rem;
   --measure: 46rem;
   --radius: 10px;
   --ease: cubic-bezier(.2, .8, .2, 1);
@@ -79,14 +79,19 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+/* Type scales with the viewport: 17px on phones and small laptops, 18px at 1280px, 22px at
+   2560px, capped at 24px from 3200px, so a HiDPI screen at 100% scaling (a huge CSS viewport)
+   still gets readable text. Percentages keep the visitor's browser font setting as the base.
+   Everything is sized in rem, so the layout scales with it; it depends only on the viewport,
+   so it is settled at first paint. images.js and sidebar.ejs mirror it in their `sizes`. */
 /* Full-width punctuation keeps its full width. Trimming depends on each font's `halt` feature,
    so with it on, a line could rewrap when the webfont replaces its local stand-in. */
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 4.5rem; text-spacing-trim: space-all; }
+html { font-size: clamp(106.25%, 87.5% + .3125vw, 150%); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 4.5rem; text-spacing-trim: space-all; }
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 16px/1.7 var(--font-sans);
+  font: 1rem/1.7 var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-wrap: break-word;
 }

@@ -149,7 +149,8 @@ function lookup(src, pagePath) {
 }
 
 // Default rendered width of images in a post: the text column is at most ~46rem wide.
-const DEFAULT_SIZES = '(min-width: 776px) 736px, calc(100vw - 2.5rem)';
+// The text column: min(100% - 2.5rem, 46rem), with the root font size from core.css.
+const DEFAULT_SIZES = 'min(100vw - 2.5rem, clamp(782px, 644px + 14.375vw, 1104px))';
 
 // Runs once per generated HTML route (after layouts and injectors), so it may be async.
 hexo.extend.filter.register('_after_html_render', async function (html, locals) {
