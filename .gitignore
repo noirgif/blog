@@ -7,3 +7,5 @@ package-lock.json
 /assets
 .cache
 .claude/
+PAGESPEED*
+.sites-runtime
