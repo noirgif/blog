@@ -1,0 +1,29 @@
+{
+  "name": "goddess-unknown-static",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "new": "node scripts/new-post.mjs",
+    "preview": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs",
+    "build:cloudflare": "node scripts/build.mjs && node scripts/check.mjs"
+  },
+  "dependencies": {
+    "cheerio": "1.2.0",
+    "gray-matter": "4.0.3",
+    "marked": "16.4.2",
+    "sharp": "0.34.4",
+    "katex": "0.16.22"
+  },
+  "packageManager": "pnpm@10.11.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
+  }
+}
