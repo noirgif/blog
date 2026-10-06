@@ -1,7 +1,7 @@
 <aside class="sidebar" id="sidebar" aria-label="<%= config.title %>">
   <picture class="sidebar-cover">
     <source media="(max-width: 1023.98px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
-    <img src="<%= url_for(theme.cover) %>" alt="" data-sizes="300px" <% if (kind === 'post') { %>loading="lazy"<% } else { %>loading="eager" fetchpriority="high"<% } %>>
+    <img src="<%= url_for(theme.cover) %>" alt="" data-sizes="clamp(319px, 263px + 5.86vw, 450px)" <% if (kind === 'post') { %>loading="lazy"<% } else { %>loading="eager" fetchpriority="high"<% } %>>
   </picture>
   <div class="sidebar-inner">
     <button class="icon-btn sidebar-close" type="button" data-close-menu aria-label="<%= t('close_menu') %>"><%- icon('close') %></button>
