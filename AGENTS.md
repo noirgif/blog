@@ -56,7 +56,7 @@ npx hexo server                 # dev server at http://localhost:4000 (-p to cha
   - `assets.js`: esbuild minify, CSS inlining, fingerprinted JS/CSS, `t()` and `icon()` helpers.
   - `images.js`: WebP variants and `<img>` rewriting.
   - `fonts.js`: per-page CJK webfont subsets.
-  - `content.js`: `{% alert %}` / `{% image %}` tags, excerpts, photo-diary filter,
+  - `content.js`: `{% alert %}` / `{% image %}` / `{% lyrics %}` tags, excerpts, photo-diary filter,
     `search.json`, per-language feeds, `_headers`, `_redirects`, `404.html`, `robots.txt`.
 - `tools/check.mjs`: post-build checks. `others/`: legacy files, not part of the build.
 
@@ -121,6 +121,8 @@ built page (`dist/`, served statically) before calling it done.
 - `scripts/fonts.js` subsets a serif CJK font per page to exactly the characters that page
   uses (by weight, chosen by the post's `lang:`), encodes WOFF2, and emits `@font-face` rules
   with `unicode-range`. List pages share one small subset of category/tag names and the title.
+  An element marked with the other language (`lang="ja"` in a Chinese post, as `{% lyrics ja %}`
+  does, or `lang="zh"` in a Japanese one) gets its own subset in that language's face.
   Source fonts are pinned by version and SHA-256; keep them pinned when changing fonts.
 - The faces cover only characters that every CJK font sets 1 em wide, never spaces or Latin
   text, so they are never a line's primary font: line heights come from the Latin face, and

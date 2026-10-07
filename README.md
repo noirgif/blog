@@ -28,6 +28,21 @@ bun run build                    # generate the site into dist/
   asset folder, or `{% image %}`). The theme resizes them to WebP with `srcset` and intrinsic
   sizes at build time, so no CDN or manual resizing is needed.
 - **Callouts:** `{% alert info %}Markdown{% endalert %}`.
+- **Lyrics with commentary:** a two-column block, lyrics on the left and notes on the right
+  (stacked on phones). Rows are separated by `===`, a row's lyrics and its Markdown note by
+  `---`; the note is optional. The argument marks the lyrics' language, so Japanese lyrics in a
+  Chinese post get the Japanese serif (and Chinese quotes in a Japanese post the Chinese one):
+
+  ```
+  {% lyrics ja %}
+  今、僕、アンダーグラウンドから
+  響けよ　アンダーグラウンドから
+  ---
+  Commentary in **Markdown**.
+  ===
+  Next stanza
+  {% endlyrics %}
+  ```
 - **Math:** `{% katex %}\lim_{x \to \infty}{% endkatex %}` (hexo-math), rendered to MathML at
   build time.
 

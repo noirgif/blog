@@ -41,6 +41,23 @@
 .alert.danger { background: rgba(245, 49, 29, .1); border-color: #d1301f; }
 .alert.success { background: rgba(77, 198, 87, .12); border-color: #2f9a3a; }
 
+/* {% lyrics %}: lyrics beside their commentary, stacked on narrow screens. */
+.lyrics { margin: 0 0 1.6em; border-top: 1px solid var(--border); }
+.lyrics-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 2rem; padding: 1.1em 0; border-bottom: 1px solid var(--border); }
+.prose .lyrics-text { margin: 0; }
+/* A passage marked with another CJK language takes that language's reading face (see fonts.js). */
+.prose [lang]:is(:lang(ja), :lang(zh)) { font-family: var(--font-read); }
+.lyrics-note { font-size: .95em; }
+.lyrics-note > :last-child { margin-bottom: 0; }
+.lyrics-row > :only-child { grid-column: 1 / -1; }
+@media (max-width: 719.98px) {
+  .lyrics-row { grid-template-columns: minmax(0, 1fr); }
+  .lyrics-note { margin-top: .8em; padding-left: 1em; border-left: 3px solid var(--accent-2); }
+}
+.prose .circled { padding: 0 .25em; border: 1px solid currentColor; border-radius: 1em; }
+/* What was written in the notebook's margin rather than on the lines. */
+.prose .margin-note { margin: 0 0 .8em; padding-left: .8em; border-left: 2px dashed var(--border); color: var(--muted); font-size: .9em; }
+
 /* Keep photo, caption, and copy blocks visibly distinct in diary entries. */
 .photo-diary .diary-entry {
   display: flex; flex-direction: column; gap: 1.15rem;

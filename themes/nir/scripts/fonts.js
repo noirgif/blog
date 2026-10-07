@@ -75,7 +75,13 @@ const textOf = html => html.replace(/<[^>]+>/g, ' ');
 const boldOf = html => [...html.matchAll(/<(h[1-6]|strong|b)\b[^>]*>([\s\S]*?)<\/\1>/gi)].map(m => textOf(m[2])).join(' ');
 
 const regionOf = item => /^ja/i.test(String(item.lang || '').trim()) ? 'jp' : 'sc';
-const pageFonts = new Map(); // page path -> { region, 400: Set, 700: Set }
+// Passages marked with the other language (`lang="ja"` in a Chinese post, `lang="zh"` in a Japanese
+// one) are set in that language's face, so quoted lyrics keep their own glyph forms. Only elements
+// that do not nest their own tag are recognised, which is how the {% lyrics %} tag marks them.
+const OTHER = { sc: { region: 'jp', re: /<(\w+)\b[^>]*\slang="ja[^"]*"[^>]*>([\s\S]*?)<\/\1>/gi },
+  jp: { region: 'sc', re: /<(\w+)\b[^>]*\slang="zh[^"]*"[^>]*>([\s\S]*?)<\/\1>/gi } };
+const setsOf = (region, html, title = '') => ({ region, 400: cjk(textOf(html)), 700: cjk(boldOf(html) + ' ' + title) });
+const pageFonts = new Map(); // page path -> [{ region, 400: Set, 700: Set }, …], page's own region first
 const articles = new Set(); // paths of every post and page, with or without CJK text
 let siteFonts = null;
 
@@ -85,9 +91,12 @@ function collect(locals) {
   const items = [...locals.posts.toArray(), ...locals.pages.toArray().filter(p => !p.layout || p.layout === 'page')];
   for (const item of items) {
     articles.add(item.path);
-    const html = readable(item.content);
-    const sets = { region: regionOf(item), 400: cjk(textOf(html)), 700: cjk(boldOf(html) + ' ' + (item.title || '')) };
-    if (sets[400].size || sets[700].size) pageFonts.set(item.path, sets);
+    const region = regionOf(item);
+    const other = OTHER[region];
+    let quoted = '';
+    const html = readable(item.content).replace(other.re, m => { quoted += m; return ' '; });
+    const sets = [setsOf(region, html, item.title || ''), setsOf(other.region, quoted)].filter(s => s[400].size || s[700].size);
+    if (sets.length) pageFonts.set(item.path, sets);
   }
   // List pages only set their (bold) headings in the serif face: category and tag names, the site title.
   const names = [...locals.categories.map(c => c.name), ...locals.tags.map(t => t.name), hexo.config.title, hexo.config.description].join(' ');
@@ -220,7 +229,8 @@ hexo.extend.generator.register('nir-fonts', locals => {
     }).join('');
     return { css: rules, urls };
   };
-  for (const [p, sets] of pageFonts) faces.set(p, build(sets));
+  const merge = built => ({ css: built.map(b => b.css).join(''), urls: built.flatMap(b => b.urls) });
+  for (const [p, sets] of pageFonts) faces.set(p, merge(sets.map(build)));
   if (siteFonts[400].size || siteFonts[700].size) faces.set('', build(siteFonts));
   return [...files].map(([route, file]) => ({ path: route, data: () => subsetFile(file) }));
 });
