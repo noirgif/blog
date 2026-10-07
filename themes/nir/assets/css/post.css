@@ -44,7 +44,7 @@
 /* {% lyrics %}: lyrics beside their commentary, stacked on narrow screens. */
 .lyrics { margin: 0 0 1.6em; border-top: 1px solid var(--border); }
 .lyrics-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 2rem; padding: 1.1em 0; border-bottom: 1px solid var(--border); }
-.prose .lyrics-text { margin: 0; font-weight: 600; }
+.prose .lyrics-text { margin: 0; }
 .lyrics-note { font-size: .95em; }
 .lyrics-note > :last-child { margin-bottom: 0; }
 .lyrics-row > :only-child { grid-column: 1 / -1; }
