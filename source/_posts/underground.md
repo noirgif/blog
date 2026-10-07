@@ -1,6 +1,6 @@
 ---
 title: Underground
-date: 2026-10-07 11:30:00
+date: 2026-08-12 23:00:00
 category: diary
 tags:
 - bocchi the rock
