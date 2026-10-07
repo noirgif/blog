@@ -30,16 +30,18 @@ hexo.extend.tag.register('alert', (args, content) => {
   return `<div class="alert ${classes}">${hexo.render.renderSync({ text: content, engine: 'markdown' })}</div>`;
 }, { ends: true });
 
-// {% lyrics %}lyric lines\n---\nmarkdown note\n===\nnext row…{% endlyrics %}
+// {% lyrics [lang] %}lyric lines\n---\nmarkdown note\n===\nnext row…{% endlyrics %}
 // Two columns: lyrics on the left (line breaks kept), commentary on the right; stacked on narrow screens.
 // Rows are separated by a line of `===`, a row's lyrics and note by a line of `---` (the note is optional).
+// `lang` (e.g. `ja`) marks the lyrics, so they get that language's webfont (see fonts.js).
 hexo.extend.tag.register('lyrics', (args, content) => {
+  const lang = /^[a-z]{2}(-[a-z]{2})?$/i.test(args[0] || '') ? ` lang="${args[0]}"` : '';
   const rows = content.trim().split(/^[ \t]*===[ \t]*$/m).map(row => {
     const [lyric, ...note] = row.split(/^[ \t]*---[ \t]*$/m);
     const lines = lyric.trim().split(/\r?\n/).map(l => hexo.render.renderSync({ text: l.trim(), engine: 'markdown' })
       .trim().replace(/^<p>([\s\S]*)<\/p>$/, '$1'));
     const body = note.join('---').trim();
-    return `<div class="lyrics-row"><p class="lyrics-text">${lines.join('<br>')}</p>` +
+    return `<div class="lyrics-row"><p class="lyrics-text"${lang}>${lines.join('<br>')}</p>` +
       (body ? `<div class="lyrics-note">${hexo.render.renderSync({ text: body, engine: 'markdown' })}</div>` : '') + '</div>';
   });
   return `<div class="lyrics">${rows.join('')}</div>`;
