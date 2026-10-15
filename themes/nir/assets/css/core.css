@@ -268,15 +268,21 @@ h1, h2, h3, h4, h5, h6 { color: var(--heading); line-height: 1.3; font-weight: 7
 mark { padding: 0 .12em; border-radius: 3px; background: var(--mark); color: var(--mark-text); }
 mark.hit { scroll-margin: 40vh; transition: box-shadow .3s; }
 mark.hit.current { box-shadow: 0 0 0 2px var(--accent-2); }
+/* Match navigator: a pill at the bottom on phones, next to the top bar's search button on wider screens. */
 .hits {
-  position: fixed; left: 50%; bottom: 1.25rem; z-index: 50; translate: -50% 0;
-  display: flex; align-items: center; gap: .25rem; padding: .25rem .35rem .25rem 1rem;
+  position: fixed; left: 50%; bottom: 1.25rem; z-index: 31; translate: -50% 0; max-width: calc(100vw - 2rem);
+  display: flex; align-items: center; gap: .1rem; height: 2.75rem; padding: 0 .2rem 0 .9rem;
   border: 1px solid var(--border); border-radius: 999px; background: var(--surface); box-shadow: var(--shadow);
-  font-size: .9rem; color: var(--muted); animation: rise .3s var(--ease);
+  font-size: .85rem; color: var(--muted); animation: rise .3s var(--ease);
 }
-.hits .icon-btn { width: 2.25rem; height: 2.25rem; }
-.hits b { color: var(--heading); font-weight: 600; }
+.hits span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hits .icon-btn { flex: none; width: 2.25rem; height: 2.25rem; }
+.hits b { color: var(--heading); font-weight: 600; font-variant-numeric: tabular-nums; }
 @keyframes rise { from { opacity: 0; translate: -50% 1rem; } }
+@media (min-width: 640px) {
+  .hits { left: auto; right: 3.5rem; bottom: auto; top: .375rem; translate: none; max-width: calc(100vw - 7rem); animation-name: drop; }
+}
+@keyframes drop { from { opacity: 0; translate: 0 -.5rem; } }
 
 /* ---------- snow ---------- */
 .snow-canvas { position: fixed; inset: 0; z-index: 60; width: 100%; height: 100%; pointer-events: none; }

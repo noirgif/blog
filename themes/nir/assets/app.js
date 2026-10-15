@@ -271,6 +271,7 @@ document.addEventListener('keydown', e => {
   const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName) || document.activeElement?.isContentEditable;
   if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typing)) { e.preventDefault(); openSearch(); }
   else if (e.key === 'Escape' && body.classList.contains('menu-open')) setMenu(false);
+  else if (e.key === 'Escape' && hitsBar && !$('dialog[open]')) dismissHits();
 });
 
 /* ---------------- highlight search matches inside a page ---------------- */
@@ -283,6 +284,11 @@ function clearHits() {
     m.replaceWith(document.createTextNode(m.textContent));
     parent.normalize();
   }
+}
+
+function dismissHits() {
+  clearHits();
+  history.replaceState({ ...history.state, highlight: null }, '');
 }
 
 function highlightPage(query) {
@@ -337,7 +343,7 @@ function highlightPage(query) {
   const [prev, nextBtn, close] = $$('button', hitsBar);
   prev.onclick = () => go(current - 1);
   nextBtn.onclick = () => go(current + 1);
-  close.onclick = () => { clearHits(); history.replaceState({ ...history.state, highlight: null }, ''); };
+  close.onclick = dismissHits;
   body.append(hitsBar);
   requestAnimationFrame(() => go(0));
 }
