@@ -423,10 +423,7 @@ document.addEventListener('click', e => {
 /* ---------------- footnote previews ---------------- */
 // Hovering or focusing a footnote mark shows the note in a floating box; a tap shows it on
 // touch screens, and a second tap on the same mark follows the link. Without JS the marks
-// stay plain links to the notes at the end of the post. Hover timing follows NN/g: the mark
-// lights up at once (CSS), the note opens once the pointer has rested on it for FN_OPEN ms,
-// and closes once the pointer has been off both mark and note for FN_CLOSE ms.
-const FN_OPEN = 300, FN_CLOSE = 500;
+// stay plain links to the notes at the end of the post.
 let fnPop, fnRef, fnShow, fnHide, lastPointer = 'mouse';
 const fnLink = el => el?.closest?.('.prose .footnote-ref a[href^="#"]');
 addEventListener('pointerdown', e => { lastPointer = e.pointerType; }, { capture: true, passive: true });
@@ -443,7 +440,7 @@ function showFootnote(a) {
     fnPop.id = 'fn-pop';
     fnPop.setAttribute('role', 'tooltip');
     fnPop.addEventListener('mouseenter', () => clearTimeout(fnHide));
-    fnPop.addEventListener('mouseleave', () => { fnHide = setTimeout(hideFootnote, FN_CLOSE); });
+    fnPop.addEventListener('mouseleave', () => { fnHide = setTimeout(hideFootnote, 200); });
   }
   const copy = note.cloneNode(true);
   for (const el of $$('.footnote-backref', copy)) el.remove();
@@ -472,21 +469,16 @@ function hideFootnote() {
   fnPop.hidden = true;
 }
 
-// Every move over the mark restarts the wait, so the note opens only once the pointer rests.
-const fnIntent = e => {
+document.addEventListener('mouseover', e => {
   const a = fnLink(e.target);
   if (!a || lastPointer === 'touch') return;
-  clearTimeout(fnHide);
-  if (fnRef === a) return;
   clearTimeout(fnShow);
-  fnShow = setTimeout(() => showFootnote(a), FN_OPEN);
-};
-document.addEventListener('mouseover', fnIntent, { passive: true });
-document.addEventListener('mousemove', fnIntent, { passive: true });
+  fnShow = setTimeout(() => showFootnote(a), 60);
+}, { passive: true });
 document.addEventListener('mouseout', e => {
   if (!fnLink(e.target) || lastPointer === 'touch') return;
   clearTimeout(fnShow);
-  if (fnRef) fnHide = setTimeout(hideFootnote, FN_CLOSE);
+  if (fnRef) fnHide = setTimeout(hideFootnote, 200);
 }, { passive: true });
 document.addEventListener('focusin', e => {
   const a = fnLink(e.target);
