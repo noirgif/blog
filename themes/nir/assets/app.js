@@ -335,7 +335,8 @@ function highlightPage(query) {
   hitsBar = document.createElement('div');
   hitsBar.className = 'hits';
   hitsBar.setAttribute('role', 'status');
-  hitsBar.innerHTML = `<span><b></b> · “${esc(query.trim())}”</span>
+  hitsBar.innerHTML = `<span class="hits-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></span>
+    <span class="hits-text"><b></b> · “${esc(query.trim())}”</span>
     <button class="icon-btn" type="button" aria-label="Previous match"><svg class="icon" viewBox="0 0 24 24"><path d="m5 15 7-7 7 7"/></svg></button>
     <button class="icon-btn" type="button" aria-label="Next match"><svg class="icon" viewBox="0 0 24 24"><path d="m5 9 7 7 7-7"/></svg></button>
     <button class="icon-btn" type="button" aria-label="Clear highlights"><svg class="icon" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>`;
