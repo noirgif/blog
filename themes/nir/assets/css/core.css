@@ -266,8 +266,9 @@ h1, h2, h3, h4, h5, h6 { color: var(--heading); line-height: 1.3; font-weight: 7
 .search-page .search-form { border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
 .search-page .search-results { padding: .5rem 0; }
 mark { padding: 0 .12em; border-radius: 3px; background: var(--mark); color: var(--mark-text); }
-mark.hit { scroll-margin: 40vh; transition: box-shadow .3s; }
-mark.hit.current { box-shadow: 0 0 0 2px var(--accent-2); }
+/* In-page hits are added after layout, so they paint their padding as a shadow instead of taking width. */
+mark.hit { padding: 0; box-shadow: 0 0 0 .12em var(--mark); scroll-margin: 40vh; transition: box-shadow .3s; }
+mark.hit.current { box-shadow: 0 0 0 .12em var(--mark), 0 0 0 calc(.12em + 2px) var(--accent-2); }
 /* Match navigator: a pill at the bottom on phones, next to the top bar's search button on wider screens. */
 .hits {
   position: fixed; left: 50%; bottom: 1.25rem; z-index: 31; translate: -50% 0; max-width: calc(100vw - 2rem);
