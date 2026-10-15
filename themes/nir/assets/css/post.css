@@ -36,13 +36,10 @@
 .prose .footnotes-sep { margin: 3em 0 1em; width: 30%; margin-left: 0; }
 .prose .footnote-ref a { border-radius: 3px; text-decoration: none; }
 .prose .footnote-ref a:is(:hover, [aria-describedby]) { background: var(--accent-soft); }
-/* Coming back from a note (↩), the mark blinks twice and fades out. */
-.prose .footnote-ref a:target { animation: fn-flash 1.4s ease-out; }
-@keyframes fn-flash {
-  0%, 30%, 60% { background: var(--mark); color: var(--mark-text); box-shadow: 0 0 0 .3em var(--mark); }
-  15%, 45% { background: transparent; box-shadow: 0 0 0 .3em transparent; }
-}
-@media (prefers-reduced-motion: reduce) { .prose .footnote-ref a:target { background: var(--mark); color: var(--mark-text); } }
+/* Coming back from a note (↩), the mark pulses once and fades out. */
+.prose .footnote-ref a:target { animation: fn-flash 1.2s ease-out; }
+@keyframes fn-flash { 0%, 25% { background: color-mix(in srgb, var(--accent) 22%, transparent); box-shadow: 0 0 0 .2em color-mix(in srgb, var(--accent) 22%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .prose .footnote-ref a:target { background: var(--accent-soft); } }
 /* Coming back from a note (↩) lands the mark a third of the way down the screen, not under the top bar. */
 .prose .footnote-ref a { scroll-margin-top: calc(33vh - 4.5rem); }
 .prose .footnote-item:target { background: var(--accent-soft); border-radius: 4px; }
