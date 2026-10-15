@@ -34,7 +34,8 @@
 .prose math[display=block] { display: block; overflow-x: auto; margin: 1.2em 0; }
 .prose .footnotes { font-size: .9rem; color: var(--muted); }
 .prose .footnotes-sep { margin: 3em 0 1em; width: 30%; margin-left: 0; }
-.prose .footnote-ref a { text-decoration: none; }
+.prose .footnote-ref a { border-radius: 3px; text-decoration: none; }
+.prose .footnote-ref a:is(:hover, [aria-describedby]) { background: var(--accent-soft); }
 .prose .footnote-item:target { background: var(--accent-soft); border-radius: 4px; }
 /* Footnote preview (app.js): floats over the text, so it never moves the page. */
 .fn-pop {
