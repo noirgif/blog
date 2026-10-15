@@ -77,7 +77,7 @@ function fetchPage(href) {
 let hoverTimer;
 const intent = e => {
   const a = e.target.closest?.('a');
-  if (!eligible(a)) return;
+  if (!eligible(a) || a.pathname === location.pathname) return; // in-page anchors need no fetch
   clearTimeout(hoverTimer);
   hoverTimer = setTimeout(() => fetchPage(a.href).catch(() => {}), e.type === 'mouseover' ? 60 : 0);
 };
@@ -91,7 +91,7 @@ document.addEventListener('click', e => {
   if (!eligible(a, e)) return;
   const url = new URL(a.href);
   if (url.pathname === location.pathname && url.search === location.search) {
-    if (url.hash) return; // in-page anchor: let the browser handle it
+    if (url.hash) { saveScroll(); return; } // in-page anchor: let the browser handle it
     e.preventDefault();
     if (a.dataset.highlight) {
       clearHits();
@@ -106,8 +106,17 @@ document.addEventListener('click', e => {
   navigate(url, { highlight: a.dataset.highlight });
 });
 
+// The page on screen; history entries that differ from it only by #hash need no swap, which
+// would also lose the :target highlight of the note an in-page link jumped to.
+let shown = location.pathname + location.search;
 window.addEventListener('popstate', e => {
-  navigate(new URL(location.href), { push: false, scroll: e.state?.scroll ?? 0 });
+  const url = new URL(location.href);
+  if (url.pathname + url.search === shown) {
+    const target = url.hash && document.getElementById(decodeURIComponent(url.hash.slice(1)));
+    if (target) target.scrollIntoView(); else window.scrollTo(0, e.state?.scroll ?? 0);
+    return;
+  }
+  navigate(url, { push: false, scroll: e.state?.scroll ?? 0 });
 });
 const saveScroll = () => history.replaceState({ ...history.state, scroll: scrollY }, '');
 window.addEventListener('pagehide', saveScroll);
@@ -152,6 +161,7 @@ async function navigate(url, { push = true, scroll = 0, highlight = null } = {})
     $('style[data-font-css]').media = 'all';
     main.replaceWith(next);
     main = next;
+    shown = url.pathname + url.search;
     markActiveNav();
     const target = url.hash && document.getElementById(decodeURIComponent(url.hash.slice(1)));
     if (target) target.scrollIntoView(); else window.scrollTo(0, scroll);
@@ -410,6 +420,79 @@ document.addEventListener('click', e => {
   lightbox.showModal();
 });
 
+/* ---------------- footnote previews ---------------- */
+// Hovering or focusing a footnote mark shows the note in a floating box; a tap shows it on
+// touch screens, and a second tap on the same mark follows the link. Without JS the marks
+// stay plain links to the notes at the end of the post.
+let fnPop, fnRef, fnShow, fnHide, lastPointer = 'mouse';
+const fnLink = el => el?.closest?.('.prose .footnote-ref a[href^="#"]');
+addEventListener('pointerdown', e => { lastPointer = e.pointerType; }, { capture: true, passive: true });
+
+function showFootnote(a) {
+  clearTimeout(fnHide);
+  if (fnRef === a) return;
+  const note = document.getElementById(decodeURIComponent(a.hash.slice(1)));
+  if (!note) return;
+  hideFootnote();
+  if (!fnPop) {
+    fnPop = document.createElement('div');
+    fnPop.className = 'fn-pop';
+    fnPop.id = 'fn-pop';
+    fnPop.setAttribute('role', 'tooltip');
+    fnPop.addEventListener('mouseenter', () => clearTimeout(fnHide));
+    fnPop.addEventListener('mouseleave', () => { fnHide = setTimeout(hideFootnote, 200); });
+  }
+  const copy = note.cloneNode(true);
+  for (const el of $$('.footnote-backref', copy)) el.remove();
+  for (const el of $$('[id]', copy)) el.removeAttribute('id');
+  fnPop.replaceChildren(...copy.childNodes);
+  fnPop.lang = a.closest('[lang]')?.lang || '';
+  fnPop.hidden = false;
+  fnPop.style.visibility = 'hidden';
+  body.append(fnPop);
+  const r = a.getBoundingClientRect(), w = fnPop.offsetWidth, h = fnPop.offsetHeight, gap = 8;
+  const left = Math.max(16, Math.min(r.left + r.width / 2 - w / 2, document.documentElement.clientWidth - w - 16));
+  const above = r.top - h - gap > 64 || r.bottom + h + gap > innerHeight;
+  fnPop.style.left = left + scrollX + 'px';
+  fnPop.style.top = (above ? r.top - h - gap : r.bottom + gap) + scrollY + 'px';
+  fnPop.style.visibility = '';
+  fnRef = a;
+  a.setAttribute('aria-describedby', 'fn-pop');
+}
+
+function hideFootnote() {
+  clearTimeout(fnShow);
+  clearTimeout(fnHide);
+  if (!fnRef) return;
+  fnRef.removeAttribute('aria-describedby');
+  fnRef = null;
+  fnPop.hidden = true;
+}
+
+document.addEventListener('mouseover', e => {
+  const a = fnLink(e.target);
+  if (!a || lastPointer === 'touch') return;
+  clearTimeout(fnShow);
+  fnShow = setTimeout(() => showFootnote(a), 60);
+}, { passive: true });
+document.addEventListener('mouseout', e => {
+  if (!fnLink(e.target) || lastPointer === 'touch') return;
+  clearTimeout(fnShow);
+  if (fnRef) fnHide = setTimeout(hideFootnote, 200);
+}, { passive: true });
+document.addEventListener('focusin', e => {
+  const a = fnLink(e.target);
+  // Only keyboard focus; a tap focuses the link too, and must leave the first tap to the click.
+  if (a?.matches(':focus-visible')) showFootnote(a); else if (!a && fnRef && !fnPop.contains(e.target)) hideFootnote();
+});
+document.addEventListener('click', e => {
+  const a = fnLink(e.target);
+  if (a && e.detail && lastPointer !== 'mouse' && fnRef !== a) { e.preventDefault(); showFootnote(a); return; }
+  if (fnRef && !fnPop.contains(e.target)) hideFootnote();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && fnRef) hideFootnote(); });
+addEventListener('resize', hideFootnote, { passive: true });
+
 /* ---------------- snow (loaded on demand) ---------------- */
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-snow]');
@@ -420,6 +503,7 @@ document.addEventListener('click', e => {
 
 /* ---------------- per page setup ---------------- */
 function initPage(highlight) {
+  hideFootnote();
   setupComments();
   topbar.style.setProperty('--read', '0'); // measured on scroll only, never during load
   if (highlight) highlightPage(highlight);
