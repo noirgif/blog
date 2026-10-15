@@ -463,7 +463,7 @@ document.addEventListener('mouseover', e => {
   const a = fnLink(e.target);
   if (!a || lastPointer === 'touch') return;
   clearTimeout(fnShow);
-  fnShow = setTimeout(() => showFootnote(a), 120);
+  fnShow = setTimeout(() => showFootnote(a), 60);
 }, { passive: true });
 document.addEventListener('mouseout', e => {
   if (!fnLink(e.target) || lastPointer === 'touch') return;
