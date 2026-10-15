@@ -59,4 +59,12 @@ Cloudflare Pages builds every push with `bun install --frozen-lockfile && bun ru
 build:cloudflare` and serves `dist/`. The old GitHub Pages mirror is updated with
 `npx hexo deploy`.
 
+Encoding the WebP variants takes most of a clean build (about two minutes for ~1,000 variants),
+so encoded images and font subsets are cached by content hash. Locally the cache is `.cache/`.
+Cloudflare Pages only keeps a few allow-listed folders between builds, so on Pages
+(`CF_PAGES` is set) the cache goes inside bun's package cache, which Pages restores when
+**Settings → Build → Build cache** is on. Only new or changed photos are then encoded; the build
+log reports `[images] N variants from cache, M encoded`, and variants no longer used are pruned
+so the cache does not grow. Clearing the build cache in the dashboard forces a full re-encode.
+
 Notes for coding agents (architecture and performance rules) are in [AGENTS.md](AGENTS.md).
