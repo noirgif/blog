@@ -36,6 +36,9 @@
 .prose .footnotes-sep { margin: 3em 0 1em; width: 30%; margin-left: 0; }
 .prose .footnote-ref a { border-radius: 3px; text-decoration: none; }
 .prose .footnote-ref a:is(:hover, [aria-describedby]) { background: var(--accent-soft); }
+.prose .footnote-ref a:target { background: var(--mark); color: var(--mark-text); box-shadow: 0 0 0 2px var(--mark); }
+/* Coming back from a note (↩) lands the mark a third of the way down the screen, not under the top bar. */
+.prose .footnote-ref a { scroll-margin-top: calc(33vh - 4.5rem); }
 .prose .footnote-item:target { background: var(--accent-soft); border-radius: 4px; }
 /* Footnote preview (app.js): floats over the text, so it never moves the page. */
 .fn-pop {
