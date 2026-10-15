@@ -35,6 +35,20 @@
 .prose .footnotes { font-size: .9rem; color: var(--muted); }
 .prose .footnotes-sep { margin: 3em 0 1em; width: 30%; margin-left: 0; }
 .prose .footnote-ref a { text-decoration: none; }
+.prose .footnote-item:target { background: var(--accent-soft); border-radius: 4px; }
+/* Footnote preview (app.js): floats over the text, so it never moves the page. */
+.fn-pop {
+  position: absolute; z-index: 45; box-sizing: border-box; max-width: min(24rem, calc(100vw - 2rem)); max-height: min(50vh, 20rem); overflow: auto;
+  padding: .7rem .95rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow);
+  color: var(--text); font: .92rem/1.65 var(--font-read); animation: fn-pop .15s var(--ease);
+}
+.fn-pop:is(:lang(zh), :lang(ja)) { letter-spacing: .02em; font-kerning: none; }
+.fn-pop > * { margin: 0; }
+.fn-pop > * + * { margin-top: .6em; }
+.fn-pop a { color: var(--accent); }
+.fn-pop code { font: .88em/1.5 var(--font-mono); padding: .12em .35em; border-radius: 4px; background: var(--code-bg); }
+.fn-pop[hidden] { display: none; }
+@keyframes fn-pop { from { opacity: 0; transform: translateY(4px); } }
 .alert { padding: .9rem 1.1rem; border-radius: var(--radius); background: var(--accent-soft); border-left: 3px solid var(--accent); font-family: var(--font-sans); font-size: .95rem; }
 .alert > :last-child { margin-bottom: 0; }
 .alert.warning, .alert.danger { background: rgba(245, 170, 10, .12); border-color: #c98a00; }
