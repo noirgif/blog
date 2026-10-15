@@ -16,6 +16,7 @@
 
 const fs = require('fs');
 const fsp = fs.promises;
+const os = require('os');
 const path = require('path');
 const zlib = require('zlib');
 const crypto = require('crypto');
@@ -36,7 +37,13 @@ const SOURCES = {
     700: { url: NOTO + 'Japanese/NotoSerifCJKjp-Bold.otf', sha: '861a2b2c0e24b23745c262be8c3fdef63f12628f0492fb120ee51aa55c503af8' }
   }
 };
-const CACHE_DIR = path.join(hexo.base_dir, '.cache', 'fonts');
+// Source fonts and subsets are cached in .cache/. Cloudflare Pages keeps only allow-listed
+// folders between builds (with Build cache enabled), so there the cache lives inside bun's own
+// cache folder, which it restores for every build of the project. NIR_CACHE_DIR overrides both.
+const CACHE_ROOT = process.env.NIR_CACHE_DIR || (process.env.CF_PAGES
+  ? path.join(process.env.BUN_INSTALL_CACHE_DIR || path.join(os.homedir(), '.bun', 'install', 'cache'), 'nir-blog')
+  : path.join(hexo.base_dir, '.cache'));
+const CACHE_DIR = path.join(CACHE_ROOT, 'fonts');
 
 // Horizontal text only, and no half-width punctuation features (`text-spacing-trim` is off, see
 // core.css): vertical metrics and alternate glyphs would roughly double the size. No positioning

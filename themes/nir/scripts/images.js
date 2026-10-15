@@ -8,12 +8,19 @@
 
 const fs = require('fs');
 const fsp = fs.promises;
+const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
 const sharp = require('sharp');
 
 const EXT = /\.(jpe?g|png|webp)$/i;
-const CACHE_DIR = path.join(hexo.base_dir, '.cache', 'images');
+// Encoded files are cached by content hash in .cache/. Cloudflare Pages keeps only allow-listed
+// folders between builds (with Build cache enabled), so there the cache lives inside bun's own
+// cache folder, which it restores for every build of the project. NIR_CACHE_DIR overrides both.
+const CACHE_ROOT = process.env.NIR_CACHE_DIR || (process.env.CF_PAGES
+  ? path.join(process.env.BUN_INSTALL_CACHE_DIR || path.join(os.homedir(), '.bun', 'install', 'cache'), 'nir-blog')
+  : path.join(hexo.base_dir, '.cache'));
+const CACHE_DIR = path.join(CACHE_ROOT, 'images');
 const images = new Map();
 const warned = new Set(); // public URL -> { file, width, height, key, widths }
 let scanned = null;
@@ -67,6 +74,8 @@ async function scan() {
 // Encode every width of one source in a single decode pass, with a small concurrency limit
 // so large photos do not exhaust memory on the build machine.
 const jobs = new Map();
+const used = new Set(); // cache file names this build read or wrote
+let encoded = 0;
 let active = 0;
 const queue = [];
 const limit = fn => new Promise((resolve, reject) => {
@@ -85,8 +94,9 @@ function variants(img) {
       const out = new Map();
       const missing = [];
       for (const [kind, w] of wanted) {
-        const cached = path.join(CACHE_DIR, `${img.key}-${kind}${w}-q${quality}s.webp`);
-        try { out.set(kind + w, await fsp.readFile(cached)); } catch { missing.push([kind, w]); }
+        const name = `${img.key}-${kind}${w}-q${quality}s.webp`;
+        used.add(name);
+        try { out.set(kind + w, await fsp.readFile(path.join(CACHE_DIR, name))); } catch { missing.push([kind, w]); }
       }
       if (missing.length) {
         const base = sharp(img.file, { failOn: 'none' }).rotate();
@@ -99,6 +109,7 @@ function variants(img) {
           const q = w <= 320 ? Math.min(quality, 60) : quality;
           const data = await resized.webp({ quality: q, effort: 6, smartSubsample: true }).toBuffer();
           out.set(kind + w, data);
+          encoded++;
           await fsp.writeFile(path.join(CACHE_DIR, `${img.key}-${kind}${w}-q${quality}s.webp`), data).catch(() => {});
         }
       }
@@ -107,6 +118,20 @@ function variants(img) {
   }
   return jobs.get(img.key);
 }
+
+// Report cache hits, so a build log shows whether the cache survived. In a persistent build
+// cache (Cloudflare Pages), drop variants no longer referenced (removed photos, an old quality
+// setting) so the archive restored before every build does not grow without bound.
+hexo.on('exit', err => {
+  if (err || !used.size) return;
+  hexo.log.info('[images] %d variants from cache, %d encoded (%s)', used.size - encoded, encoded, CACHE_DIR);
+  if (!process.env.CF_PAGES) return;
+  let pruned = 0;
+  for (const name of fs.readdirSync(CACHE_DIR)) {
+    if (!used.has(name)) { fs.rmSync(path.join(CACHE_DIR, name), { force: true }); pruned++; }
+  }
+  if (pruned) hexo.log.info('[images] pruned %d unused cached variants', pruned);
+});
 
 const variantUrl = (img, w, kind = 'v') => `${hexo.config.root}img/${kind}/${img.key}-${w}.webp`;
 

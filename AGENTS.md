@@ -31,7 +31,9 @@ npx hexo server                 # dev server at http://localhost:4000 (-p to cha
   references a `/js/`, `/css/`, `/img/` or `/fonts/` URL that was not generated.
 - The first build on a clean machine downloads the CJK source fonts (about 100 MB, pinned and
   checksummed) into `.cache/fonts` and encodes every WebP variant into `.cache/images`; expect
-  a minute or two. Later builds reuse `.cache/` and take seconds. Never commit `.cache/` or
+  a minute or two. Later builds reuse `.cache/` and take seconds. On Cloudflare Pages the same
+  cache lives in bun's package cache folder, the one folder Pages keeps between builds (README,
+  "Deployment"); `NIR_CACHE_DIR` overrides the location. Never commit `.cache/` or
   `dist/` (both are git-ignored), and delete `.cache/` only when a cache is actually stale.
 - `hexo generate` rewrites `"hexo": { "version" }` and the formatting of `package.json`. Revert
   that churn (`git checkout package.json`) unless the change is about dependencies.
