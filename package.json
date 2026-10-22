@@ -30,7 +30,7 @@
     "hexo-renderer-ejs": "2.0.0",
     "hexo-renderer-markdown-it": "7.1.1",
     "hexo-server": "3.0.0",
-    "sharp": "0.35.4",
+    "sharp": "0.35.5",
     "subset-font": "2.9.0"
   },
   "trustedDependencies": [
